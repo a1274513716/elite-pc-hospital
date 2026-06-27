@@ -2039,16 +2039,17 @@
                 item.classList.add('active');
             }
         }
-        <!-- 视频弹窗 -->
-        <div class="video-modal" id="videoModal" onclick="closeVideo(event);">
-            <div class="modal-content">
-                <button class="modal-close" onclick="closeVideo();">&times;</button>
-                <iframe id="videoIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            </div>
+    </script>
+    <!-- 视频弹窗 -->
+    <div class="video-modal" id="videoModal" onclick="closeVideo(event);">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVideo();">&times;</button>
+            <iframe id="videoIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
+    </div>
 
-        <script>
-            // 视频弹窗
+    <script>
+        // 视频弹窗
             function openVideo(bvid) {
                 const modal = document.getElementById('videoModal');
                 const iframe = document.getElementById('videoIframe');
