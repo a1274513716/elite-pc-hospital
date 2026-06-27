@@ -897,6 +897,78 @@
             }
         }
 
+        /* ===== 流光动态效果 ===== */
+        .game-card,
+        .work-card,
+        .service-card,
+        .review-card,
+        .faq-item,
+        .contact-card,
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before,
+        .work-card::before,
+        .service-card::before,
+        .review-card::before,
+        .faq-item::before,
+        .contact-card::before,
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255,255,255,0.03) 30%,
+                rgba(255,23,68,0.06) 50%,
+                rgba(255,255,255,0.03) 70%,
+                transparent 100%
+            );
+            transform: skewX(-20deg);
+            z-index: 1;
+            pointer-events: none;
+            animation: flow-light 4s ease-in-out infinite;
+        }
+
+        .review-card::before,
+        .faq-item::before,
+        .contact-card::before,
+        .stat-card::before {
+            animation-duration: 5s;
+        }
+
+        .service-card::before {
+            animation-duration: 6s;
+            animation-delay: 0.5s;
+        }
+
+        .work-card::before {
+            animation-duration: 3.5s;
+        }
+
+        @keyframes flow-light {
+            0% { left: -60%; }
+            100% { left: 120%; }
+        }
+
+        /* 卡片内容在伪元素上层 */
+        .game-card > *,
+        .work-card > *,
+        .service-card > *,
+        .review-card > *,
+        .faq-item > *,
+        .contact-card > *,
+        .stat-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
         /* ===== 回到顶部 ===== */
         .back-to-top {
             position: fixed;
