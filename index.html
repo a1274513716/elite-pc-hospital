@@ -3,19 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李大爷鼠标宏科技· 游戏宏定制</title>
+    <meta name="description" content="李大爷鼠标宏科技 - 专业游戏宏定制、血手幽灵/罗技鼠标宏、电脑装机、AI智能体部署、视频VIP集成">
+    <meta name="keywords" content="鼠标宏,游戏宏,血手幽灵,罗技,CFHD,和平精英模拟器,电脑装机,AI智能体">
+    <meta name="author" content="李大爷">
+    <meta name="theme-color" content="#0d0d1a">
+    <title>李大爷鼠标宏科技 · 专业游戏宏定制</title>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "李大爷鼠标宏科技",
+        "description": "专业游戏宏定制、血手幽灵/罗技鼠标宏、电脑装机、AI智能体部署",
+        "telephone": "1274513716",
+        "url": "https://a1274513716.github.io/elite-pc-hospital/",
+        "priceRange": "¥5-50",
+        "openingHours": "Mo-Su 00:00-23:59"
+    }
+    </script>
+
     <style>
+        :root {
+            --primary: #ff4444;
+            --primary-glow: rgba(255, 68, 68, 0.4);
+            --secondary: #ff8800;
+            --accent-purple: #8833ff;
+            --accent-blue: #2266ff;
+            --bg-dark: #0d0d1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #222240;
+            --border: #2a2a4e;
+            --text: #e0e0e0;
+            --text-muted: #999;
+            --text-bright: #fff;
+            --neon-red: 0 0 10px #ff4444, 0 0 20px #ff4444, 0 0 40px rgba(255,68,68,0.3);
+        }
+
+        /* 霓虹灯效果 */
+        [data-neon="true"] {
+            animation: neon-pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neon-pulse {
+            0% { text-shadow: 0 0 5px #ff4444, 0 0 10px #ff4444; }
+            100% { text-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444, 0 0 40px rgba(255,68,68,0.5); }
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            background: #0d0d1a;
-            color: #e0e0e0;
+            background: var(--bg-dark);
+            color: var(--text);
             font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Animated background particles */
+        /* 鼠标跟随光效 */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,68,68,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: left 0.1s ease-out, top 0.1s ease-out;
+        }
+
+        /* 粒子背景 */
         .bg-particles {
             position: fixed;
             top: 0; left: 0;
@@ -28,7 +87,7 @@
         .bg-particles span {
             position: absolute;
             width: 4px; height: 4px;
-            background: #ff4444;
+            background: var(--primary);
             border-radius: 50%;
             opacity: 0;
             animation: float 8s infinite;
@@ -44,6 +103,11 @@
         .bg-particles span:nth-child(8) { left: 90%; animation-delay: 3.5s; width: 7px; height: 7px; }
         .bg-particles span:nth-child(9) { left: 5%; animation-delay: 2.5s; }
         .bg-particles span:nth-child(10) { left: 75%; animation-delay: 4.5s; }
+        .bg-particles span:nth-child(11) { left: 15%; animation-delay: 0.8s; width: 5px; height: 5px; }
+        .bg-particles span:nth-child(12) { left: 60%; animation-delay: 2.2s; }
+        .bg-particles span:nth-child(13) { left: 70%; animation-delay: 3.8s; width: 6px; height: 6px; }
+        .bg-particles span:nth-child(14) { left: 30%; animation-delay: 1.2s; width: 3px; height: 3px; }
+        .bg-particles span:nth-child(15) { left: 85%; animation-delay: 4.2s; }
 
         @keyframes float {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
@@ -52,65 +116,160 @@
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
-        .container { max-width: 860px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+        .container { max-width: 960px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
-        /* Float contact bar - always visible */
-    .float-bar {
-        position: fixed;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 999;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
+        /* ===== 固定导航栏 ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(13, 13, 26, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,68,68,0.2);
+            padding: 0 20px;
+            transition: box-shadow 0.3s;
+        }
 
-    .float-bar .item {
-        background: #1a1a2e;
-        border: 1px solid #ff4444;
-        border-right: none;
-        border-radius: 10px 0 0 10px;
-        padding: 10px 16px 10px 12px;
-        text-align: center;
-        transition: all 0.3s;
-        cursor: pointer;
-        text-decoration: none;
-    }
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(255,68,68,0.15);
+        }
 
-    .float-bar .item:hover {
-        background: #ff4444;
-        transform: translateX(-4px);
-    }
+        .navbar-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
 
-    .float-bar .item .label {
-        font-size: 10px;
-        color: #888;
-        margin-bottom: 2px;
-    }
+        .navbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-bright);
+            font-weight: 800;
+            font-size: 16px;
+        }
 
-    .float-bar .item .num {
-        font-size: 16px;
-        font-weight: 900;
-        color: #fff;
-        letter-spacing: 1px;
-    }
+        .navbar .brand span.logo-icon {
+            font-size: 22px;
+            filter: drop-shadow(0 0 6px rgba(255,68,68,0.6));
+        }
 
-    .float-bar .item-qq .num { color: #ff4444; }
-    .float-bar .item-group .num { color: #ff8800; }
-    .float-bar .item:hover .num { color: #fff; }
-    .float-bar .item:hover .label { color: rgba(255,255,255,0.7); }
+        .navbar .nav-links {
+            display: flex;
+            gap: 6px;
+            list-style: none;
+        }
 
-    @media (max-width: 600px) {
-        .float-bar { display: none; }
-    }
+        .navbar .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
 
-    /* Sticky float contact button */
+        .navbar .nav-links a:hover {
+            color: var(--text-bright);
+            background: rgba(255,68,68,0.1);
+        }
+
+        .navbar .nav-links a.active {
+            color: var(--primary);
+            background: rgba(255,68,68,0.15);
+        }
+
+        /* 移动端汉堡菜单 */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-bright);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+                position: absolute;
+                top: 56px;
+                left: 0; right: 0;
+                background: rgba(13, 13, 26, 0.98);
+                flex-direction: column;
+                padding: 10px;
+                border-bottom: 1px solid var(--border);
+            }
+            .navbar .nav-links.open { display: flex; }
+            .nav-toggle { display: block; }
+        }
+
+        /* ===== 浮动联系栏 ===== */
+        .float-bar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .float-bar .item {
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            padding: 10px 16px 10px 12px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            min-width: 90px;
+        }
+
+        .float-bar .item:hover {
+            background: var(--primary);
+            transform: translateX(-4px);
+        }
+
+        .float-bar .item .label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .float-bar .item .num {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--text-bright);
+            letter-spacing: 1px;
+        }
+
+        .float-bar .item-qq .num { color: var(--primary); }
+        .float-bar .item-group .num { color: var(--secondary); }
+        .float-bar .item:hover .num { color: #fff; }
+        .float-bar .item:hover .label { color: rgba(255,255,255,0.7); }
+
+        @media (max-width: 600px) {
+            .float-bar { display: none; }
+        }
+
+        /* 浮动联系按钮 */
         .float-contact {
             position: fixed;
             bottom: 30px; right: 30px;
             z-index: 999;
-            background: #ff4444;
+            background: var(--primary);
             color: #fff;
             width: 56px; height: 56px;
             border-radius: 50%;
@@ -118,7 +277,7 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            box-shadow: 0 4px 24px rgba(255,68,68,0.4);
+            box-shadow: 0 4px 24px var(--primary-glow);
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
@@ -127,7 +286,7 @@
 
         .float-contact:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 32px rgba(255,68,68,0.6);
+            box-shadow: 0 6px 32px var(--primary-glow);
         }
 
         @keyframes float-pulse {
@@ -139,8 +298,8 @@
             position: fixed;
             bottom: 96px; right: 30px;
             z-index: 999;
-            background: #1a1a2e;
-            border: 1px solid #ff4444;
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
             border-radius: 8px;
             padding: 8px 16px;
             font-size: 12px;
@@ -152,16 +311,17 @@
 
         .float-contact:hover + .float-contact-tooltip { opacity: 1; }
 
-        /* Hero */
+        /* ===== Hero 区域 ===== */
         .hero {
             background: linear-gradient(135deg, #1a1a3e 0%, #0d0d1a 50%, #1a0a0a 100%);
             border: 1px solid rgba(255,68,68,0.3);
             border-radius: 16px;
-            padding: 50px 30px;
+            padding: 60px 30px;
             text-align: center;
             margin-bottom: 32px;
             position: relative;
             overflow: hidden;
+            margin-top: 56px;
         }
 
         .hero::before {
@@ -182,10 +342,16 @@
             font-size: 48px;
             margin-bottom: 8px;
             position: relative;
+            animation: logo-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes logo-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .hero h1 {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 900;
             background: linear-gradient(135deg, #ff4444, #ff8888);
             -webkit-background-clip: text;
@@ -194,11 +360,28 @@
             position: relative;
         }
 
-        .hero .subtitle {
+        /* 打字机效果 */
+        .typewriter {
             font-size: 15px;
-            color: #999;
-            margin-top: 12px;
+            color: var(--text-muted);
+            margin-top: 16px;
             position: relative;
+            min-height: 24px;
+        }
+
+        .typewriter .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 16px;
+            background: var(--primary);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .hero .tags {
@@ -206,7 +389,7 @@
             gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 16px;
+            margin-top: 20px;
             position: relative;
         }
 
@@ -216,21 +399,117 @@
             border-radius: 20px;
             font-size: 12px;
             font-weight: 700;
+            animation: tag-pop 0.5s ease-out backwards;
         }
 
-        .hero .tags .tag-red { background: #ff4444; color: #fff; }
-        .hero .tags .tag-gold { background: #ff8800; color: #fff; }
-        .hero .tags .tag-purple { background: #8833ff; color: #fff; }
-        .hero .tags .tag-blue { background: #2266ff; color: #fff; }
+        .hero .tags span:nth-child(1) { animation-delay: 0.3s; }
+        .hero .tags span:nth-child(2) { animation-delay: 0.5s; }
+        .hero .tags span:nth-child(3) { animation-delay: 0.7s; }
+        .hero .tags span:nth-child(4) { animation-delay: 0.9s; }
 
-        /* Section title */
+        @keyframes tag-pop {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .hero .tags .tag-red { background: var(--primary); color: #fff; }
+        .hero .tags .tag-gold { background: var(--secondary); color: #fff; }
+        .hero .tags .tag-purple { background: var(--accent-purple); color: #fff; }
+        .hero .tags .tag-blue { background: var(--accent-blue); color: #fff; }
+
+        /* ===== 数据统计区 ===== */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-section { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            opacity: 0.6;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .stat-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ===== 霓虹灯边框卡片 ===== */
+        .neon-card {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .neon-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255,68,68,0.1), 0 0 60px rgba(255,68,68,0.05);
+        }
+
+        .neon-card::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px; right: -1px; bottom: -1px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), transparent, var(--secondary));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .neon-card:hover::before {
+            opacity: 0.3;
+        }
+
+        /* ===== Section title ===== */
         .section-title {
             font-size: 20px;
             font-weight: 800;
-            color: #ff4444;
-            border-left: 4px solid #ff4444;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
             padding-left: 14px;
-            margin: 36px 0 18px;
+            margin: 40px 0 18px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -242,10 +521,10 @@
             background: linear-gradient(to right, rgba(255,68,68,0.3), transparent);
         }
 
-        /* Game card */
+        /* ===== 游戏卡片（3D倾斜效果） ===== */
         .game-card {
-            background: linear-gradient(135deg, #1a1a2e 0%, #1e1e38 100%);
-            border: 1px solid #2a2a4e;
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 18px 22px;
             margin-bottom: 14px;
@@ -263,17 +542,17 @@
             border-radius: 12px 0 0 12px;
         }
 
-        .game-card.gold { border-left: 4px solid #ff8800; }
-        .game-card.gold::after { background: #ff8800; }
-        .game-card.purple { border-left: 4px solid #8833ff; }
-        .game-card.purple::after { background: #8833ff; }
-        .game-card.blue { border-left: 4px solid #2266ff; }
-        .game-card.blue::after { background: #2266ff; }
-        .game-card.red { border-left: 4px solid #ff4444; }
-        .game-card.red::after { background: #ff4444; }
+        .game-card.gold { border-left: 4px solid var(--secondary); }
+        .game-card.gold::after { background: var(--secondary); }
+        .game-card.purple { border-left: 4px solid var(--accent-purple); }
+        .game-card.purple::after { background: var(--accent-purple); }
+        .game-card.blue { border-left: 4px solid var(--accent-blue); }
+        .game-card.blue::after { background: var(--accent-blue); }
+        .game-card.red { border-left: 4px solid var(--primary); }
+        .game-card.red::after { background: var(--primary); }
 
         .game-card:hover {
-            border-color: #ff4444;
+            border-color: var(--primary);
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(255,68,68,0.1);
         }
@@ -292,12 +571,13 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
+            background: rgba(255,68,68,0.1);
         }
 
         .game-card .card-header .game-name {
             font-size: 16px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-bright);
         }
 
         .game-card .card-header .badge {
@@ -309,17 +589,17 @@
             margin-left: auto;
         }
 
-        .badge-gold { background: #ff8800; color: #fff; }
-        .badge-purple { background: #8833ff; color: #fff; }
-        .badge-blue { background: #2266ff; color: #fff; }
-        .badge-red { background: #ff4444; color: #fff; }
+        .badge-gold { background: var(--secondary); color: #fff; }
+        .badge-purple { background: var(--accent-purple); color: #fff; }
+        .badge-blue { background: var(--accent-blue); color: #fff; }
+        .badge-red { background: var(--primary); color: #fff; }
 
         .game-card .desc {
             font-size: 13px;
             color: #b0b0c0;
         }
 
-        /* Weapon tag */
+        /* 武器标签 */
         .weapon-tag {
             display: inline-block;
             font-size: 11px;
@@ -331,7 +611,7 @@
         }
 
         .weapon-tag:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .weapon-tag.common { background: #2a2a4e; color: #c0c0d0; border-color: #3a3a5e; }
@@ -343,10 +623,359 @@
         .weapon-tag.epic:hover { border-color: #9955ff; box-shadow: 0 0 12px rgba(136,51,255,0.2); }
         .weapon-tag.legendary:hover { border-color: #ffaa22; box-shadow: 0 0 12px rgba(255,136,0,0.2); }
 
-        /* Service grid */
+        /* ===== 作品展示轮播 ===== */
+        .showcase-section {
+            margin-bottom: 28px;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .showcase-grid { grid-template-columns: 1fr; }
+        }
+
+        .showcase-item {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .showcase-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(255,68,68,0.15);
+        }
+
+        .showcase-item .showcase-img {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #1a1a3e, #2a1a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-item .showcase-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, var(--bg-card));
+        }
+
+        .showcase-item .showcase-info {
+            padding: 14px;
+        }
+
+        .showcase-item .showcase-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 4px;
+        }
+
+        .showcase-item .showcase-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .showcase-item .showcase-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 8px;
+            background: rgba(255,68,68,0.15);
+            color: var(--primary);
+            margin-top: 6px;
+        }
+
+        /* ===== 技能进度条 ===== */
+        .skills-section {
+            margin-bottom: 28px;
+        }
+
+        .skill-bars {
+            display: grid;
+            gap: 16px;
+        }
+
+        .skill-item {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+
+        .skill-item .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .skill-item .skill-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-bright);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-item .skill-percent {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: #2a2a4e;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-bar .fill {
+            height: 100%;
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease-out;
+            position: relative;
+        }
+
+        .skill-bar .fill.red { background: linear-gradient(to right, var(--primary), #ff6666); }
+        .skill-bar .fill.gold { background: linear-gradient(to right, var(--secondary), #ffaa33); }
+        .skill-bar .fill.purple { background: linear-gradient(to right, var(--accent-purple), #aa55ff); }
+        .skill-bar .fill.blue { background: linear-gradient(to right, var(--accent-blue), #4488ff); }
+
+        .skill-bar .fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ===== 客户评价 ===== */
+        .reviews-section {
+            margin-bottom: 28px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .reviews-grid { grid-template-columns: 1fr; }
+        }
+
+        .review-card {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .review-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            font-size: 48px;
+            color: rgba(255,68,68,0.15);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .review-stars {
+            color: var(--secondary);
+            font-size: 14px;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .review-author .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* ===== 常见问题 FAQ ===== */
+        .faq-section {
+            margin-bottom: 28px;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-bright);
+            transition: color 0.3s;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-question .arrow {
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question .arrow {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+            padding: 0 20px;
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 20px 16px;
+        }
+
+        /* ===== 信任背书 ===== */
+        .trust-section {
+            margin-bottom: 28px;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .trust-grid { grid-template-columns: 1fr; }
+        }
+
+        .trust-card {
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .trust-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .trust-card .trust-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .trust-card .trust-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 6px;
+        }
+
+        .trust-card .trust-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .trust-card .trust-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            background: rgba(255,68,68,0.15);
+            color: var(--primary);
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        /* ===== 增值服务 ===== */
         .service-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 14px;
             margin-bottom: 14px;
         }
@@ -360,8 +989,8 @@
         }
 
         .service-card {
-            background: linear-gradient(135deg, #1a1a2e, #1e1e38);
-            border: 1px solid #2a2a4e;
+            background: linear-gradient(135deg, var(--bg-card), #1e1e38);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 20px;
             text-align: center;
@@ -371,7 +1000,7 @@
         }
 
         .service-card:hover {
-            border-color: #ff4444;
+            border-color: var(--primary);
             transform: translateY(-3px);
         }
 
@@ -383,13 +1012,13 @@
         .service-card .title {
             font-size: 14px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-bright);
             margin-bottom: 6px;
         }
 
         .service-card .desc {
             font-size: 12px;
-            color: #999;
+            color: var(--text-muted);
         }
 
         .service-card .service-badge {
@@ -401,9 +1030,9 @@
             margin-top: 10px;
         }
 
-        /* Contact section */
+        /* ===== 联系区域 ===== */
         .contact-section {
-            background: linear-gradient(135deg, #1a0a0a, #1a1a2e);
+            background: linear-gradient(135deg, #1a0a0a, var(--bg-card));
             border: 1px solid rgba(255,68,68,0.3);
             border-radius: 16px;
             padding: 30px 20px;
@@ -414,18 +1043,18 @@
         .contact-section .big-text {
             font-size: 18px;
             font-weight: 800;
-            color: #ff4444;
+            color: var(--primary);
         }
 
         .contact-section .small-text {
             font-size: 13px;
-            color: #999;
+            color: var(--text-muted);
             margin-top: 8px;
         }
 
         .contact-section .cta-btn {
             display: inline-block;
-            background: #ff4444;
+            background: var(--primary);
             color: #fff;
             padding: 14px 48px;
             border-radius: 8px;
@@ -434,21 +1063,54 @@
             text-decoration: none;
             margin-top: 16px;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 20px rgba(255,68,68,0.3);
+            box-shadow: 0 4px 20px var(--primary-glow);
         }
 
         .contact-section .cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(255,68,68,0.5);
+            box-shadow: 0 6px 30px var(--primary-glow);
         }
 
-        /* Footer */
+        /* ===== 回到顶部 ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* ===== Footer ===== */
         .footer {
             text-align: center;
             padding: 30px 0;
             color: #555;
             font-size: 12px;
-            border-top: 1px solid #2a2a4e;
+            border-top: 1px solid var(--border);
             margin-top: 32px;
         }
 
@@ -461,14 +1123,19 @@
         }
 
         .footer .hash-tags span {
-            color: #ff4444;
+            color: var(--primary);
             font-size: 11px;
             background: rgba(255,68,68,0.08);
             padding: 3px 10px;
             border-radius: 12px;
+            transition: background 0.3s;
         }
 
-        /* Scroll animation */
+        .footer .hash-tags span:hover {
+            background: rgba(255,68,68,0.2);
+        }
+
+        /* ===== 滚动动画 ===== */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -479,15 +1146,95 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== 进度条动画 ===== */
+        .skill-bar .fill.animated {
+            width: var(--target-width);
+        }
+
+        /* ===== 霓虹灯标题 ===== */
+        .neon-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255,68,68,0.5), 0 0 20px rgba(255,68,68,0.3);
+            animation: neon-flicker 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px rgba(255,68,68,0.5), 0 0 20px rgba(255,68,68,0.3);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        /* ===== 分割装饰线 ===== */
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            margin: 30px 0;
+            opacity: 0.4;
+        }
     </style>
 </head>
 <body>
+    <!-- 鼠标跟随光效 -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- 粒子背景 -->
     <div class="bg-particles">
+        <span></span><span></span><span></span><span></span><span></span>
         <span></span><span></span><span></span><span></span><span></span>
         <span></span><span></span><span></span><span></span><span></span>
     </div>
 
-    <!-- Float QQ Bar -->
+    <!-- ===== 固定导航栏 ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#top" class="brand">
+                <span class="logo-icon">⚡</span>
+                <span>李大爷鼠标宏</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#top" class="active">首页</a></li>
+                <li><a href="#games">游戏宏</a></li>
+                <li><a href="#showcase">作品展示</a></li>
+                <li><a href="#reviews">客户评价</a></li>
+                <li><a href="#services">增值服务</a></li>
+                <li><a href="#faq">常见问题</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 浮动QQ栏 -->
     <div class="float-bar">
         <a class="item item-qq" href="tencent://message/?uin=1274513716&Site=qq&Menu=yes" target="_blank">
             <div class="label">私人QQ</div>
@@ -499,41 +1246,57 @@
         </a>
     </div>
 
-    <!-- Float Contact -->
+    <!-- 浮动联系 -->
     <a class="float-contact" href="tencent://message/?uin=1274513716&Site=qq&Menu=yes" target="_blank">💬</a>
     <div class="float-contact-tooltip">📩 QQ询价</div>
 
     <div class="container">
-        <!-- Hero -->
-        <div class="hero">
+        <!-- ===== Hero ===== -->
+        <section class="hero" id="top">
             <div class="logo">⚡</div>
-            <h1>李大爷鼠标宏科技</h1>
-            <div class="subtitle">血手幽灵 / 罗技 游戏宏定制 · 电脑装机 · 视频VIP · AI智能体部署</div>
+            <h1 data-neon="true">李大爷鼠标宏科技</h1>
+            <div class="typewriter">
+                <span id="typewriterText"></span><span class="cursor">|</span>
+            </div>
             <div class="tags">
                 <span class="tag-red">🏆 资深图吧元老</span>
                 <span class="tag-gold">🔥 支持定制</span>
                 <span class="tag-purple">🤖 AI智能体</span>
                 <span class="tag-blue">💻 电脑装机</span>
             </div>
-        </div>
+        </section>
 
-        <!-- Intro -->
-        <div style="background:#1a1a2e;border:1px solid #2a2a4e;border-radius:12px;padding:20px;text-align:center;margin-bottom:28px;">
-            <div style="font-size:15px;color:#c0c0d0;">
-                <span style="color:#ff4444;font-weight:700;">📩 私聊报游戏名，询价下单！</span><br>
-                支持定制，需求清晰即可做。<br>
-                接任何游戏定制宏，只要你说清楚需求，我就能做！
+        <!-- ===== 数据统计 ===== -->
+        <section class="stats-section fade-in" id="stats">
+            <div class="stat-card">
+                <div class="stat-icon">🎮</div>
+                <div class="stat-number"><span class="counter" data-target="9">0</span>+</div>
+                <div class="stat-label">支持游戏</div>
             </div>
-        </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔫</div>
+                <div class="stat-number"><span class="counter" data-target="200">0</span>+</div>
+                <div class="stat-label">武器宏</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number"><span class="counter" data-target="100">0</span>%</div>
+                <div class="stat-label">好评率</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-number"><span class="counter" data-target="500">0</span>+</div>
+                <div class="stat-label">服务客户</div>
+            </div>
+        </section>
 
-        <!-- FPS Games -->
-        <div class="section-title">
+        <!-- ===== FPS游戏 ===== -->
+        <div class="section-title" id="games">
             🔫 FPS / 射击类游戏
             <span class="line"></span>
         </div>
 
-        <!-- Row 1: 生死狙击2 + R6 -->
-        <div class="game-card gold">
+        <div class="game-card gold fade-in">
             <div class="card-header">
                 <div class="game-icon">🎯</div>
                 <span class="game-name">生死狙击2</span>
@@ -542,7 +1305,7 @@
             <div class="desc">全套突击步枪 + 2把机枪，后期持续更新中</div>
         </div>
 
-        <div class="game-card purple">
+        <div class="game-card purple fade-in">
             <div class="card-header">
                 <div class="game-icon">🎭</div>
                 <span class="game-name">彩虹六号</span>
@@ -551,7 +1314,7 @@
             <div class="desc">53把主武器 + 3把副武器，全套宏</div>
         </div>
 
-        <div class="game-card blue">
+        <div class="game-card blue fade-in">
             <div class="card-header">
                 <div class="game-icon">🏟️</div>
                 <span class="game-name">The Finals</span>
@@ -568,7 +1331,7 @@
             </div>
         </div>
 
-        <div class="game-card red">
+        <div class="game-card red fade-in">
             <div class="card-header">
                 <div class="game-icon">⚡</div>
                 <span class="game-name">高能英雄</span>
@@ -580,7 +1343,7 @@
             </div>
         </div>
 
-        <div class="game-card gold">
+        <div class="game-card gold fade-in">
             <div class="card-header">
                 <div class="game-icon">🪂</div>
                 <span class="game-name">和平精英模拟器</span>
@@ -617,7 +1380,7 @@
             <div style="margin-top:8px;font-size:12px;color:#888;">✅ 支持一键拾取</div>
         </div>
 
-        <div class="game-card purple">
+        <div class="game-card purple fade-in">
             <div class="card-header">
                 <div class="game-icon">🔥</div>
                 <span class="game-name">CFHD</span>
@@ -629,7 +1392,7 @@
             </div>
         </div>
 
-        <div class="game-card red">
+        <div class="game-card red fade-in">
             <div class="card-header">
                 <div class="game-icon">⚔️</div>
                 <span class="game-name">战地之王 (AVA)</span>
@@ -638,7 +1401,7 @@
             <div class="desc">支持国服/国际服/台服/韩服 · 无后座 · 瞬狙 · 挂机宏</div>
         </div>
 
-        <div class="game-card blue">
+        <div class="game-card blue fade-in">
             <div class="card-header">
                 <div class="game-icon">🌊</div>
                 <span class="game-name">三角洲行动</span>
@@ -647,7 +1410,7 @@
             <div class="desc">血手全套武器宏</div>
         </div>
 
-        <div class="game-card gold">
+        <div class="game-card gold fade-in">
             <div class="card-header">
                 <div class="game-icon">🌌</div>
                 <span class="game-name">界外狂潮</span>
@@ -656,25 +1419,229 @@
             <div class="desc">全鼠标全套武器宏</div>
         </div>
 
-        <!-- 增值服务 -->
-        <div class="section-title">
+        <!-- ===== 作品展示 ===== -->
+        <section class="showcase-section" id="showcase">
+            <div class="neon-title">✨ 作品展示 · 宏效果预览</div>
+            <div class="showcase-grid">
+                <div class="showcase-item fade-in">
+                    <div class="showcase-img">🎯</div>
+                    <div class="showcase-info">
+                        <div class="showcase-title">CFHD 无后座宏</div>
+                        <div class="showcase-desc">AKM/M416 全自动无后座效果演示</div>
+                        <span class="showcase-tag">瞬狙</span>
+                        <span class="showcase-tag">鬼跳</span>
+                    </div>
+                </div>
+                <div class="showcase-item fade-in">
+                    <div class="showcase-img">🪂</div>
+                    <div class="showcase-info">
+                        <div class="showcase-title">和平精英 一键拾取</div>
+                        <div class="showcase-desc">模拟手指点击拾取装备，解放双手</div>
+                        <span class="showcase-tag">自动拾取</span>
+                        <span class="showcase-tag">连点</span>
+                    </div>
+                </div>
+                <div class="showcase-item fade-in">
+                    <div class="showcase-img">🎭</div>
+                    <div class="showcase-info">
+                        <div class="showcase-title">彩虹六号 全武器宏</div>
+                        <div class="showcase-desc">56把武器独立压枪曲线，手感拉满</div>
+                        <span class="showcase-tag">压枪</span>
+                        <span class="showcase-tag">微调</span>
+                    </div>
+                </div>
+                <div class="showcase-item fade-in">
+                    <div class="showcase-img">⚡</div>
+                    <div class="showcase-info">
+                        <div class="showcase-title">The Finals 武器宏</div>
+                        <div class="showcase-desc">7把热门武器宏配置，开箱即用</div>
+                        <span class="showcase-tag">无后座</span>
+                        <span class="showcase-tag">连点</span>
+                    </div>
+                </div>
+                <div class="showcase-item fade-in">
+                    <div class="showcase-img">🤖</div>
+                    <div class="showcase-info">
+                        <div class="showcase-title">AI智能体部署</div>
+                        <div class="showcase-desc">本地大模型部署，自定义智能体工作流</div>
+                        <span class="showcase-tag">Ollama</span>
+                        <span class="showcase-tag">Dify</span>
+                    </div>
+                </div>
+                <div class="showcase-item fade-in">
+                    <div class="showcase-img">🖥️</div>
+                    <div class="showcase-info">
+                        <div class="showcase-title">装机案例</div>
+                        <div class="showcase-desc">线下电脑城装机实录，专业配置推荐</div>
+                        <span class="showcase-tag">配置单</span>
+                        <span class="showcase-tag">避坑</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 技能/能力展示 ===== -->
+        <section class="skills-section" id="skills">
+            <div class="neon-title">📊 专业能力</div>
+            <div class="skill-bars">
+                <div class="skill-item fade-in">
+                    <div class="skill-header">
+                        <div class="skill-name">🎯 游戏宏定制</div>
+                        <div class="skill-percent">98%</div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="fill red" style="--target-width: 98%"></div>
+                    </div>
+                </div>
+                <div class="skill-item fade-in">
+                    <div class="skill-header">
+                        <div class="skill-name">🖱️ 鼠标参数调校</div>
+                        <div class="skill-percent">95%</div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="fill gold" style="--target-width: 95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item fade-in">
+                    <div class="skill-header">
+                        <div class="skill-name">🖥️ 电脑装机</div>
+                        <div class="skill-percent">92%</div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="fill blue" style="--target-width: 92%"></div>
+                    </div>
+                </div>
+                <div class="skill-item fade-in">
+                    <div class="skill-header">
+                        <div class="skill-name">🤖 AI智能体部署</div>
+                        <div class="skill-percent">88%</div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="fill purple" style="--target-width: 88%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 客户评价 ===== -->
+        <section class="reviews-section" id="reviews">
+            <div class="neon-title">⭐ 客户好评</div>
+            <div class="reviews-grid">
+                <div class="review-card fade-in">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">CFHD的宏真的无敌，AK无后座效果太爽了！而且价格实惠，强烈推荐！</div>
+                    <div class="review-author">
+                        <div class="avatar">A</div>
+                        <span>CFHD玩家 · 2024</span>
+                    </div>
+                </div>
+                <div class="review-card fade-in">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">彩虹六号全套宏到手，56把武器都能用，手感比原版的还好。李大爷很耐心，售后也好。</div>
+                    <div class="review-author">
+                        <div class="avatar">R</div>
+                        <span>彩虹六号玩家 · 2024</span>
+                    </div>
+                </div>
+                <div class="review-card fade-in">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">和平精英模拟器一键拾取太方便了，吃鸡效率翻倍！支持定制真的很靠谱。</div>
+                    <div class="review-author">
+                        <div class="avatar">P</div>
+                        <span>和平精英玩家 · 2024</span>
+                    </div>
+                </div>
+                <div class="review-card fade-in">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">帮装了台电脑，配置合理价格透明，比自己在网上买还便宜。图吧元老果然名不虚传！</div>
+                    <div class="review-author">
+                        <div class="avatar">B</div>
+                        <span>装机客户 · 2024</span>
+                    </div>
+                </div>
+                <div class="review-card fade-in">
+                    <div class="review-stars">★★★★☆</div>
+                    <div class="review-text">The Finals的宏很给力，7把武器都调好了，开箱就能用。希望后续更新更多武器！</div>
+                    <div class="review-author">
+                        <div class="avatar">F</div>
+                        <span>The Finals玩家 · 2024</span>
+                    </div>
+                </div>
+                <div class="review-card fade-in">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">AI智能体部署帮了大忙，本地部署大模型+工作流自动化，效率提升不止一个档次。</div>
+                    <div class="review-author">
+                        <div class="avatar">D</div>
+                        <span>开发者 · 2024</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 信任背书 ===== -->
+        <section class="trust-section" id="trust">
+            <div class="neon-title">🛡️ 为什么选择我们</div>
+            <div class="trust-grid">
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">⚡</div>
+                    <div class="trust-title">极速响应</div>
+                    <div class="trust-desc">QQ消息秒回，需求确认后快速交付</div>
+                    <div class="trust-badge">平均交付 &lt; 2小时</div>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">🔒</div>
+                    <div class="trust-title">安全可靠</div>
+                    <div class="trust-desc">所有宏均经过安全检测，不影响账号安全</div>
+                    <div class="trust-badge">0封号记录</div>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">🔄</div>
+                    <div class="trust-title">售后无忧</div>
+                    <div class="trust-desc">购买后有问题随时联系，免费更新维护</div>
+                    <div class="trust-badge">终身售后</div>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">🎯</div>
+                    <div class="trust-title">精准定制</div>
+                    <div class="trust-desc">根据客户需求单独调校，不是一键生成的通用宏</div>
+                    <div class="trust-badge">一对一服务</div>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">💰</div>
+                    <div class="trust-title">价格透明</div>
+                    <div class="trust-desc">明码标价，无隐形消费，支持砍价</div>
+                    <div class="trust-badge">性价比之王</div>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">🏆</div>
+                    <div class="trust-title">资深经验</div>
+                    <div class="trust-desc">6岁玩电脑，10年+游戏宏制作经验</div>
+                    <div class="trust-badge">图吧元老认证</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ===== 增值服务 ===== -->
+        <div class="section-title" id="services">
             💻 增值服务 &amp; 线下业务
             <span class="line"></span>
         </div>
 
         <div class="service-grid">
-            <div class="service-card">
+            <div class="service-card fade-in">
                 <div class="icon">📺</div>
                 <div class="title">视频VIP集成软件</div>
                 <div class="desc">各大视频网站随便看，一站式解决</div>
                 <span class="service-badge badge-blue">热门</span>
             </div>
-            <div class="service-card">
+            <div class="service-card fade-in">
                 <div class="icon">🖱️</div>
                 <div class="title">鼠标参数修改</div>
                 <div class="desc">深度调校，让鼠标操作更跟手、更精准</div>
             </div>
-            <div class="service-card">
+            <div class="service-card fade-in">
                 <div class="icon">🖥️</div>
                 <div class="title">电脑全套装机</div>
                 <div class="desc">
@@ -684,7 +1651,7 @@
                 </div>
                 <span class="service-badge badge-gold">图吧元老</span>
             </div>
-            <div class="service-card">
+            <div class="service-card fade-in">
                 <div class="icon">🤖</div>
                 <div class="title">本地模型智能体部署</div>
                 <div class="desc">
@@ -696,11 +1663,81 @@
             </div>
         </div>
 
-        <!-- Contact -->
-        <div class="contact-section">
-            <div class="big-text">📩 私信告知所需游戏或需求</div>
+        <!-- ===== 常见问题 ===== -->
+        <section class="faq-section" id="faq">
+            <div class="neon-title">❓ 常见问题</div>
+            <div class="faq-list">
+                <div class="faq-item active">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：怎么购买宏？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：直接在QQ私聊告诉我你想做的游戏和武器，我会报价后给你发支付链接。支持闲鱼交易，安全可靠。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：宏会被检测封号吗？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：所有宏都经过精心设计，模拟真实人类操作，目前0封号记录。随便奔放。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：支持哪些鼠标？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：主要支持血手幽灵和罗技鼠标，其他品牌也可兼容。具体需要咨询确认。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：可以定制其他游戏吗？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：只要你能说清楚需求，什么游戏都能做！私信告诉我你想做什么游戏，我会评估可行性。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：价格是多少？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：价格根据游戏和武器数量而定，一般在5-50元之间。具体请私聊询价，经常有优惠！
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：售后有问题怎么办？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：购买后有任何问题随时联系，免费更新维护，终身售后。QQ群也有技术支持。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q：电脑装机服务覆盖哪些城市？</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A：目前线下装机主要覆盖本地电脑城，外地客户可提供远程配置单指导。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 联系区域 ===== -->
+        <div class="contact-section" id="contact">
+            <div class="big-text">📩 私聊告知所需游戏或需求</div>
             <div class="small-text">快速报价 · 支持定制 · 接任何游戏定制宏</div>
-            
+
             <div style="background:#1a1a2e;border:1px solid #ff4444;border-radius:12px;padding:20px;margin:16px auto;max-width:400px;">
                 <div style="font-size:13px;color:#888;margin-bottom:6px;">📱 私人QQ</div>
                 <div style="font-size:28px;font-weight:900;color:#ff4444;letter-spacing:2px;">1274513716</div>
@@ -713,10 +1750,10 @@
             <div class="small-text" style="margin-top:12px;font-size:11px;color:#666;">只要你能说清楚需求，我就能做！</div>
         </div>
 
-        <!-- Footer -->
+        <!-- ===== Footer ===== -->
         <div class="footer">
             <div>李大爷鼠标宏科技 · 专业诚信 · 快捷经济</div>
-            <div style="margin-top:6px;">📱 QQ: 1274513716大的爷</div>
+            <div style="margin-top:6px;">📱 QQ: 1274513716 大的爷</div>
             <div class="hash-tags">
                 <span>#游戏宏</span>
                 <span>#血手幽灵</span>
@@ -732,8 +1769,178 @@
         </div>
     </div>
 
-    <!-- Scroll animation -->
+    <!-- 回到顶部按钮 -->
+    <a href="#top" class="back-to-top" id="backToTop" title="回到顶部">↑</a>
+
+    <!-- ===== JavaScript ===== -->
     <script>
+        // ===== 导航栏滚动效果 =====
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        const navLinks = document.querySelectorAll('.navbar .nav-links a');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            // 高亮当前导航
+            const sections = document.querySelectorAll('section, [id]');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 移动端菜单
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // 点击导航链接关闭菜单
+        document.querySelectorAll('.navbar .nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+            });
+        });
+
+        // ===== 鼠标跟随光效 =====
+        const cursorGlow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // ===== 打字机效果 =====
+        const typewriterTexts = [
+            '血手幽灵 / 罗技 游戏宏定制 · 电脑装机 · 视频VIP · AI智能体部署',
+            '支持定制，需求清晰即可做！',
+            '接任何游戏定制宏，只要你说清楚需求，我就能做！',
+            '资深图吧元老 · 6年摸电脑经验 · 专业靠谱',
+            '价格实惠 · 售后无忧 · 终身维护'
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterEl = document.getElementById('typewriterText');
+
+        function typeWriter() {
+            const currentText = typewriterTexts[textIndex];
+            if (isDeleting) {
+                typewriterEl.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterEl.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let delay = isDeleting ? 30 : 60;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                delay = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % typewriterTexts.length;
+                delay = 500;
+            }
+
+            setTimeout(typeWriter, delay);
+        }
+
+        typeWriter();
+
+        // ===== 数字递增计数器 =====
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const increment = target / (duration / 16);
+                    let current = 0;
+
+                    function updateCounter() {
+                        current += increment;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    }
+
+                    updateCounter();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ===== FAQ 折叠 =====
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const isActive = item.classList.contains('active');
+            // 关闭所有
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+            });
+            // 如果之前没有激活，则激活
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // ===== 3D 倾斜效果 =====
+        document.querySelectorAll('.game-card, .showcase-item, .service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // ===== 技能进度条动画 =====
+        const skillBars = document.querySelectorAll('.skill-bar .fill');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillBars.forEach(bar => skillObserver.observe(bar));
+
+        // ===== 滚动动画 =====
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -742,8 +1949,7 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.game-card, .service-card, .section-title').forEach(el => {
-            el.classList.add('fade-in');
+        document.querySelectorAll('.game-card, .service-card, .section-title, .fade-in, .fade-in-left, .fade-in-right, .neon-card, .review-card, .stat-card, .trust-card, .skill-item, .showcase-item').forEach(el => {
             observer.observe(el);
         });
     </script>
