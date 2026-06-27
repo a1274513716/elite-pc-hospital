@@ -701,6 +701,64 @@
             margin-top: 6px;
         }
 
+        /* 可点击作品卡片 */
+        .showcase-clickable {
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .showcase-clickable .showcase-item {
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .showcase-clickable:hover .showcase-item {
+            border-color: var(--primary);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(255,68,68,0.15);
+        }
+
+        .showcase-clickable:hover .showcase-img::before {
+            opacity: 1;
+        }
+
+        .showcase-item .showcase-img {
+            position: relative;
+        }
+
+        .showcase-img .play-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            z-index: 2;
+            background: rgba(255,68,68,0.9);
+            color: #fff;
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .showcase-img .coming-soon {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            z-index: 2;
+            background: rgba(136,136,136,0.7);
+            color: #ccc;
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+        }
+
         /* ===== 技能进度条 ===== */
         .skills-section {
             margin-bottom: 28px;
@@ -1423,8 +1481,8 @@
         <section class="showcase-section" id="showcase">
             <div class="neon-title">✨ 作品展示 · 宏效果预览</div>
             <div class="showcase-grid">
-                <div class="showcase-item fade-in">
-                    <div class="showcase-img">🎯</div>
+                <div class="showcase-item fade-in" style="position:relative;">
+                    <div class="showcase-img">🎯<span class="coming-soon">即将上线</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">CFHD 无后座宏</div>
                         <div class="showcase-desc">AKM/M416 全自动无后座效果演示</div>
@@ -1432,8 +1490,9 @@
                         <span class="showcase-tag">鬼跳</span>
                     </div>
                 </div>
-                <div class="showcase-item fade-in">
-                    <div class="showcase-img">🪂</div>
+                <a class="showcase-clickable" href="https://www.douyin.com/user/self?modal_id=7539338840998202639" target="_blank">
+                <div class="showcase-item fade-in" style="position:relative;">
+                    <div class="showcase-img">🪂<span class="play-badge">▶ 效果视频</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">和平精英 一键拾取</div>
                         <div class="showcase-desc">模拟手指点击拾取装备，解放双手</div>
@@ -1441,8 +1500,10 @@
                         <span class="showcase-tag">连点</span>
                     </div>
                 </div>
-                <div class="showcase-item fade-in">
-                    <div class="showcase-img">🎭</div>
+                </a>
+                <a class="showcase-clickable" href="https://www.bilibili.com/video/BV1oKSnBkEEa/" target="_blank">
+                <div class="showcase-item fade-in" style="position:relative;">
+                    <div class="showcase-img">🎭<span class="play-badge">▶ 效果视频</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">彩虹六号 全武器宏</div>
                         <div class="showcase-desc">56把武器独立压枪曲线，手感拉满</div>
@@ -1450,8 +1511,10 @@
                         <span class="showcase-tag">微调</span>
                     </div>
                 </div>
-                <div class="showcase-item fade-in">
-                    <div class="showcase-img">⚡</div>
+                </a>
+                <a class="showcase-clickable" href="https://www.bilibili.com/video/BV1oYJu6gEqg/" target="_blank">
+                <div class="showcase-item fade-in" style="position:relative;">
+                    <div class="showcase-img">⚡<span class="play-badge">▶ 效果视频</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">The Finals 武器宏</div>
                         <div class="showcase-desc">7把热门武器宏配置，开箱即用</div>
@@ -1459,8 +1522,9 @@
                         <span class="showcase-tag">连点</span>
                     </div>
                 </div>
-                <div class="showcase-item fade-in">
-                    <div class="showcase-img">🤖</div>
+                </a>
+                <div class="showcase-item fade-in" style="position:relative;">
+                    <div class="showcase-img">🤖<span class="coming-soon">即将上线</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">AI智能体部署</div>
                         <div class="showcase-desc">本地大模型部署，自定义智能体工作流</div>
@@ -1468,8 +1532,8 @@
                         <span class="showcase-tag">Dify</span>
                     </div>
                 </div>
-                <div class="showcase-item fade-in">
-                    <div class="showcase-img">🖥️</div>
+                <div class="showcase-item fade-in" style="position:relative;">
+                    <div class="showcase-img">🖥️<span class="coming-soon">即将上线</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">装机案例</div>
                         <div class="showcase-desc">线下电脑城装机实录，专业配置推荐</div>
