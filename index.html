@@ -759,6 +759,73 @@
             backdrop-filter: blur(4px);
         }
 
+        /* 视频弹窗 */
+        .video-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            animation: modal-fade 0.3s ease;
+        }
+        .video-modal.open {
+            display: flex;
+        }
+        @keyframes modal-fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .video-modal .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(255,68,68,0.3);
+            animation: modal-zoom 0.3s ease;
+        }
+        @keyframes modal-zoom {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .video-modal .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-modal .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px 10px;
+            transition: transform 0.2s;
+            z-index: 10001;
+        }
+        .video-modal .modal-close:hover {
+            transform: scale(1.2);
+            color: #ff4444;
+        }
+        @media (max-width: 600px) {
+            .video-modal .modal-content {
+                width: 96%;
+                border-radius: 8px;
+            }
+            .video-modal .modal-close {
+                top: -36px;
+                font-size: 24px;
+            }
+        }
+
         /* ===== 技能进度条 ===== */
         .skills-section {
             margin-bottom: 28px;
@@ -1483,9 +1550,8 @@
         <section class="showcase-section" id="showcase">
             <div class="neon-title">✨ 作品展示 · 宏效果预览</div>
             <div class="showcase-grid">
-                <a class="showcase-clickable" href="https://www.bilibili.com/video/BV1H6Gb6QEHE/" target="_blank">
-                <div class="showcase-item fade-in" style="position:relative;">
-                    <div class="showcase-img">🎯<span class="play-badge">▶ 效果视频</span></div>
+                <div class="showcase-item fade-in" style="position:relative;cursor:pointer;" onclick="openVideo('BV1H6Gb6QEHE');">
+                    <div class="showcase-img">🎯<span class="play-badge">▶ 点击播放</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">CFHD 无后座宏</div>
                         <div class="showcase-desc">AKM/M416 全自动无后座效果演示</div>
@@ -1493,10 +1559,8 @@
                         <span class="showcase-tag">鬼跳</span>
                     </div>
                 </div>
-                </a>
-                <a class="showcase-clickable" href="https://www.bilibili.com/video/BV1mvq5BLEbu/" target="_blank">
-                <div class="showcase-item fade-in" style="position:relative;">
-                    <div class="showcase-img">🪂<span class="play-badge">▶ 效果视频</span></div>
+                <div class="showcase-item fade-in" style="position:relative;cursor:pointer;" onclick="openVideo('BV1mvq5BLEbu');">
+                    <div class="showcase-img">🪂<span class="play-badge">▶ 点击播放</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">和平精英 一键拾取</div>
                         <div class="showcase-desc">模拟手指点击拾取装备，解放双手</div>
@@ -1504,10 +1568,8 @@
                         <span class="showcase-tag">连点</span>
                     </div>
                 </div>
-                </a>
-                <a class="showcase-clickable" href="https://www.bilibili.com/video/BV1oKSnBkEEa/" target="_blank">
-                <div class="showcase-item fade-in" style="position:relative;">
-                    <div class="showcase-img">🎭<span class="play-badge">▶ 效果视频</span></div>
+                <div class="showcase-item fade-in" style="position:relative;cursor:pointer;" onclick="openVideo('BV1oKSnBkEEa');">
+                    <div class="showcase-img">🎭<span class="play-badge">▶ 点击播放</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">彩虹六号 全武器宏</div>
                         <div class="showcase-desc">56把武器独立压枪曲线，手感拉满</div>
@@ -1515,10 +1577,8 @@
                         <span class="showcase-tag">微调</span>
                     </div>
                 </div>
-                </a>
-                <a class="showcase-clickable" href="https://www.bilibili.com/video/BV1oYJu6gEqg/" target="_blank">
-                <div class="showcase-item fade-in" style="position:relative;">
-                    <div class="showcase-img">⚡<span class="play-badge">▶ 效果视频</span></div>
+                <div class="showcase-item fade-in" style="position:relative;cursor:pointer;" onclick="openVideo('BV1oYJu6gEqg');">
+                    <div class="showcase-img">⚡<span class="play-badge">▶ 点击播放</span></div>
                     <div class="showcase-info">
                         <div class="showcase-title">The Finals 武器宏</div>
                         <div class="showcase-desc">7把热门武器宏配置，开箱即用</div>
@@ -1526,7 +1586,6 @@
                         <span class="showcase-tag">连点</span>
                     </div>
                 </div>
-                </a>
                 <div class="showcase-item fade-in" style="position:relative;">
                     <div class="showcase-img">🤖<span class="coming-soon">即将上线</span></div>
                     <div class="showcase-info">
@@ -1979,51 +2038,84 @@
                 item.classList.add('active');
             }
         }
+        <!-- 视频弹窗 -->
+        <div class="video-modal" id="videoModal" onclick="closeVideo(event);">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeVideo();">&times;</button>
+                <iframe id="videoIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </div>
 
-        // ===== 3D 倾斜效果 =====
-        document.querySelectorAll('.game-card, .showcase-item, .service-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
+        <script>
+            // 视频弹窗
+            function openVideo(bvid) {
+                const modal = document.getElementById('videoModal');
+                const iframe = document.getElementById('videoIframe');
+                iframe.src = 'https://player.bilibili.com/player.html?bvid=' + bvid + '&autoplay=1&muted=false&high_quality=1';
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
 
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-            });
+            function closeVideo(e) {
+                if (e && e.target !== e.currentTarget) return;
+                const modal = document.getElementById('videoModal');
+                const iframe = document.getElementById('videoIframe');
+                iframe.src = '';
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
 
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-            });
-        });
-
-        // ===== 技能进度条动画 =====
-        const skillBars = document.querySelectorAll('.skill-bar .fill');
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    skillObserver.unobserve(entry.target);
+            // ESC键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeVideo();
                 }
             });
-        }, { threshold: 0.5 });
 
-        skillBars.forEach(bar => skillObserver.observe(bar));
+            // ===== 3D 倾斜效果 =====
+            document.querySelectorAll('.game-card, .showcase-item, .service-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
 
-        // ===== 滚动动画 =====
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                    card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-2px)';
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
             });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.game-card, .service-card, .section-title, .fade-in, .fade-in-left, .fade-in-right, .neon-card, .review-card, .stat-card, .trust-card, .skill-item, .showcase-item').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+            // ===== 技能进度条动画 =====
+            const skillBars = document.querySelectorAll('.skill-bar .fill');
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        skillObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            skillBars.forEach(bar => skillObserver.observe(bar));
+
+            // ===== 滚动动画 =====
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.game-card, .service-card, .section-title, .fade-in, .fade-in-left, .fade-in-right, .neon-card, .review-card, .stat-card, .trust-card, .skill-item, .showcase-item').forEach(el => {
+                observer.observe(el);
+            });
+        </script>
+        </body>
+        </html>
