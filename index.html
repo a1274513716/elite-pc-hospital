@@ -865,7 +865,35 @@
         .float-bar .item:hover .label { color: rgba(255,255,255,0.7); }
 
         @media (max-width: 600px) {
-            .float-bar { display: none; }
+            .float-bar {
+                bottom: 0;
+                top: auto;
+                right: 0;
+                left: 0;
+                transform: none;
+                flex-direction: row;
+                gap: 0;
+                border-top: 1px solid #ff1744;
+                background: rgba(10,10,15,0.95);
+                backdrop-filter: blur(10px);
+            }
+            .float-bar .item {
+                flex: 1;
+                border: none;
+                border-radius: 0;
+                padding: 8px 10px;
+                min-width: 0;
+                text-align: center;
+            }
+            .float-bar .item:hover {
+                transform: none;
+            }
+            .float-bar .item .label {
+                font-size: 9px;
+            }
+            .float-bar .item .num {
+                font-size: 13px;
+            }
         }
 
         /* ===== 回到顶部 ===== */
