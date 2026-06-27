@@ -475,11 +475,20 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .work-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+            z-index: 1;
         }
 
         .work-thumb-icon {
-            font-size: 48px;
-            opacity: 0.8;
+            display: none;
         }
 
         .work-play-btn {
@@ -493,6 +502,7 @@
             justify-content: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(255, 23, 68, 0.5);
+            z-index: 2;
         }
 
         .work-play-btn::after {
@@ -1285,8 +1295,7 @@
         </div>
         <div class="works-grid">
             <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1H6Gb6QEHE&autoplay=0')">
-                <div class="work-thumb">
-                    <span class="work-thumb-icon">💥</span>
+                <div class="work-thumb" style="background-image: url('https://i0.hdslb.com/bfs/archive/b0ad9c947537bcf592924809526b06158892798c.jpg');">
                     <div class="work-play-btn"></div>
                 </div>
                 <div class="work-info">
@@ -1295,8 +1304,7 @@
                 </div>
             </div>
             <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1mvq5BLEbu&autoplay=0')">
-                <div class="work-thumb">
-                    <span class="work-thumb-icon">🎖️</span>
+                <div class="work-thumb" style="background-image: url('https://i0.hdslb.com/bfs/archive/4b2e613490df0decd9eea0ed64392204435c30d9.jpg');">
                     <div class="work-play-btn"></div>
                 </div>
                 <div class="work-info">
@@ -1305,8 +1313,7 @@
                 </div>
             </div>
             <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1oKSnBkEEa&autoplay=0')">
-                <div class="work-thumb">
-                    <span class="work-thumb-icon">🎯</span>
+                <div class="work-thumb" style="background-image: url('https://i2.hdslb.com/bfs/archive/92e61dc01fcd66797fc92f97fe6e27c9439c2356.jpg');">
                     <div class="work-play-btn"></div>
                 </div>
                 <div class="work-info">
@@ -1315,8 +1322,7 @@
                 </div>
             </div>
             <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1oYJu6gEqg&autoplay=0')">
-                <div class="work-thumb">
-                    <span class="work-thumb-icon">🏆</span>
+                <div class="work-thumb" style="background-image: url('https://i1.hdslb.com/bfs/archive/8e4ec15f84966941cd4cbb09db31d366d69a9832.jpg');">
                     <div class="work-play-btn"></div>
                 </div>
                 <div class="work-info">
