@@ -806,6 +806,58 @@
             color: var(--accent-red);
         }
 
+        /* ===== 全局悬浮QQ栏 ===== */
+        .float-bar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .float-bar .item {
+            background: #12121a;
+            border: 1px solid #ff1744;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            padding: 10px 16px 10px 12px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            min-width: 90px;
+        }
+
+        .float-bar .item:hover {
+            background: #ff1744;
+            transform: translateX(-4px);
+        }
+
+        .float-bar .item .label {
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 2px;
+        }
+
+        .float-bar .item .num {
+            font-size: 16px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .float-bar .item-qq .num { color: #ff1744; }
+        .float-bar .item-group .num { color: #ffd600; }
+        .float-bar .item:hover .num { color: #fff; }
+        .float-bar .item:hover .label { color: rgba(255,255,255,0.7); }
+
+        @media (max-width: 600px) {
+            .float-bar { display: none; }
+        }
+
         /* ===== 回到顶部 ===== */
         .back-to-top {
             position: fixed;
@@ -1448,7 +1500,7 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>主要支持血手、罗技、雷蛇等主流游戏鼠标。部分产品也支持全鼠标适配。具体请咨询QQ客服。</p>
+                    <p>全鼠标通用！不管你是血手、罗技、雷蛇、赛睿、卓威、达尔优，还是几十块的普通游戏鼠标，只要你有侧键，我就能给你做宏。插上就能用，不挑设备。不确定的话QQ报鼠标型号我直接告诉你能不能做。</p>
                 </div>
             </div>
             <div class="faq-item reveal">
@@ -1457,7 +1509,7 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>我们的产品经过精心调试，模拟人类操作轨迹，极大降低被检测的风险。但我们建议您合理游戏，切勿过度使用。</p>
+                    <p>我们的产品经过精心调试，模拟人类操作轨迹，极大降低被检测的风险。肆意奔放就完事了！</p>
                 </div>
             </div>
             <div class="faq-item reveal">
@@ -1541,6 +1593,18 @@
             </p>
         </div>
     </footer>
+
+    <!-- 全局悬浮QQ栏 -->
+    <div class="float-bar">
+        <a class="item item-qq" href="tencent://message/?uin=1274513716&Site=qq&Menu=yes" target="_blank">
+            <div class="label">私人QQ</div>
+            <div class="num">1274513716</div>
+        </a>
+        <a class="item item-group" href="https://qm.qq.com/cgi-bin/qm/qr?k=&noverify=true&uin=946408366" target="_blank">
+            <div class="label">QQ群</div>
+            <div class="num">946408366</div>
+        </a>
+    </div>
 
     <!-- 回到顶部 -->
     <button class="back-to-top" id="backToTop" aria-label="回到顶部">
