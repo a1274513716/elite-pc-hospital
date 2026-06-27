@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://a1274513716.github.io/elite-pc-hospital/sitemap.xml
