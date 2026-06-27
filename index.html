@@ -1397,22 +1397,22 @@
         <section class="stats-section fade-in" id="stats">
             <div class="stat-card">
                 <div class="stat-icon">🎮</div>
-                <div class="stat-number"><span class="counter" data-target="9">0</span>+</div>
+                <div class="stat-number"><span class="counter" data-target="9">9</span>+</div>
                 <div class="stat-label">支持游戏</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🔫</div>
-                <div class="stat-number"><span class="counter" data-target="200">0</span>+</div>
+                <div class="stat-number"><span class="counter" data-target="200">200</span>+</div>
                 <div class="stat-label">武器宏</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">⭐</div>
-                <div class="stat-number"><span class="counter" data-target="100">0</span>%</div>
+                <div class="stat-number"><span class="counter" data-target="100">100</span>%</div>
                 <div class="stat-label">好评率</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📦</div>
-                <div class="stat-number"><span class="counter" data-target="500">0</span>+</div>
+                <div class="stat-number"><span class="counter" data-target="500">500</span>+</div>
                 <div class="stat-label">服务客户</div>
             </div>
         </section>
@@ -2006,6 +2006,7 @@
                     const duration = 2000;
                     const increment = target / (duration / 16);
                     let current = 0;
+                    counter.textContent = '0';
 
                     function updateCounter() {
                         current += increment;
