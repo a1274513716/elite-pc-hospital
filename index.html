@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李大爷· 游戏宏定制</title>
+    <title>李大爷鼠标宏科技· 游戏宏定制</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -54,7 +54,58 @@
 
         .container { max-width: 860px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
-        /* Sticky float contact button */
+        /* Float contact bar - always visible */
+    .float-bar {
+        position: fixed;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .float-bar .item {
+        background: #1a1a2e;
+        border: 1px solid #ff4444;
+        border-right: none;
+        border-radius: 10px 0 0 10px;
+        padding: 10px 16px 10px 12px;
+        text-align: center;
+        transition: all 0.3s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .float-bar .item:hover {
+        background: #ff4444;
+        transform: translateX(-4px);
+    }
+
+    .float-bar .item .label {
+        font-size: 10px;
+        color: #888;
+        margin-bottom: 2px;
+    }
+
+    .float-bar .item .num {
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+
+    .float-bar .item-qq .num { color: #ff4444; }
+    .float-bar .item-group .num { color: #ff8800; }
+    .float-bar .item:hover .num { color: #fff; }
+    .float-bar .item:hover .label { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 600px) {
+        .float-bar { display: none; }
+    }
+
+    /* Sticky float contact button */
         .float-contact {
             position: fixed;
             bottom: 30px; right: 30px;
@@ -436,6 +487,18 @@
         <span></span><span></span><span></span><span></span><span></span>
     </div>
 
+    <!-- Float QQ Bar -->
+    <div class="float-bar">
+        <a class="item item-qq" href="tencent://message/?uin=1274513716&Site=qq&Menu=yes" target="_blank">
+            <div class="label">私人QQ</div>
+            <div class="num">1274513716</div>
+        </a>
+        <a class="item item-group" href="https://qm.qq.com/cgi-bin/qm/qr?k=&noverify=true&uin=946408366" target="_blank">
+            <div class="label">QQ群</div>
+            <div class="num">946408366</div>
+        </a>
+    </div>
+
     <!-- Float Contact -->
     <a class="float-contact" href="tencent://message/?uin=1274513716&Site=qq&Menu=yes" target="_blank">💬</a>
     <div class="float-contact-tooltip">📩 QQ询价</div>
@@ -444,7 +507,7 @@
         <!-- Hero -->
         <div class="hero">
             <div class="logo">⚡</div>
-            <h1>李大爷</h1>
+            <h1>李大爷鼠标宏科技</h1>
             <div class="subtitle">血手幽灵 / 罗技 游戏宏定制 · 电脑装机 · 视频VIP · AI智能体部署</div>
             <div class="tags">
                 <span class="tag-red">🏆 资深图吧元老</span>
@@ -652,7 +715,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <div>李大爷 · 专业诚信 · 快捷经济</div>
+            <div>李大爷鼠标宏科技 · 专业诚信 · 快捷经济</div>
             <div style="margin-top:6px;">📱 QQ: 1274513716大的爷</div>
             <div class="hash-tags">
                 <span>#游戏宏</span>
