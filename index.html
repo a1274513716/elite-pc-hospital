@@ -164,13 +164,20 @@
             position: relative;
             overflow: hidden;
             background: #111111;
-            background-image: url('https://game.gtimg.cn/images/gp/web202411/sec2-banner1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: normal;
         }
 
         .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            display: none;
+        }
+
+        .hero-bg-img {
             position: absolute;
             top: 0;
             left: 0;
@@ -805,12 +812,17 @@
         // 微信浏览器强制置顶（微信会自动恢复滚动位置，必须多重兜底）
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         !function() {
-            // 微信隐藏视频（DOM加载后执行）
+            // UA检测：微信显示图片，非微信显示视频
             document.addEventListener('DOMContentLoaded', function() {
-                var ua = navigator.userAgent.toLowerCase();
-                if (ua.indexOf('micromessenger') !== -1) {
-                    var v = document.querySelector('.hero-bg-video');
-                    if (v) v.style.display = 'none';
+                var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+                var img = document.querySelector('.hero-bg-img');
+                var vid = document.querySelector('.hero-bg-video');
+                if (isWeChat) {
+                    if (img) img.style.display = 'block';
+                    if (vid) vid.style.display = 'none';
+                } else {
+                    if (img) img.style.display = 'none';
+                    if (vid) { vid.style.display = 'block'; vid.play().catch(function(){}); }
                 }
             });
             var t = function() { window.scrollTo(0, 0); };
@@ -856,8 +868,10 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <img class="hero-bg-img"
+            src="https://game.gtimg.cn/images/gp/web202411/sec2-banner1.jpg"
+            alt="">
         <video class="hero-bg-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
-            poster="https://game.gtimg.cn/images/gp/web202411/sec2-banner1.jpg"
             src="https://gp.lv.game.qq.com/dis_kt_0cb737859f8a4f34a99c9843a2900247_1776064763/0b53eac5qaafteaeatwzwru6eigd3aqalwaa.f0.mp4">
         </video>
         <div class="hero-overlay"></div>
