@@ -1187,7 +1187,7 @@
             { game: '彩虹六号', item: '全套', price: 368 },
             { game: 'CFHD', item: '全套', price: 288 },
             { game: '和平精英', item: '全套', price: 328 },
-            { game: '电脑装机', item: '全套主机', price: 2899 },
+            { game: '电脑装机', item: '全套主机', price: 0 }, // price在生成时随机
             { game: '鼠标参数', item: '深度定制', price: 68 },
             { game: '本地模型', item: '部署服务', price: 588 },
             { game: 'The Finals', item: '全套', price: 268 },
@@ -1209,12 +1209,19 @@
         function makeTradeHTML() {
             const t = TRADES[Math.floor(Math.random() * TRADES.length)];
             const phone = genPhone();
-            return `<li class="trade-item" style="animation: fadeInItem 0.5s ease">用户 <span class="highlight">${phone}</span> 购买${t.game} ${t.item} <span class="price">¥${t.price}</span></li>`;
+            const price = t.price || (1999 + Math.floor(Math.random() * 18001));
+            return `<li class="trade-item" style="animation: fadeInItem 0.5s ease">用户 <span class="highlight">${phone}</span> 购买${t.game} ${t.item} <span class="price">¥${price}</span></li>`;
+        }
+
+        function makeMarqueeHTML() {
+            const t = TRADES[Math.floor(Math.random() * TRADES.length)];
+            const phone = genPhone();
+            const price = t.price || (1999 + Math.floor(Math.random() * 18001));
+            return '<span>📢 用户 <span class="m-highlight">' + phone + '</span> 购买' + t.game + ' ' + t.item + ' <span class="m-price">¥' + price + '</span></span>';
         }
 
         (function initTrades() {
             const list = document.getElementById('tradeList');
-            // 初始填充10条
             for (let i = 0; i < 10; i++) {
                 list.innerHTML += makeTradeHTML();
             }
@@ -1243,11 +1250,8 @@
             if (!inner) return;
             var html = '';
             for (var i = 0; i < 15; i++) {
-                var t = TRADES[Math.floor(Math.random() * TRADES.length)];
-                var phone = genPhone();
-                html += '<span>📢 用户 <span class="m-highlight">' + phone + '</span> 购买' + t.game + ' ' + t.item + ' <span class="m-price">¥' + t.price + '</span></span>';
+                html += makeMarqueeHTML();
             }
-            // 双倍实现无缝滚动
             inner.innerHTML = html + html;
         })();
     </script>
