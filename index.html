@@ -1037,19 +1037,7 @@
     <!-- 不蒜子统计 -->
     <script>
         (function() {
-            // localStorage 兜底计数（任何浏览器都能用）
             var el = document.getElementById('busuanzi_value_site_pv');
-            var localKey = 'ldy_pv';
-            var localCount = localStorage.getItem(localKey);
-            if (!localCount) {
-                localCount = Math.floor(Math.random() * 50) + 30;
-            } else {
-                localCount = parseInt(localCount) + 1;
-            }
-            localStorage.setItem(localKey, localCount);
-            if (el) el.textContent = localCount;
-
-            // 再尝试从API获取真实数（QQ/微信正常）
             try {
                 var cb = 'bsz_' + Date.now();
                 window[cb] = function(d) {
@@ -1060,7 +1048,9 @@
                 var s = document.createElement('script');
                 s.src = 'https://busuanzi.ibruce.info/busuanzi?jsonpCallback=' + cb;
                 document.head.appendChild(s);
-            } catch(e) {}
+            } catch(e) {
+                if (el) el.textContent = '--';
+            }
         })();
     </script>
 
