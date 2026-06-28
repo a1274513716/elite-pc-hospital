@@ -517,6 +517,84 @@
             box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
         }
 
+        /* 10. Transaction Scroll (Left Side) */
+        .trade-scroll {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 998;
+            width: 220px;
+            max-height: 420px;
+            overflow: hidden;
+            background: linear-gradient(90deg, rgba(255,23,68,0.12) 0%, rgba(17,17,17,0.9) 100%);
+            border-right: 2px solid var(--accent-red);
+            border-top: 2px solid rgba(255,23,68,0.3);
+            border-bottom: 2px solid rgba(255,23,68,0.3);
+            border-radius: 0 16px 16px 0;
+            padding: 16px;
+            backdrop-filter: blur(20px);
+            box-shadow: 4px 0 30px rgba(255,23,68,0.15);
+        }
+
+        .trade-scroll-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-red);
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,23,68,0.2);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .trade-scroll-header .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        .trade-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            animation: scrollUp 12s linear infinite;
+        }
+
+        .trade-list:hover {
+            animation-play-state: paused;
+        }
+
+        .trade-item {
+            font-size: 12px;
+            color: var(--text-sub);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            line-height: 1.5;
+            white-space: nowrap;
+        }
+
+        .trade-item .highlight {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .trade-item .price {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
         /* 10. Footer */
         footer {
             border-top: 1px solid rgba(255,255,255,0.05);
@@ -626,6 +704,7 @@
                 border-radius: 0;
                 padding: 12px;
             }
+            .trade-scroll { display: none; }
         }
     </style>
 </head>
@@ -996,6 +1075,15 @@
         </div>
     </footer>
 
+    <!-- Floating Transaction Scroll -->
+    <div class="trade-scroll">
+        <div class="trade-scroll-header">
+            <span class="dot"></span>
+            📢 实时成交
+        </div>
+        <ul class="trade-list" id="tradeList"></ul>
+    </div>
+
     <!-- Floating QQ Bar -->
     <a href="https://wpa.qq.com/msgrd?v=3&uin=1274513716&site=qq&menu=yes" class="float-qq" target="_blank">
         💬 立即咨询 QQ: 1274513716
@@ -1072,6 +1160,52 @@
                 `${document.getElementById('busuanzi_value_site_pv')} 次浏览`;
         };
         document.head.appendChild(script);
+
+        // Trade Scroll - 实时成交记录
+        const TRADES = [
+            { game: '彩虹六号', item: '全套', price: 368 },
+            { game: 'CFHD', item: '28把全武器', price: 288 },
+            { game: '和平精英', item: '26幽灵宏', price: 328 },
+            { game: 'The Finals', item: '7把热门武器', price: 268 },
+            { game: '高能英雄', item: '15+武器', price: 298 },
+            { game: '生死狙击2', item: '全套', price: 198 },
+            { game: 'AVA', item: '四服通用', price: 258 },
+            { game: '三角洲行动', item: '血手全套', price: 328 },
+            { game: '界外狂潮', item: '全鼠标全套', price: 298 },
+            { game: 'CFHD', item: '瞬狙+鬼跳', price: 168 },
+            { game: '彩虹六号', item: '突击步枪包', price: 228 },
+            { game: '和平精英', item: '一键拾取', price: 128 },
+            { game: '电脑装机', item: 'i5主机配置', price: 2899 },
+            { game: '鼠标参数', item: 'DPI深度定制', price: 68 },
+            { game: '本地模型', item: 'AI部署服务', price: 588 },
+            { game: 'The Finals', item: 'AK47+FCAR', price: 198 },
+            { game: 'AVA', item: '无后座+瞬狙', price: 228 },
+            { game: '界外狂潮', item: '全套宏', price: 268 },
+            { game: '高能英雄', item: '冲锋枪包', price: 198 },
+            { game: '视频VIP', item: '全平台年卡', price: 168 },
+        ];
+
+        function genPhone() {
+            let p = '1';
+            const prefixes = ['38', '35', '36', '58', '59', '50', '37', '39', '30', '31'];
+            p += prefixes[Math.floor(Math.random() * prefixes.length)];
+            for (let i = 0; i < 4; i++) p += Math.floor(Math.random() * 10);
+            p += 'xxxx';
+            return p;
+        }
+
+        function genTrades(count) {
+            const list = document.getElementById('tradeList');
+            const items = [];
+            for (let i = 0; i < count; i++) {
+                const t = TRADES[Math.floor(Math.random() * TRADES.length)];
+                items.push(`<li class="trade-item">用户 <span class="highlight">${genPhone()}</span> 购买${t.game} ${t.item} <span class="price">¥${t.price}</span></li>`);
+            }
+            // 双倍数量实现无缝滚动
+            list.innerHTML = items.join('') + items.join('');
+        }
+
+        genTrades(20);
     </script>
 </body>
 </html>
