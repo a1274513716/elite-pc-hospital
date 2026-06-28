@@ -524,15 +524,11 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 998;
-            width: 220px;
+            width: 310px;
             max-height: 420px;
-            overflow: hidden;
             background: linear-gradient(90deg, rgba(255,23,68,0.12) 0%, rgba(17,17,17,0.9) 100%);
-            border-right: 2px solid var(--accent-red);
-            border-top: 2px solid rgba(255,23,68,0.3);
-            border-bottom: 2px solid rgba(255,23,68,0.3);
             border-radius: 0 16px 16px 0;
-            padding: 16px;
+            padding: 14px 16px;
             backdrop-filter: blur(20px);
             box-shadow: 4px 0 30px rgba(255,23,68,0.15);
         }
@@ -542,14 +538,17 @@
             font-weight: 700;
             color: var(--accent-red);
             text-align: center;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px solid rgba(255,23,68,0.2);
-            margin-bottom: 12px;
+            margin-bottom: 6px;
             letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            position: sticky;
+            top: 0;
+            background: rgba(17,17,17,0.95);
         }
 
         .trade-scroll-header .dot {
@@ -560,11 +559,16 @@
             animation: blink 1.5s infinite;
         }
 
+        .trade-list-wrap {
+            overflow: hidden;
+            max-height: 340px;
+        }
+
         .trade-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            animation: scrollUp 12s linear infinite;
+            animation: scrollUp 20s linear infinite;
         }
 
         .trade-list:hover {
@@ -574,10 +578,9 @@
         .trade-item {
             font-size: 12px;
             color: var(--text-sub);
-            padding: 8px 0;
+            padding: 7px 0;
             border-bottom: 1px solid rgba(255,255,255,0.04);
-            line-height: 1.5;
-            white-space: nowrap;
+            line-height: 1.6;
         }
 
         .trade-item .highlight {
@@ -1079,9 +1082,11 @@
     <div class="trade-scroll">
         <div class="trade-scroll-header">
             <span class="dot"></span>
-            📢 实时成交
+            📢 今日交易
         </div>
-        <ul class="trade-list" id="tradeList"></ul>
+        <div class="trade-list-wrap">
+            <ul class="trade-list" id="tradeList"></ul>
+        </div>
     </div>
 
     <!-- Floating QQ Bar -->
