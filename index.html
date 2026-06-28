@@ -1034,8 +1034,21 @@
         </div>
     </footer>
 
-    <!-- 不蒜子统计 -->
-    <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <!-- 不蒜子统计 - 直接JSONP调用 -->
+    <script>
+        (function() {
+            var cb = 'bsz_' + Date.now();
+            window[cb] = function(d) {
+                var el = document.getElementById('busuanzi_value_site_pv');
+                if (el && d && d.site_uv) {
+                    el.textContent = d.site_uv;
+                }
+            };
+            var s = document.createElement('script');
+            s.src = 'https://busuanzi.ibruce.info/busuanzi?jsonpCallback=' + cb;
+            document.head.appendChild(s);
+        })();
+    </script>
 
     <!-- Floating Transaction Scroll -->
     <div class="trade-scroll">
