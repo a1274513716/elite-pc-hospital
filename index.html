@@ -605,6 +605,102 @@
             to { opacity: 0; }
         }
 
+        /* 11. Slogan Animation Section */
+        .slogan-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent 0%, rgba(255,23,68,0.03) 50%, transparent 100%);
+        }
+
+        .slogan-container {
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .slogan-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 48px;
+            opacity: 0;
+        }
+
+        .slogan-row.visible {
+            animation: sloganReveal 0.6s ease forwards;
+        }
+
+        .slogan-char {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-red), #ff6e40);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: scale(0.5);
+            min-width: 48px;
+            display: inline-block;
+        }
+
+        .slogan-row.visible .slogan-char {
+            animation: charPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .slogan-eq {
+            font-size: 28px;
+            color: var(--text-dim);
+            opacity: 0;
+        }
+
+        .slogan-row.visible .slogan-eq {
+            animation: fadeIn 0.3s ease 0.3s forwards;
+        }
+
+        .slogan-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            opacity: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .slogan-row.visible .slogan-desc {
+            animation: fadeIn 0.4s ease 0.5s forwards;
+        }
+
+        .slogan-desc .highlight-gold {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .slogan-desc .highlight-red {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        @keyframes sloganReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes charPop {
+            0% { opacity: 0; transform: scale(0.5); }
+            60% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         /* 10. Footer */
         footer {
             border-top: 1px solid rgba(255,255,255,0.05);
@@ -765,6 +861,27 @@
         <div class="hero-btns fade-in">
             <a href="#games" class="btn btn-primary">浏览游戏宏</a>
             <a href="#contact" class="btn btn-outline">联系我们</a>
+        </div>
+    </section>
+
+    <!-- Slogan Animation -->
+    <section class="slogan-section">
+        <div class="slogan-container" id="sloganContainer">
+            <div class="slogan-row" id="slogan1">
+                <span class="slogan-char">稳</span>
+                <span class="slogan-eq">＝</span>
+                <span class="slogan-desc"><span class="highlight-gold">不封号</span> · 用着放心</span>
+            </div>
+            <div class="slogan-row" id="slogan2">
+                <span class="slogan-char">全</span>
+                <span class="slogan-eq">＝</span>
+                <span class="slogan-desc"><span class="highlight-gold">全鼠标全游戏</span> · 不挑设备</span>
+            </div>
+            <div class="slogan-row" id="slogan3">
+                <span class="slogan-char">快</span>
+                <span class="slogan-eq">＝</span>
+                <span class="slogan-desc"><span class="highlight-gold">售后快更新快</span> · 秒回不拖</span>
+            </div>
         </div>
     </section>
 
@@ -1236,6 +1353,42 @@
                 }
             }, 4000 + Math.random() * 4000);
         })();
+
+        // Slogan Animation - 逐条弹出
+        function animateSlogan() {
+            const rows = [
+                document.getElementById('slogan1'),
+                document.getElementById('slogan2'),
+                document.getElementById('slogan3')
+            ];
+            let idx = 0;
+            function showNext() {
+                if (idx >= rows.length) {
+                    // 全部播完后停顿，循环
+                    setTimeout(() => {
+                        rows.forEach(r => r.classList.remove('visible'));
+                        idx = 0;
+                        setTimeout(showNext, 300);
+                    }, 3000);
+                    return;
+                }
+                rows[idx].classList.add('visible');
+                idx++;
+                setTimeout(showNext, 1200);
+            }
+            // 使用IntersectionObserver，滚动到可视区域才触发
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(showNext, 400);
+                        observer.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+            const container = document.getElementById('sloganContainer');
+            if (container) observer.observe(container);
+        }
+        animateSlogan();
     </script>
 </body>
 </html>
