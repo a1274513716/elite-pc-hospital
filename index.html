@@ -568,11 +568,8 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            animation: scrollUp 20s linear infinite;
-        }
-
-        .trade-list:hover {
-            animation-play-state: paused;
+            display: flex;
+            flex-direction: column;
         }
 
         .trade-item {
@@ -596,6 +593,16 @@
         @keyframes scrollUp {
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); }
+        }
+
+        @keyframes fadeInItem {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOutItem {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
 
         /* 10. Footer */
@@ -1166,7 +1173,7 @@
         };
         document.head.appendChild(script);
 
-        // Trade Scroll - 实时成交记录
+        // Trade Scroll - 实时成交记录（动态追加）
         const TRADES = [
             { game: '彩虹六号', item: '全套', price: 368 },
             { game: 'CFHD', item: '28把全武器', price: 288 },
@@ -1199,18 +1206,36 @@
             return p;
         }
 
-        function genTrades(count) {
-            const list = document.getElementById('tradeList');
-            const items = [];
-            for (let i = 0; i < count; i++) {
-                const t = TRADES[Math.floor(Math.random() * TRADES.length)];
-                items.push(`<li class="trade-item">用户 <span class="highlight">${genPhone()}</span> 购买${t.game} ${t.item} <span class="price">¥${t.price}</span></li>`);
-            }
-            // 双倍数量实现无缝滚动
-            list.innerHTML = items.join('') + items.join('');
+        function makeTradeHTML() {
+            const t = TRADES[Math.floor(Math.random() * TRADES.length)];
+            const phone = genPhone();
+            return `<li class="trade-item" style="animation: fadeInItem 0.5s ease">用户 <span class="highlight">${phone}</span> 购买${t.game} ${t.item} <span class="price">¥${t.price}</span></li>`;
         }
 
-        genTrades(20);
+        (function initTrades() {
+            const list = document.getElementById('tradeList');
+            // 初始填充10条
+            for (let i = 0; i < 10; i++) {
+                list.innerHTML += makeTradeHTML();
+            }
+            // 每4-8秒追加一条新成交到顶部
+            setInterval(() => {
+                const first = list.firstElementChild;
+                if (first) {
+                    // 旧记录滑出效果
+                    first.style.animation = 'fadeOutItem 0.5s ease';
+                    setTimeout(() => {
+                        if (first.parentNode) first.remove();
+                    }, 500);
+                }
+                // 新记录插到顶部
+                list.innerHTML = makeTradeHTML() + list.innerHTML;
+                // 控制列表长度不超过15条
+                while (list.children.length > 15) {
+                    list.lastElementChild.remove();
+                }
+            }, 4000 + Math.random() * 4000);
+        })();
     </script>
 </body>
 </html>
