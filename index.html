@@ -228,53 +228,6 @@
             margin-top: 4px;
         }
 
-        /* Hero区右下角slogan */
-        .hero-slogan {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 8px;
-            margin-bottom: 12px;
-        }
-
-        .hero-slogan-item {
-            font-size: 15px;
-            color: var(--text-sub);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            opacity: 0;
-            animation: sloganFadeIn 0.5s ease forwards;
-        }
-
-        .hero-slogan-item:nth-child(1) { animation-delay: 0.3s; }
-        .hero-slogan-item:nth-child(2) { animation-delay: 0.8s; }
-        .hero-slogan-item:nth-child(3) { animation-delay: 1.3s; }
-
-        .hero-slogan-item .s-char {
-            font-size: 20px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent-red), #ff6e40);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-slogan-item .s-eq {
-            color: var(--accent-gold);
-            font-weight: 600;
-        }
-
-        .hero-slogan-item .s-desc {
-            color: var(--text-secondary);
-        }
-
-        @keyframes sloganFadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .hero-btns {
             display: flex;
             gap: 16px;
@@ -787,11 +740,6 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <h1 class="fade-in">李大爷鼠标宏科技</h1>
-        <div class="hero-slogan fade-in">
-            <span class="hero-slogan-item"><span class="s-char">稳</span><span class="s-eq">＝</span><span class="s-desc">不封号 · 用着放心</span></span>
-            <span class="hero-slogan-item"><span class="s-char">全</span><span class="s-eq">＝</span><span class="s-desc">全鼠标全游戏 · 不挑设备</span></span>
-            <span class="hero-slogan-item"><span class="s-char">快</span><span class="s-eq">＝</span><span class="s-desc">售后快更新快 · 秒回不拖</span></span>
-        </div>
         <h2 class="fade-in">专业游戏宏解决方案</h2>
         <div class="hero-tags fade-in">
             <span>🎯 精准稳定</span>
