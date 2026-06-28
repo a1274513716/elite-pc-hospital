@@ -154,6 +154,8 @@
         /* 2. Hero Section */
         .hero {
             height: 100vh;
+            height: 100dvh;
+            min-height: 600px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -1039,6 +1041,12 @@
 
     <!-- Scripts -->
     <script>
+        // 确保页面从顶部开始
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         // Intersection Observer for fade-in
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
