@@ -1405,30 +1405,39 @@
             }
         }
 
-        // 滚动到游戏区时自动展开
+        // 滚动控制：首页收起喇叭，滚到游戏区自动展开，回到首页自动收起
         (function() {
             var panel = document.getElementById('tradeScroll');
             var horn = document.getElementById('tradeHorn');
             var gamesSec = document.getElementById('games');
-            if (!panel || !gamesSec) return;
-            var autoShown = false;
+            var heroSec = document.getElementById('home');
+            if (!panel || !gamesSec || !heroSec) return;
+            var userExpanded = false;
             window.addEventListener('scroll', function() {
-                if (autoShown) return;
-                var rect = gamesSec.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    autoShown = true;
+                var heroRect = heroSec.getBoundingClientRect();
+                var gamesRect = gamesSec.getBoundingClientRect();
+                var heroVisible = heroRect.bottom > 0;
+                // 如果用户手动展开过，不再自动控制
+                if (userExpanded) return;
+                if (heroVisible) {
+                    // 在首页范围 → 收起
+                    panel.classList.add('collapsed');
+                    panel.classList.remove('expanded');
+                    horn.classList.add('visible');
+                } else if (gamesRect.top < window.innerHeight) {
+                    // 滚到游戏区 → 展开
                     panel.classList.remove('collapsed');
                     panel.classList.add('expanded');
                     horn.classList.remove('visible');
                 }
             });
-            // 如果初始就在游戏区下面（比如直接刷到评论区）
-            var rect = gamesSec.getBoundingClientRect();
-            if (rect.top < window.innerHeight) {
-                panel.classList.remove('collapsed');
-                panel.classList.add('expanded');
-                horn.classList.remove('visible');
-            }
+            // 初始状态：在首页收起
+            panel.classList.add('collapsed');
+            panel.classList.remove('expanded');
+            horn.classList.add('visible');
+            // 用户手动点过展开后，不再自动控制
+            panel.onclick = function() { userExpanded = true; };
+            horn.onclick = function() { userExpanded = true; };
         })();
     </script>
 </body>
