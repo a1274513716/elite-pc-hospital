@@ -802,6 +802,12 @@
         // 微信浏览器强制置顶（微信会自动恢复滚动位置，必须多重兜底）
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         !function() {
+            // 微信浏览器隐藏视频（微信不支持自动播放，显示CSS背景图兜底）
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf('micromessenger') !== -1) {
+                var v = document.querySelector('.hero-bg-video');
+                if (v) v.style.display = 'none';
+            }
             var t = function() { window.scrollTo(0, 0); };
             t();
             document.addEventListener('DOMContentLoaded', t);
