@@ -596,6 +596,54 @@
             padding: 14px 16px;
             backdrop-filter: blur(20px);
             box-shadow: 4px 0 30px rgba(255,23,68,0.15);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+
+        .trade-scroll.collapsed {
+            transform: translateY(-50%) translateX(-280px);
+            opacity: 0.3;
+            cursor: pointer;
+        }
+
+        .trade-scroll.collapsed:hover {
+            opacity: 0.8;
+        }
+
+        .trade-scroll.expanded {
+            transform: translateY(-50%) translateX(0);
+            opacity: 1;
+        }
+
+        /* 小喇叭按钮（折叠时显示） */
+        .trade-horn {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            width: 36px;
+            height: 60px;
+            background: var(--accent-red);
+            border-radius: 0 10px 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 4px 0 15px rgba(255,23,68,0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .trade-horn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .trade-horn:hover {
+            width: 42px;
+            box-shadow: 4px 0 25px rgba(255,23,68,0.5);
         }
 
         .trade-scroll-header {
@@ -1179,8 +1227,11 @@
         }
     </script>
 
+    <!-- 小喇叭（折叠时显示） -->
+    <div class="trade-horn" id="tradeHorn" onclick="toggleTrade()">📢</div>
+
     <!-- Floating Transaction Scroll -->
-    <div class="trade-scroll">
+    <div class="trade-scroll collapsed" id="tradeScroll" onclick="toggleTrade()">
         <div class="trade-scroll-header">
             <span class="dot"></span>
             📢 今日交易
@@ -1337,6 +1388,47 @@
                 html += makeMarqueeHTML();
             }
             inner.innerHTML = html + html;
+        })();
+
+        // 交易面板折叠/展开
+        function toggleTrade() {
+            var panel = document.getElementById('tradeScroll');
+            var horn = document.getElementById('tradeHorn');
+            if (panel.classList.contains('collapsed')) {
+                panel.classList.remove('collapsed');
+                panel.classList.add('expanded');
+                horn.classList.remove('visible');
+            } else {
+                panel.classList.add('collapsed');
+                panel.classList.remove('expanded');
+                horn.classList.add('visible');
+            }
+        }
+
+        // 滚动到游戏区时自动展开
+        (function() {
+            var panel = document.getElementById('tradeScroll');
+            var horn = document.getElementById('tradeHorn');
+            var gamesSec = document.getElementById('games');
+            if (!panel || !gamesSec) return;
+            var autoShown = false;
+            window.addEventListener('scroll', function() {
+                if (autoShown) return;
+                var rect = gamesSec.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    autoShown = true;
+                    panel.classList.remove('collapsed');
+                    panel.classList.add('expanded');
+                    horn.classList.remove('visible');
+                }
+            });
+            // 如果初始就在游戏区下面（比如直接刷到评论区）
+            var rect = gamesSec.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                panel.classList.remove('collapsed');
+                panel.classList.add('expanded');
+                horn.classList.remove('visible');
+            }
         })();
     </script>
 </body>
