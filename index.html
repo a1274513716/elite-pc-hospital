@@ -4,142 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>李大爷鼠标宏科技 - 专业游戏宏解决方案</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
     <style>
-        /* ===== 基础重置 ===== */
+        :root {
+            --bg-color: #111111;
+            --card-bg: rgba(28, 28, 30, 0.6);
+            --accent-red: #ff1744;
+            --accent-gold: #ffd600;
+            --text-main: #ffffff;
+            --text-sub: #86868b;
+            --blur: blur(20px);
+            --radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --bg-card-hover: #1a1a25;
-            --accent-red: #ff1744;
-            --accent-red-dark: #c50e32;
-            --accent-gold: #ffd600;
-            --accent-gold-dim: #b89800;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --text-dim: #606070;
-            --border: #2a2a35;
-            --gradient-red: linear-gradient(135deg, #ff1744, #ff6e40);
-            --gradient-gold: linear-gradient(135deg, #ffd600, #ffab00);
-            --gradient-hero: linear-gradient(180deg, rgba(255,23,68,0.1) 0%, transparent 60%);
-            --shadow-card: 0 4px 20px rgba(0,0,0,0.4);
-            --shadow-hover: 0 8px 40px rgba(255,23,68,0.2);
-            --radius: 12px;
-            --radius-sm: 8px;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
-        /* ===== 导航栏 ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(10, 10, 15, 0.98);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
-        }
-
-        .nav-container {
+        /* Utilities */
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
+            padding: 0 24px;
         }
 
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
             text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
         }
 
-        .nav-brand-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--gradient-red);
-            border-radius: 8px;
+        .btn-primary {
+            background: var(--text-main);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tag {
+            background: rgba(255, 23, 68, 0.15);
+            color: var(--accent-red);
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 23, 68, 0.3);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 1. Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 54px;
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-main);
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .nav-brand-text {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: 0.5px;
+            gap: 8px;
         }
 
         .nav-links {
             display: flex;
-            gap: 4px;
-            list-style: none;
+            gap: 24px;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--text-sub);
             text-decoration: none;
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
             font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+            transition: color 0.2s;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--accent-red);
-            background: rgba(255, 23, 68, 0.1);
+        .nav-links a:hover {
+            color: var(--text-main);
         }
 
-        .nav-toggle {
+        /* Mobile Menu Toggle */
+        .menu-toggle {
             display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
             font-size: 24px;
             cursor: pointer;
-            padding: 8px;
         }
 
-        /* ===== Hero区 ===== */
+        /* 2. Hero Section */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 100px 20px 60px;
             position: relative;
             overflow: hidden;
         }
@@ -147,886 +166,391 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(255,23,68,0.08) 0%, transparent 50%);
-            animation: heroPulse 8s ease-in-out infinite;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,23,68,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
         }
 
-        @keyframes heroPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            background: rgba(255, 23, 68, 0.15);
-            border: 1px solid rgba(255, 23, 68, 0.3);
-            border-radius: 50px;
-            font-size: 13px;
-            color: var(--accent-red);
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .hero-badge-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--accent-red);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .hero-title {
-            font-size: clamp(36px, 8vw, 72px);
-            font-weight: 900;
+        .hero h1 {
+            font-size: 72px;
             line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             margin-bottom: 16px;
-            animation: fadeInUp 0.6s ease 0.1s both;
-        }
-
-        .hero-title .highlight {
-            background: var(--gradient-red);
+            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
-        .hero-subtitle {
-            font-size: clamp(16px, 3vw, 22px);
-            color: var(--text-secondary);
+        .hero h2 {
+            font-size: 28px;
+            color: var(--text-sub);
             margin-bottom: 32px;
-            animation: fadeInUp 0.6s ease 0.2s both;
+            font-weight: 400;
         }
 
         .hero-tags {
             display: flex;
+            gap: 12px;
             flex-wrap: wrap;
-            gap: 8px;
             justify-content: center;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease 0.3s both;
+            margin-bottom: 60px;
         }
 
-        .hero-tag {
-            padding: 6px 14px;
-            background: rgba(255, 214, 0, 0.1);
-            border: 1px solid rgba(255, 214, 0, 0.25);
-            border-radius: 50px;
-            font-size: 13px;
-            color: var(--accent-gold);
-            font-weight: 500;
+        .hero-tags span {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 14px;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .hero-stats {
             display: flex;
-            justify-content: center;
-            gap: 48px;
-            animation: fadeInUp 0.6s ease 0.4s both;
+            gap: 64px;
+            margin-bottom: 48px;
         }
 
-        .hero-stat {
-            text-align: center;
+        .stat-item h3 {
+            font-size: 36px;
+            color: var(--accent-gold);
+            font-weight: 700;
         }
 
-        .hero-stat-num {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--accent-red);
-        }
-
-        .hero-stat-label {
-            font-size: 13px;
-            color: var(--text-dim);
+        .stat-item p {
+            color: var(--text-sub);
+            font-size: 14px;
             margin-top: 4px;
         }
 
-        .hero-cta {
+        .hero-btns {
             display: flex;
             gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-            animation: fadeInUp 0.6s ease 0.5s both;
         }
 
-        .btn {
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-flex;
+        /* 3. Game List (Cards) */
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin: 100px 0 60px;
+        }
+
+        .section-title span {
+            color: var(--accent-red);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding-bottom: 100px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 23, 68, 0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .game-card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .btn-primary {
-            background: var(--gradient-red);
+        .game-card p {
+            color: var(--text-sub);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .update-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-red);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 23, 68, 0.4);
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(255, 23, 68, 0.6);
+        /* 4. Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 100px;
         }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border);
+        .portfolio-item {
+            aspect-ratio: 16/9;
+            border-radius: var(--radius);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .btn-outline:hover {
-            border-color: var(--accent-red);
-            color: var(--accent-red);
-            background: rgba(255, 23, 68, 0.05);
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .portfolio-item:hover .portfolio-overlay {
+            background: rgba(0,0,0,0.2);
         }
 
-        /* ===== 通用区块 ===== */
-        .section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
+        .play-btn::after {
+            content: '';
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 4px;
         }
 
-        .section-label {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(255, 23, 68, 0.1);
-            border: 1px solid rgba(255, 23, 68, 0.2);
-            border-radius: 50px;
+        /* 5. Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 100px;
+        }
+
+        .review-card {
+            background: #1c1c1e;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stars {
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+        }
+
+        .review-text {
+            color: #d1d1d1;
+            font-size: 14px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .reviewer {
+            margin-top: 16px;
             font-size: 12px;
+            color: var(--text-sub);
+            text-align: right;
+        }
+
+        /* 6. Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 100px;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, #1c1c1e, #111);
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .service-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .service-card h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            color: var(--text-sub);
+            font-size: 13px;
+        }
+
+        /* 7. FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto 100px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 0;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 24px 0;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            text-align: left;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 24px;
             color: var(--accent-red);
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
+            transition: transform 0.3s;
         }
 
-        .section-title {
-            font-size: clamp(28px, 5vw, 40px);
-            font-weight: 800;
-            margin-bottom: 12px;
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
         }
 
-        .section-desc {
-            font-size: 16px;
-            color: var(--text-secondary);
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 24px;
+        }
+
+        /* 8. Contact */
+        .contact-section {
+            background: linear-gradient(180deg, #111 0%, #1a1a1a 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .contact-box {
+            background: rgba(255, 23, 68, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: var(--radius);
+            padding: 48px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* ===== 游戏列表 ===== */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .game-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            transition: all 0.3s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-red);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .game-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 23, 68, 0.3);
-            box-shadow: var(--shadow-hover);
-            background: var(--bg-card-hover);
-        }
-
-        .game-card:hover::before {
-            opacity: 1;
-        }
-
-        .game-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .game-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 23, 68, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .game-card-badge {
-            padding: 3px 10px;
-            background: rgba(255, 214, 0, 0.15);
-            border-radius: 50px;
-            font-size: 11px;
-            color: var(--accent-gold);
-            font-weight: 600;
-        }
-
-        .game-card-title {
-            font-size: 18px;
+        .qq-num {
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 8px;
+            color: var(--accent-red);
+            font-family: monospace;
+            margin: 16px 0;
+            display: block;
         }
 
-        .game-card-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 16px;
-        }
-
-        .game-card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .game-tag {
-            padding: 3px 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        /* ===== 作品展示 ===== */
-        .works-section {
-            background: linear-gradient(180deg, transparent, rgba(255,23,68,0.03), transparent);
-        }
-
-        .works-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .work-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .work-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: rgba(255, 23, 68, 0.3);
-        }
-
-        .work-thumb {
-            aspect-ratio: 16/9;
-            background: #1a1a25;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .work-thumb::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
-            z-index: 1;
-        }
-
-        .work-thumb-icon {
-            display: none;
-        }
-
-        .work-play-btn {
-            position: absolute;
-            width: 56px;
-            height: 56px;
-            background: rgba(255, 23, 68, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(255, 23, 68, 0.5);
-            z-index: 2;
-        }
-
-        .work-play-btn::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 10px 0 10px 18px;
-            border-color: transparent transparent transparent white;
-            margin-left: 3px;
-        }
-
-        .work-card:hover .work-play-btn {
-            transform: scale(1.1);
+        /* 9. Floating QQ Bar */
+        .float-qq {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
             background: var(--accent-red);
-        }
-
-        .work-info {
-            padding: 20px;
-        }
-
-        .work-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .work-meta {
-            font-size: 13px;
-            color: var(--text-dim);
-        }
-
-        /* ===== 客户评价 ===== */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-        }
-
-        .review-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
-            transition: all 0.3s ease;
-        }
-
-        .review-card:hover {
-            border-color: rgba(255, 214, 0, 0.3);
-            box-shadow: 0 4px 20px rgba(255, 214, 0, 0.05);
-        }
-
-        .review-stars {
-            color: var(--accent-gold);
-            font-size: 14px;
-            margin-bottom: 16px;
-            letter-spacing: 2px;
-        }
-
-        .review-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .review-author {
+            color: white;
+            padding: 16px 24px;
+            border-radius: 99px;
+            box-shadow: 0 10px 30px rgba(255, 23, 68, 0.4);
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .review-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--gradient-red);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .review-name {
-            font-size: 14px;
             font-weight: 600;
-        }
-
-        .review-game {
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-
-        /* ===== FAQ ===== */
-        .faq-list {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(255, 23, 68, 0.2);
-        }
-
-        .faq-question {
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: color 0.2s ease;
-            gap: 16px;
+            transition: var(--transition);
+            text-decoration: none;
         }
 
-        .faq-question:hover {
-            color: var(--accent-red);
+        .float-qq:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
         }
 
-        .faq-icon {
-            font-size: 20px;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-            color: var(--text-dim);
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-            color: var(--accent-red);
-        }
-
-        .faq-answer {
-            padding: 0 24px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 0 24px 20px;
-            max-height: 300px;
-        }
-
-        .faq-answer p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            border-top: 1px solid var(--border);
-            padding-top: 16px;
-        }
-
-        /* ===== 增值服务 ===== */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .service-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px 28px;
+        /* 10. Footer */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 40px 0;
             text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 23, 68, 0.3);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .service-icon {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 20px;
-            background: rgba(255, 23, 68, 0.1);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .service-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .service-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* ===== 联系区 ===== */
-        .contact-section {
-            background: linear-gradient(180deg, transparent, rgba(255,23,68,0.05));
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .contact-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 36px 28px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            border-color: rgba(255, 23, 68, 0.4);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .contact-card-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            background: rgba(255, 23, 68, 0.12);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .contact-card-label {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 8px;
-        }
-
-        .contact-card-value {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--accent-red);
-            letter-spacing: 1px;
-        }
-
-        .contact-card-sub {
+            color: var(--text-sub);
             font-size: 12px;
-            color: var(--text-dim);
+        }
+
+        #pv-stats {
             margin-top: 8px;
+            font-family: monospace;
         }
 
-        /* ===== 页脚 ===== */
-        .footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-red);
-        }
-
-        .footer-copy {
-            font-size: 13px;
-            color: var(--text-dim);
-            margin-bottom: 8px;
-        }
-
-        .footer-stat {
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-
-        #busuanzi_value_site_pv {
-            color: var(--accent-red);
-        }
-
-        /* ===== 全局悬浮QQ栏 ===== */
-        .float-bar {
+        /* Modal */
+        .modal {
             position: fixed;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .float-bar .item {
-            background: #12121a;
-            border: 1px solid #ff1744;
-            border-right: none;
-            border-radius: 10px 0 0 10px;
-            padding: 10px 16px 10px 12px;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            min-width: 90px;
-        }
-
-        .float-bar .item:hover {
-            background: #ff1744;
-            transform: translateX(-4px);
-        }
-
-        .float-bar .item .label {
-            font-size: 10px;
-            color: #888;
-            margin-bottom: 2px;
-        }
-
-        .float-bar .item .num {
-            font-size: 16px;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-
-        .float-bar .item-qq .num { color: #ff1744; }
-        .float-bar .item-group .num { color: #ffd600; }
-        .float-bar .item:hover .num { color: #fff; }
-        .float-bar .item:hover .label { color: rgba(255,255,255,0.7); }
-
-        @media (max-width: 600px) {
-            .float-bar {
-                bottom: 0;
-                top: auto;
-                right: 0;
-                left: 0;
-                transform: none;
-                flex-direction: row;
-                gap: 0;
-                border-top: 1px solid #ff1744;
-                background: rgba(10,10,15,0.95);
-                backdrop-filter: blur(10px);
-            }
-            .float-bar .item {
-                flex: 1;
-                border: none;
-                border-radius: 0;
-                padding: 8px 10px;
-                min-width: 0;
-                text-align: center;
-            }
-            .float-bar .item:hover {
-                transform: none;
-            }
-            .float-bar .item .label {
-                font-size: 9px;
-            }
-            .float-bar .item .num {
-                font-size: 13px;
-            }
-        }
-
-        /* ===== 流光动态效果 ===== */
-        .game-card,
-        .work-card,
-        .service-card,
-        .review-card,
-        .faq-item,
-        .contact-card,
-        .stat-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-card::before,
-        .work-card::before,
-        .service-card::before,
-        .review-card::before,
-        .faq-item::before,
-        .contact-card::before,
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255,255,255,0.03) 30%,
-                rgba(255,23,68,0.06) 50%,
-                rgba(255,255,255,0.03) 70%,
-                transparent 100%
-            );
-            transform: skewX(-20deg);
-            z-index: 1;
-            pointer-events: none;
-            animation: flow-light 4s ease-in-out infinite;
-        }
-
-        .review-card::before,
-        .faq-item::before,
-        .contact-card::before,
-        .stat-card::before {
-            animation-duration: 5s;
-        }
-
-        .service-card::before {
-            animation-duration: 6s;
-            animation-delay: 0.5s;
-        }
-
-        .work-card::before {
-            animation-duration: 3.5s;
-        }
-
-        @keyframes flow-light {
-            0% { left: -60%; }
-            100% { left: 120%; }
-        }
-
-        /* 卡片内容在伪元素上层 */
-        .game-card > *,
-        .work-card > *,
-        .service-card > *,
-        .review-card > *,
-        .faq-item > *,
-        .contact-card > *,
-        .stat-card > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ===== 回到顶部 ===== */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-red);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(255, 23, 68, 0.4);
-            transition: all 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(255, 23, 68, 0.6);
-        }
-
-        .back-to-top svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        /* ===== 视频弹窗 ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            inset: 0;
+            background: rgba(0,0,0,0.95);
             z-index: 2000;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .modal-overlay.active {
+        .modal.active {
             display: flex;
+            opacity: 1;
         }
 
         .modal-content {
-            width: 100%;
+            width: 90%;
             max-width: 900px;
             aspect-ratio: 16/9;
             background: #000;
@@ -1035,880 +559,520 @@
             position: relative;
         }
 
-        .modal-content iframe {
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        .modal-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
+        /* Back to Top */
+        .back-top {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 8px;
-            transition: color 0.2s ease;
-        }
-
-        .modal-close:hover {
-            color: var(--accent-red);
-        }
-
-        /* ===== 数字动画 ===== */
-        .count-up {
-            display: inline-block;
-        }
-
-        /* ===== 滚动显示动画 ===== */
-        .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+            transition: var(--transition);
+            color: white;
+            text-decoration: none;
         }
 
-        .reveal.visible {
+        .back-top.visible {
             opacity: 1;
-            transform: translateY(0);
         }
 
-        /* ===== 移动端适配 ===== */
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 64px;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 15, 0.98);
-                flex-direction: column;
-                padding: 16px;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .nav-links.open {
+            .hero h1 { font-size: 42px; }
+            .hero h2 { font-size: 18px; }
+            .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .nav-links.active {
                 display: flex;
-            }
-
-            .nav-links a {
-                padding: 12px 16px;
-                font-size: 15px;
-            }
-
-            .nav-toggle {
-                display: block;
-            }
-
-            .hero-stats {
-                gap: 24px;
-            }
-
-            .hero-stat-num {
-                font-size: 24px;
-            }
-
-            .games-grid,
-            .works-grid,
-            .reviews-grid,
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section {
-                padding: 60px 16px;
-            }
-
-            .contact-card-value {
-                font-size: 20px;
-            }
-
-            .footer-links {
                 flex-direction: column;
-                gap: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-stats {
-                flex-direction: column;
+                position: absolute;
+                top: 54px;
+                left: 0;
+                width: 100%;
+                background: rgba(17,17,17,0.95);
+                backdrop-filter: blur(20px);
+                padding: 24px;
                 gap: 16px;
             }
-
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .float-qq { 
+                bottom: 0; 
+                right: 0; 
+                left: 0; 
+                justify-content: center; 
+                border-radius: 0;
+                padding: 12px;
             }
-
-            .btn {
-                width: 100%;
-                max-width: 280px;
-                justify-content: center;
-            }
-        }
-
-        /* ===== 分隔线装饰 ===== */
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border), transparent);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* ===== CSDN链接 ===== */
-        .csdn-link {
-            color: var(--accent-gold);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .csdn-link:hover {
-            color: #ffab00;
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="nav-brand">
-                <div class="nav-brand-icon">👑</div>
-                <span class="nav-brand-text">李大爷鼠标宏科技</span>
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="active">首页</a></li>
-                <li><a href="#games">游戏宏</a></li>
-                <li><a href="#works">作品展示</a></li>
-                <li><a href="#reviews">客户评价</a></li>
-                <li><a href="#services">增值服务</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contact">联系</a></li>
-            </ul>
-            <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">👑 李大爷鼠标宏科技</div>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">首页</a>
+                <a href="#games">游戏宏</a>
+                <a href="#portfolio">产品效果演示</a>
+                <a href="#reviews">评价</a>
+                <a href="#services">服务</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">联系</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero区 -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="hero-badge-dot"></span>
-                持续更新中 · 专业服务
+        <h1 class="fade-in">李大爷鼠标宏科技</h1>
+        <h2 class="fade-in">专业游戏宏解决方案</h2>
+        <div class="hero-tags fade-in">
+            <span>🎯 精准稳定</span>
+            <span>🔄 持续更新</span>
+            <span>🛡️ 安全可靠</span>
+            <span>💬 QQ服务</span>
+            <span>🎮 多游戏支持</span>
+        </div>
+        <div class="hero-stats fade-in">
+            <div class="stat-item">
+                <h3>9</h3>
+                <p>款游戏</p>
             </div>
-            <h1 class="hero-title">
-                <span class="highlight">李大爷</span>鼠标宏科技
-            </h1>
-            <p class="hero-subtitle">专业游戏宏解决方案 · 稳定高效 · 持续维护</p>
-            <div class="hero-tags">
-                <span class="hero-tag">🎯 精准稳定</span>
-                <span class="hero-tag">🔄 持续更新</span>
-                <span class="hero-tag">🛡️ 安全可靠</span>
-                <span class="hero-tag">💬 QQ服务</span>
-                <span class="hero-tag">🎮 多游戏支持</span>
+            <div class="stat-item">
+                <h3>150+</h3>
+                <p>武器宏</p>
             </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-num count-up" data-target="9">9</div>
-                    <div class="hero-stat-label">支持游戏</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-num count-up" data-target="150">150</div>
-                    <div class="hero-stat-label">武器宏数量</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-num count-up" data-target="100">100</div>
-                    <div class="hero-stat-label">好评率 %</div>
-                </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>好评率</p>
             </div>
-            <div class="hero-cta">
-                <a href="#games" class="btn btn-primary">🎮 浏览游戏宏</a>
-                <a href="#contact" class="btn btn-outline">📱 联系我们</a>
+        </div>
+        <div class="hero-btns fade-in">
+            <a href="#games" class="btn btn-primary">浏览游戏宏</a>
+            <a href="#contact" class="btn btn-outline">联系我们</a>
+        </div>
+    </section>
+
+    <!-- Games List -->
+    <section id="games">
+        <h2 class="section-title fade-in">游戏宏<span>库</span></h2>
+        <div class="container games-grid">
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>生死狙击2</h3>
+                <p>全武器宏支持，稳定压枪，精准射击</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>彩虹六号</h3>
+                <p>53把主武器 + 3把副武器宏，全枪械覆盖</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>The Finals</h3>
+                <p>AK47, FCAR, V95, M11, XP54, 刘易斯, LH1 全覆盖</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>高能英雄</h3>
+                <p>15+武器宏支持，稳定压枪体验</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>和平精英模拟器</h3>
+                <p>26幽灵宏，全武器精准控制</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>CFHD</h3>
+                <p>28把枪宏 + 瞬狙鬼跳大跳，全功能支持</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>AVA</h3>
+                <p>四服通用，全武器宏支持</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>三角洲行动</h3>
+                <p>全武器宏，稳定压枪体验</p>
+            </div>
+            <div class="game-card fade-in">
+                <span class="update-badge">持续更新</span>
+                <h3>界外狂潮</h3>
+                <p>全武器宏支持，精准射击</p>
             </div>
         </div>
     </section>
 
-    <!-- 游戏列表 -->
-    <section class="section" id="games">
-        <div class="section-header reveal">
-            <div class="section-label">🎮 游戏支持</div>
-            <h2 class="section-title">游戏宏列表</h2>
-            <p class="section-desc">覆盖主流射击游戏，每把武器都有专属宏</p>
-        </div>
-        <div class="games-grid">
-            <!-- 生死狙击2 -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🔫</div>
-                    <span class="game-card-badge">持续更新</span>
-                </div>
-                <h3 class="game-card-title">生死狙击2</h3>
-                <p class="game-card-desc">全套突击步枪 + 2把机枪，持续更新新武器支持</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">突击步枪</span>
-                    <span class="game-tag">机枪</span>
-                    <span class="game-tag">持续更新</span>
+    <!-- Portfolio -->
+    <section id="portfolio">
+        <h2 class="section-title fade-in">产品<span>效果演示</span></h2>
+        <div class="container portfolio-grid">
+            <div class="portfolio-item fade-in" style="background-image: url('https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg')" onclick="openModal('BV1oKSnBkEEa')">
+                <div class="portfolio-overlay">
+                    <div class="play-btn"></div>
                 </div>
             </div>
-
-            <!-- 彩虹六号 -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🎯</div>
-                    <span class="game-card-badge">全武器</span>
-                </div>
-                <h3 class="game-card-title">彩虹六号</h3>
-                <p class="game-card-desc">53把主武器 + 3把副武器，全武器宏全覆盖</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">53把主武器</span>
-                    <span class="game-tag">3把副武器</span>
-                    <span class="game-tag">全武器宏</span>
+            <div class="portfolio-item fade-in" style="background-image: url('https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg')" onclick="openModal('BV1oYJu6gEqg')">
+                <div class="portfolio-overlay">
+                    <div class="play-btn"></div>
                 </div>
             </div>
-
-            <!-- The Finals -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🏆</div>
-                    <span class="game-card-badge">热门</span>
-                </div>
-                <h3 class="game-card-title">The Finals</h3>
-                <p class="game-card-desc">7把热门武器：AK47, FCAR, V95, M11, XP54, 刘易斯, LH1</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">AK47</span>
-                    <span class="game-tag">FCAR</span>
-                    <span class="game-tag">V95</span>
-                    <span class="game-tag">M11</span>
-                    <span class="game-tag">XP54</span>
-                    <span class="game-tag">刘易斯</span>
-                    <span class="game-tag">LH1</span>
+            <div class="portfolio-item fade-in" style="background-image: url('https://game.gtimg.cn/images/cfhd/cp/a20260601mact/act0-2.jpg')" onclick="openModal('BV1H6Gb6QEHE')">
+                <div class="portfolio-overlay">
+                    <div class="play-btn"></div>
                 </div>
             </div>
-
-            <!-- 高能英雄 -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">⚡</div>
-                    <span class="game-card-badge">全面</span>
-                </div>
-                <h3 class="game-card-title">高能英雄</h3>
-                <p class="game-card-desc">冲锋枪双子/尖刃/电涌，突击步枪B116/GK47/M401/R117，聚能/脉冲星，轻机枪MG600/星粒/炼狱/飓风</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">冲锋枪</span>
-                    <span class="game-tag">突击步枪</span>
-                    <span class="game-tag">轻机枪</span>
-                    <span class="game-tag">15+武器</span>
-                </div>
-            </div>
-
-            <!-- 和平精英模拟器 -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🎖️</div>
-                    <span class="game-card-badge">26把幽灵</span>
-                </div>
-                <h3 class="game-card-title">和平精英模拟器</h3>
-                <p class="game-card-desc">26把武器全套幽灵宏（AC-VAL/AKM/AUG/法玛斯/G36C/GROZA/M16A4/M416/M762/MINI14/MK12/MK47/MP5K/QBU/QBZ/SCAR-L/SKS/SLR/UMP45/UZI/VECTOR/汤姆逊/蜜罐/野牛/DP28/MG36），一键拾取</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">26把武器</span>
-                    <span class="game-tag">幽灵宏</span>
-                    <span class="game-tag">一键拾取</span>
-                    <span class="game-tag">模拟器</span>
-                </div>
-            </div>
-
-            <!-- CFHD -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">💥</div>
-                    <span class="game-card-badge">功能全面</span>
-                </div>
-                <h3 class="game-card-title">CFHD</h3>
-                <p class="game-card-desc">19把通用 + 9把专属武器，功能含瞬狙/鬼跳/大跳上箱子/咖喱/AK103/法玛斯/MK12/春田高伤/P90/挑战挂机宏</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">瞬狙</span>
-                    <span class="game-tag">鬼跳</span>
-                    <span class="game-tag">大跳</span>
-                    <span class="game-tag">挂机宏</span>
-                    <span class="game-tag">28把武器</span>
-                </div>
-            </div>
-
-            <!-- 战地之王 AVA -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🌐</div>
-                    <span class="game-card-badge">四服通用</span>
-                </div>
-                <h3 class="game-card-title">战地之王 (AVA)</h3>
-                <p class="game-card-desc">国服/国际服/台服/韩服四服通用，无后座/瞬狙/挂机宏</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">国服</span>
-                    <span class="game-tag">国际服</span>
-                    <span class="game-tag">台服</span>
-                    <span class="game-tag">韩服</span>
-                    <span class="game-tag">无后座</span>
-                    <span class="game-tag">瞬狙</span>
-                </div>
-            </div>
-
-            <!-- 三角洲行动 -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🪖</div>
-                    <span class="game-card-badge">全套</span>
-                </div>
-                <h3 class="game-card-title">三角洲行动</h3>
-                <p class="game-card-desc">血手鼠标全套宏解决方案，稳定可靠</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">血手全套</span>
-                    <span class="game-tag">稳定</span>
-                </div>
-            </div>
-
-            <!-- 界外狂潮 -->
-            <div class="game-card reveal">
-                <div class="game-card-header">
-                    <div class="game-icon">🔥</div>
-                    <span class="game-card-badge">全鼠标</span>
-                </div>
-                <h3 class="game-card-title">界外狂潮</h3>
-                <p class="game-card-desc">全鼠标全套宏支持，覆盖所有主流鼠标</p>
-                <div class="game-card-tags">
-                    <span class="game-tag">全鼠标</span>
-                    <span class="game-tag">全套</span>
+            <div class="portfolio-item fade-in" style="background-image: url('https://static.gametalk.qq.com/image/182/1780387636_1b377d594325819fa771fa10c4ead3bc.jpg')" onclick="openModal('BV1mvq5BLEbu')">
+                <div class="portfolio-overlay">
+                    <div class="play-btn"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="section-divider"></div>
-
-    <!-- 作品展示 -->
-    <section class="section works-section" id="works">
-        <div class="section-header reveal">
-            <div class="section-label">🎬 作品展示</div>
-            <h2 class="section-title">实拍演示视频</h2>
-            <p class="section-desc">点击播放B站视频，看看实际效果</p>
-        </div>
-        <div class="works-grid">
-            <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1H6Gb6QEHE&autoplay=0')">
-                <div class="work-thumb" style="background-image: url('https://game.gtimg.cn/images/cfhd/cp/a20260601mact/act0-2.jpg');">
-                    <div class="work-play-btn"></div>
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title">CFHD 游戏演示</h3>
-                    <p class="work-meta">CFHD · 瞬狙/鬼跳/挂机宏演示</p>
-                </div>
+    <!-- Reviews -->
+    <section id="reviews">
+        <h2 class="section-title fade-in">客户<span>评价</span></h2>
+        <div class="container reviews-grid">
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"宏非常稳定，压枪效果很好，客服态度也不错！"</p>
+                <div class="reviewer">- 彩虹六号玩家</div>
             </div>
-            <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1mvq5BLEbu&autoplay=0')">
-                <div class="work-thumb" style="background-image: url('https://static.gametalk.qq.com/image/182/1780387636_1b377d594325819fa771fa10c4ead3bc.jpg');">
-                    <div class="work-play-btn"></div>
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title">和平精英模拟器</h3>
-                    <p class="work-meta">和平精英 · 幽灵宏+一键拾取</p>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"用了三个月了，从来没出过问题，强烈推荐！"</p>
+                <div class="reviewer">- CFHD老玩家</div>
             </div>
-            <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1oKSnBkEEa&autoplay=0')">
-                <div class="work-thumb" style="background-image: url('https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg');">
-                    <div class="work-play-btn"></div>
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title">彩虹六号演示</h3>
-                    <p class="work-meta">彩虹六号 · 全武器宏展示</p>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"更新很及时，新武器很快就出宏了，很专业！"</p>
+                <div class="reviewer">- 和平精英玩家</div>
             </div>
-            <div class="work-card reveal" onclick="openModal('https://player.bilibili.com/player.html?bvid=BV1oYJu6gEqg&autoplay=0')">
-                <div class="work-thumb" style="background-image: url('https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg');">
-                    <div class="work-play-btn"></div>
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title">The Finals 演示</h3>
-                    <p class="work-meta">The Finals · AK47/FCAR/V95等</p>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"The Finals的宏太好用了，AK47压枪很稳！"</p>
+                <div class="reviewer">- The Finals玩家</div>
             </div>
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- 客户评价 -->
-    <section class="section" id="reviews">
-        <div class="section-header reveal">
-            <div class="section-label">⭐ 客户好评</div>
-            <h2 class="section-title">用户真实反馈</h2>
-            <p class="section-desc">来自客户的评价和认可</p>
-        </div>
-        <div class="reviews-grid">
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">李大爷的宏真的稳，CFHD瞬狙丝滑无比，用了之后再也回不去了，强烈推荐！</p>
-                <div class="review-author">
-                    <div class="review-avatar">张</div>
-                    <div>
-                        <div class="review-name">张同学</div>
-                        <div class="review-game">CFHD玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"安全不封号，用着放心，会一直支持！"</p>
+                <div class="reviewer">- 生死狙击2玩家</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">和平精英模拟器用了幽灵宏，打人机太爽了。一键拾取也很方便，省了不少时间。</p>
-                <div class="review-author">
-                    <div class="review-avatar">李</div>
-                    <div>
-                        <div class="review-name">李老板</div>
-                        <div class="review-game">和平精英玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"装机服务很专业，电脑跑游戏很流畅！"</p>
+                <div class="reviewer">- 深圳本地客户</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">彩虹六号53把武器的宏都有，而且质量很高。售后服务也给力，有问题秒回。</p>
-                <div class="review-author">
-                    <div class="review-avatar">王</div>
-                    <div>
-                        <div class="review-name">王哥</div>
-                        <div class="review-game">彩虹六号玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"客服响应很快，有问题及时解决，好评！"</p>
+                <div class="reviewer">- AVA玩家</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">The Finals的AK和FCAR宏特别好用，压枪稳如老狗。性价比超高！</p>
-                <div class="review-author">
-                    <div class="review-avatar">赵</div>
-                    <div>
-                        <div class="review-name">赵同学</div>
-                        <div class="review-game">The Finals玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"高能英雄的宏很给力，15把武器都覆盖了！"</p>
+                <div class="reviewer">- 高能英雄玩家</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">战地之王四服都能用，台服韩服也没问题，兼容性太好了。无后座效果一流。</p>
-                <div class="review-author">
-                    <div class="review-avatar">陈</div>
-                    <div>
-                        <div class="review-name">陈哥</div>
-                        <div class="review-game">AVA玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"三角洲行动的宏用了两周，很稳定，推荐！"</p>
+                <div class="reviewer">- 三角洲行动玩家</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">不仅宏做得好，电脑装机也很专业。线下电脑城小白避坑首选，图吧元老真不是吹的。</p>
-                <div class="review-author">
-                    <div class="review-avatar">刘</div>
-                    <div>
-                        <div class="review-name">刘同学</div>
-                        <div class="review-game">装机客户</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"界外狂潮的宏刚出就用上了，更新速度很快！"</p>
+                <div class="reviewer">- 界外狂潮玩家</div>
             </div>
-
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">生死狙击2的宏太顶了，AK压得跟激光枪一样。而且李大爷售后真的没话说，有问题直接发消息就给调。</p>
-                <div class="review-author">
-                    <div class="review-avatar">孙</div>
-                    <div>
-                        <div class="review-name">孙哥</div>
-                        <div class="review-game">生死狙击2玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"生死狙击2的压枪稳得一批，开镜瞬间就稳住了，比我自己调的强多了！"</p>
+                <div class="reviewer">- 生死狙击2玩家</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">高能英雄全武器宏都有，冲锋枪和步枪手感极佳。用了之后上分如喝水，真心推荐李大爷。</p>
-                <div class="review-author">
-                    <div class="review-avatar">周</div>
-                    <div>
-                        <div class="review-name">周同学</div>
-                        <div class="review-game">高能英雄玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"深圳本地过来装机的，李大爷人很nice，现场调试还教了我怎么改参数，专业！"</p>
+                <div class="reviewer">- 装机客户</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">虽然不在深圳，让李大爷远程出的配置单，自己京东买配件照着装，性价比比网上整机高太多了！</p>
-                <div class="review-author">
-                    <div class="review-avatar">吴</div>
-                    <div>
-                        <div class="review-name">吴哥</div>
-                        <div class="review-game">装机客户·外地</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"The Finals里身法配合宏，跳扫真的丝滑，队友都问我是不是开了挂哈哈"</p>
+                <div class="reviewer">- The Finals玩家</div>
             </div>
-            <div class="review-card reveal">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-text">三角洲行动的宏刚到手，试了几把枪效果很好。李大爷调试很细心，一步步教我怎么用，服务态度一流。</p>
-                <div class="review-author">
-                    <div class="review-avatar">郑</div>
-                    <div>
-                        <div class="review-name">郑先生</div>
-                        <div class="review-game">三角洲行动玩家</div>
-                    </div>
-                </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"远程客户帮搞的彩虹六号，延迟设得刚好，不用来回折腾，省心。"</p>
+                <div class="reviewer">- 远程客户</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"高能英雄的瞬移技能按宏键就秒放，团战优势太大了，五星推荐！"</p>
+                <div class="reviewer">- 高能英雄玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"和平精英模拟器的手感调整得特别好，开镜速度完美，以前总是描边现在一枪头。"</p>
+                <div class="reviewer">- 和平精英模拟器玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"CFHD的瞬狙太顶了，练了两天就上手了，李大爷的技术没得说。"</p>
+                <div class="reviewer">- CFHD玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"AVA的老玩家了，这宏把当年的手感找回来了，压枪稳得一批！"</p>
+                <div class="reviewer">- AVA玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"三角洲行动的跟枪太准了，近距离交火从来没输过，感谢李大爷。"</p>
+                <div class="reviewer">- 三角洲行动玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"界外狂潮的自瞄范围调得刚好，不会太夸张被检测到，安全又好用。"</p>
+                <div class="reviewer">- 界外狂潮玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"本地装机服务很正规，线材整理得干干净净，鼠标参数也调得舒适合手。"</p>
+                <div class="reviewer">- 装机客户</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"远程帮搞的生死狙击2，沟通很顺畅，一次搞定，不用寄硬件，方便。"</p>
+                <div class="reviewer">- 远程客户</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"彩虹六号的开门秒切，反应速度提升不止一个档次，太爽了！"</p>
+                <div class="reviewer">- 彩虹六号玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"The Finals的落地后瞬间开火，真的是抢点神器，兄弟们都在问哪里买的宏。"</p>
+                <div class="reviewer">- The Finals玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"高能英雄的大招衔接太顺滑了，连招手感无敌，必须好评！"</p>
+                <div class="reviewer">- 高能英雄玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"和平精英模拟器的压枪曲线调得自然，不像那种机械式的，体验很好。"</p>
+                <div class="reviewer">- 和平精英模拟器玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"CFHD的爆头线辅助太准了，练枪效率翻倍，李大爷靠谱。"</p>
+                <div class="reviewer">- CFHD玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"AVA的连发控制做得很好，不会第一发准后面乱飘，细节到位。"</p>
+                <div class="reviewer">- AVA玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"三角洲行动的跟枪逻辑很智能，目标移动越快跟得越稳，黑科技啊。"</p>
+                <div class="reviewer">- 三角洲行动玩家</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"界外狂潮的本地模型部署很顺利，加载速度快，游戏内表现稳定不掉帧。"</p>
+                <div class="reviewer">- 远程客户</div>
             </div>
         </div>
     </section>
 
-    <div class="section-divider"></div>
-
-    <!-- 增值服务 -->
-    <section class="section" id="services">
-        <div class="section-header reveal">
-            <div class="section-label">🔧 增值服务</div>
-            <h2 class="section-title">更多服务</h2>
-            <p class="section-desc">除了游戏宏，还提供其他技术服务</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-icon">🎬</div>
-                <h3 class="service-title">视频VIP集成软件</h3>
-                <p class="service-desc">视频VIP权益集成解决方案，一站式满足您的娱乐需求</p>
+    <!-- Services -->
+    <section id="services">
+        <h2 class="section-title fade-in">增值<span>服务</span></h2>
+        <div class="container services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">📺</div>
+                <h4>视频VIP集成</h4>
+                <p>B站大会员等视频服务</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card fade-in">
                 <div class="service-icon">🖱️</div>
-                <h3 class="service-title">鼠标参数修改</h3>
-                <p class="service-desc">专业鼠标DPI/回报率/按键等参数深度定制，打造专属手感</p>
+                <h4>鼠标参数修改</h4>
+                <p>专业调整鼠标DPI和参数</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card fade-in">
                 <div class="service-icon">🖥️</div>
-                <h3 class="service-title">电脑全套装机</h3>
-                <p class="service-desc">深圳本地可到店装机，外地支持远程配置单+京东代下单+整机发货。6岁摸电脑·40岁图吧元老，全国可接</p>
+                <h4>电脑装机服务</h4>
+                <p>深圳本地上门 / 外地远程指导</p>
             </div>
-            <div class="service-card reveal">
+            <div class="service-card fade-in">
                 <div class="service-icon">🤖</div>
-                <h3 class="service-title">本地模型智能体部署</h3>
-                <p class="service-desc">本地部署AI大模型智能体，私有化部署，数据安全无忧</p>
+                <h4>本地模型部署</h4>
+                <p>AI大模型本地化部署服务</p>
             </div>
         </div>
     </section>
-
-    <div class="section-divider"></div>
 
     <!-- FAQ -->
-    <section class="section" id="faq">
-        <div class="section-header reveal">
-            <div class="section-label">❓ 常见问题</div>
-            <h2 class="section-title">FAQ</h2>
-            <p class="section-desc">常见问题的快速解答</p>
-        </div>
-        <div class="faq-list">
-            <div class="faq-item reveal">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>支持哪些鼠标？</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>全鼠标通用！不管你是血手、罗技、雷蛇、赛睿、卓威、达尔优，还是几十块的普通游戏鼠标，只要你有侧键，我就能给你做宏。插上就能用，不挑设备。不确定的话QQ报鼠标型号我直接告诉你能不能做。</p>
-                </div>
+    <section id="faq">
+        <h2 class="section-title fade-in">常见<span>问题</span></h2>
+        <div class="container faq-container">
+            <div class="faq-item fade-in">
+                <button class="faq-question" onclick="toggleFaq(this)">全鼠标通用吗？</button>
+                <div class="faq-answer">是的，我们的宏支持所有主流鼠标，包括罗技、雷蛇、赛睿等品牌，即插即用。</div>
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>会被检测吗？安全性如何？</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>我们的产品经过精心调试，模拟人类操作轨迹，极大降低被检测的风险。肆意奔放就完事了！</p>
-                </div>
+            <div class="faq-item fade-in">
+                <button class="faq-question" onclick="toggleFaq(this)">使用安全吗？会封号吗？</button>
+                <div class="faq-answer">我们采用硬件级宏技术，模拟真实鼠标信号，不会被游戏检测，安全可靠。</div>
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>购买后如何使用？</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>购买后会发送安装包和使用说明。按照教程安装配置即可，整个过程简单快捷。如有疑问，客服会全程指导。</p>
-                </div>
+            <div class="faq-item fade-in">
+                <button class="faq-question" onclick="toggleFaq(this)">如何使用？</button>
+                <div class="faq-answer">购买后我们会提供详细的使用说明和视频教程，如有疑问可随时联系客服。</div>
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>更新频率如何？</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>产品会持续更新维护。游戏版本更新后我们会第一时间适配，新增武器也会陆续加入。购买后持续享受更新服务。</p>
-                </div>
+            <div class="faq-item fade-in">
+                <button class="faq-question" onclick="toggleFaq(this)">更新频率如何？</button>
+                <div class="faq-answer">我们持续更新，新武器、新枪械会第一时间推出宏，确保您始终使用最新版本。</div>
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>如何联系售后？</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>可通过QQ: 1274513716 联系，或加入QQ群: 946408366 获取更多帮助。我们也欢迎加入QQ群交流。</p>
-                </div>
+            <div class="faq-item fade-in">
+                <button class="faq-question" onclick="toggleFaq(this)">售后服务怎么样？</button>
+                <div class="faq-answer">我们提供QQ客服和QQ群服务，QQ: 1274513716，群: 946408366，随时为您解答问题。</div>
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>电脑装机服务怎么收费？</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>线下电脑城装机服务根据配置需求报价。图吧元老级经验，保证性价比。具体价格请咨询QQ客服。</p>
-                </div>
+            <div class="faq-item fade-in">
+                <button class="faq-question" onclick="toggleFaq(this)">装机服务收费吗？</button>
+                <div class="faq-answer">装机服务根据配置和需求收费，具体价格请联系客服咨询。</div>
             </div>
         </div>
     </section>
 
-    <div class="section-divider"></div>
-
-    <!-- 联系区 -->
-    <section class="section contact-section" id="contact">
-        <div class="section-header reveal">
-            <div class="section-label">📱 联系我们</div>
-            <h2 class="section-title">联系方式</h2>
-            <p class="section-desc">有任何问题欢迎随时联系</p>
-        </div>
-        <div class="contact-grid">
-            <div class="contact-card reveal">
-                <div class="contact-card-icon">👤</div>
-                <div class="contact-card-label">私人QQ</div>
-                <div class="contact-card-value">1274513716</div>
-                <div class="contact-card-sub">点击复制QQ号</div>
-            </div>
-            <div class="contact-card reveal">
-                <div class="contact-card-icon">👥</div>
-                <div class="contact-card-label">QQ交流群</div>
-                <div class="contact-card-value">946408366</div>
-                <div class="contact-card-sub">进群交流技术</div>
+    <!-- Contact -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title fade-in">联系<span>我们</span></h2>
+            <div class="contact-box fade-in">
+                <p style="color: var(--text-sub); margin-bottom: 8px;">QQ客服</p>
+                <span class="qq-num">1274513716</span>
+                <p style="color: var(--text-sub); margin-bottom: 8px;">QQ群</p>
+                <span class="qq-num">946408366</span>
+                <p style="color: var(--text-sub); margin-top: 16px; font-size: 14px;">工作日 9:00-22:00 在线</p>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-links">
-                <a href="#home">首页</a>
-                <a href="#games">游戏宏</a>
-                <a href="#works">作品展示</a>
-                <a href="#reviews">客户评价</a>
-                <a href="#services">增值服务</a>
-                <a href="#contact">联系我们</a>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2024 李大爷鼠标宏科技. All rights reserved.</p>
+            <div id="pv-stats">
+                <span id="busuanzi_value_site_pv">加载中...</span> 次浏览
             </div>
-            <p class="footer-copy">© 2024-2026 李大爷鼠标宏科技. All rights reserved.</p>
-            <p class="footer-stat">
-                访问统计：<span id="busuanzi_value_site_pv">0</span> 次
-            </p>
         </div>
     </footer>
 
-    <!-- 全局悬浮QQ栏 -->
-    <div class="float-bar">
-        <a class="item item-qq" href="tencent://message/?uin=1274513716&Site=qq&Menu=yes" target="_blank">
-            <div class="label">私人QQ</div>
-            <div class="num">1274513716</div>
-        </a>
-        <a class="item item-group" href="https://qm.qq.com/cgi-bin/qm/qr?k=&noverify=true&uin=946408366" target="_blank">
-            <div class="label">QQ群</div>
-            <div class="num">946408366</div>
-        </a>
-    </div>
+    <!-- Floating QQ Bar -->
+    <a href="https://wpa.qq.com/msgrd?v=3&uin=1274513716&site=qq&menu=yes" class="float-qq" target="_blank">
+        💬 立即咨询 QQ: 1274513716
+    </a>
 
-    <!-- 回到顶部 -->
-    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
-        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
-    </button>
+    <!-- Back to Top -->
+    <a href="#home" class="back-top" id="backTop">↑</a>
 
-    <!-- 视频弹窗 -->
-    <div class="modal-overlay" id="videoModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+    <!-- Modal -->
+    <div class="modal" id="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <iframe id="modalIframe" src="" allowfullscreen></iframe>
         </div>
     </div>
 
-    <!-- 不蒜子统计脚本 -->
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+    <!-- Scripts -->
     <script>
-        // ===== 导航栏滚动效果 =====
-        const navbar = document.getElementById('navbar');
-        const backToTop = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-            
-            if (window.scrollY > 400) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // ===== 移动端菜单 =====
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-        });
-
-        // 点击链接关闭菜单
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-            });
-        });
-
-        // ===== 活跃导航高亮 =====
-        const sections = document.querySelectorAll('section[id]');
-        const navItems = document.querySelectorAll('.nav-links a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === '#' + current) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        // ===== 数字递增动画 =====
-        const countElements = document.querySelectorAll('.count-up');
-        let countStarted = false;
-
-        function startCount() {
-            if (countStarted) return;
-            countStarted = true;
-            
-            countElements.forEach(el => {
-                const target = parseInt(el.getAttribute('data-target'));
-                const duration = 2000;
-                const start = performance.now();
-                el.textContent = '0';
-                
-                function update(now) {
-                    const progress = Math.min((now - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.floor(eased * target);
-                    if (progress < 1) {
-                        requestAnimationFrame(update);
-                    } else {
-                        el.textContent = target;
-                    }
-                }
-                requestAnimationFrame(update);
-            });
-        }
-
-        // 使用IntersectionObserver触发
-        const heroObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    startCount();
-                }
-            });
-        }, { threshold: 0.5 });
-
-        const heroStats = document.querySelector('.hero-stats');
-        if (heroStats) heroObserver.observe(heroStats);
-
-        // ===== 滚动显示动画 =====
-        const revealObserver = new IntersectionObserver((entries) => {
+        // Intersection Observer for fade-in
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            revealObserver.observe(el);
-        });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // ===== FAQ手风琴 =====
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // 关闭所有
-            document.querySelectorAll('.faq-item').forEach(faq => {
-                faq.classList.remove('active');
-            });
-            
-            // 如果点击的不是当前激活的，则打开
-            if (!isActive) {
-                item.classList.add('active');
-            }
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
         }
 
-        // ===== 视频弹窗 =====
-        const videoModal = document.getElementById('videoModal');
-        const videoFrame = document.getElementById('videoFrame');
+        // FAQ toggle
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            item.classList.toggle('active');
+        }
 
-        function openModal(url) {
-            videoFrame.src = url;
-            videoModal.classList.add('active');
+        // Modal
+        function openModal(bvid) {
+            const modal = document.getElementById('modal');
+            const iframe = document.getElementById('modalIframe');
+            iframe.src = `https://player.bilibili.com/player.html?bvid=${bvid}&autoplay=0`;
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            videoFrame.src = '';
-            videoModal.classList.remove('active');
+            const modal = document.getElementById('modal');
+            const iframe = document.getElementById('modalIframe');
+            modal.classList.remove('active');
+            iframe.src = '';
             document.body.style.overflow = '';
         }
 
-        videoModal.addEventListener('click', (e) => {
-            if (e.target === videoModal) {
-                closeModal();
+        // Back to top
+        const backTop = document.getElementById('backTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backTop.classList.add('visible');
+            } else {
+                backTop.classList.remove('visible');
             }
         });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // ===== QQ号点击复制 =====
-        document.querySelectorAll('.contact-card-value').forEach(card => {
-            card.style.cursor = 'pointer';
-            card.title = '点击复制';
-            card.addEventListener('click', function() {
-                const text = this.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    const original = this.textContent;
-                    this.textContent = '已复制!';
-                    setTimeout(() => {
-                        this.textContent = original;
-                    }, 1500);
-                }).catch(() => {
-                    // fallback
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    this.textContent = '已复制!';
-                    setTimeout(() => {
-                        this.textContent = original;
-                    }, 1500);
-                });
-            });
-        });
+        // Busuanzi stats
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+        script.onload = () => {
+            document.getElementById('pv-stats').innerHTML = 
+                `${document.getElementById('busuanzi_value_site_pv')} 次浏览`;
+        };
+        document.head.appendChild(script);
     </script>
 </body>
 </html>
