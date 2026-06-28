@@ -177,6 +177,19 @@
             display: none;
         }
 
+        .desktop-bg { display: none; }
+        .mobile-bg { display: none; }
+
+        @media (min-width: 769px) {
+            .desktop-bg { display: block; }
+            .mobile-bg { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-bg { display: none; }
+            .mobile-bg { display: block; }
+        }
+
         .hero-bg-img {
             position: absolute;
             top: 0;
@@ -886,13 +899,16 @@
             document.addEventListener('DOMContentLoaded', function() {
                 var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
                 var img = document.querySelector('.hero-bg-img');
-                var vid = document.querySelector('.hero-bg-video');
+                var vids = document.querySelectorAll('.hero-bg-video');
                 if (isWeChat) {
                     if (img) img.style.display = 'block';
-                    if (vid) vid.style.display = 'none';
+                    vids.forEach(function(v){ v.style.display = 'none'; });
                 } else {
                     if (img) img.style.display = 'none';
-                    if (vid) { vid.style.display = 'block'; vid.play().catch(function(){}); }
+                    vids.forEach(function(v){ 
+                        v.style.display = ''; 
+                        v.play().catch(function(){});
+                    });
                 }
             });
             var t = function() { window.scrollTo(0, 0); };
@@ -942,8 +958,11 @@
             src="https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg"
             alt="">
         <div class="hero-glow"></div>
-        <video class="hero-bg-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
+        <video class="hero-bg-video desktop-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
             src="bg.mp4">
+        </video>
+        <video class="hero-bg-video mobile-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
+            src="bg_mobile.mp4">
         </video>
         <div class="hero-overlay"></div>
         <h1 class="fade-in">李大爷鼠标宏科技</h1>
