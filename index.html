@@ -210,6 +210,46 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
 
+        /* 鼠标品牌区 */
+        .brand-strip {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 99px;
+        }
+
+        .brand-strip-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .brand-item {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .brand-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-1px);
+        }
+
+        .brand-logitech  { color: #00b8fc; }
+        .brand-bloody    { color: #ff1744; }
+        .brand-razer     { color: #44d62c; }
+        .brand-steelseries { color: #ff6e00; }
+        .brand-rapoo     { color: #ffd600; }
+
         .hero-stats {
             display: flex;
             gap: 64px;
@@ -747,6 +787,14 @@
             <span>🛡️ 安全可靠</span>
             <span>💬 QQ服务</span>
             <span>🎮 多游戏支持</span>
+        </div>
+        <div class="brand-strip fade-in">
+            <span class="brand-strip-label">全鼠标通用</span>
+            <span class="brand-item brand-logitech">Logitech G</span>
+            <span class="brand-item brand-bloody">BLOODY</span>
+            <span class="brand-item brand-razer">RAZER</span>
+            <span class="brand-item brand-steelseries">SteelSeries</span>
+            <span class="brand-item brand-rapoo">RAPOO</span>
         </div>
         <div class="hero-stats fade-in">
             <div class="stat-item">
