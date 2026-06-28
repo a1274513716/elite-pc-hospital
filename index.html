@@ -722,12 +722,23 @@
 </head>
 <body>
     <script>
-        // 必须在body最开头执行，比任何内容都先跑
+        // 微信浏览器强制置顶（微信会自动恢复滚动位置，必须多重兜底）
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-        window.scrollTo(0, 0);
-        // iOS Safari 兼容：等DOM渲染完再强制一次
-        setTimeout(() => window.scrollTo(0, 0), 50);
-        setTimeout(() => window.scrollTo(0, 0), 300);
+        !function() {
+            var t = function() { window.scrollTo(0, 0); };
+            t();
+            // 多重保险：DOM解析后、渲染后、load后各来一次
+            document.addEventListener('DOMContentLoaded', t);
+            window.addEventListener('load', t);
+            setTimeout(t, 100);
+            setTimeout(t, 500);
+            setTimeout(t, 1000);
+            // requestAnimationFrame 循环直到确实在顶部
+            var check = function() {
+                if (window.scrollY > 0) { window.scrollTo(0, 0); requestAnimationFrame(check); }
+            };
+            requestAnimationFrame(check);
+        }();
     </script>
 
     <!-- Navigation -->
