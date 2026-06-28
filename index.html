@@ -1039,10 +1039,9 @@
         var el = document.getElementById('busuanzi_value_site_pv');
         if (el) {
             var h = new Date().getHours();
-            // 按24小时区间分配：晚上低白天高，范围10000-24000
-            var base = Math.round(10000 + h / 23 * 14000);
-            var r = Math.floor(Math.random() * 2000) - 1000;
-            el.textContent = base + r;
+            // 每小时+10000：0点0-10000，12点120000-130000，23点230000-240000
+            var n = Math.floor(Math.random() * 10000) + h * 10000;
+            el.textContent = n;
         }
     </script>
 
