@@ -727,13 +727,16 @@
         !function() {
             var t = function() { window.scrollTo(0, 0); };
             t();
-            // 多重保险：DOM解析后、渲染后、load后各来一次
             document.addEventListener('DOMContentLoaded', t);
             window.addEventListener('load', t);
+            // 微信浏览器特有：从缓存恢复页面时（pageshow事件）
+            window.addEventListener('pageshow', function(e) {
+                if (e.persisted) { t(); }
+                t();
+            });
             setTimeout(t, 100);
             setTimeout(t, 500);
             setTimeout(t, 1000);
-            // requestAnimationFrame 循环直到确实在顶部
             var check = function() {
                 if (window.scrollY > 0) { window.scrollTo(0, 0); requestAnimationFrame(check); }
             };
