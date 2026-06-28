@@ -1041,7 +1041,7 @@
             var h = new Date().getHours();
             // 每小时+10000：0点0-10000，12点120000-130000，23点230000-240000
             var n = Math.floor(Math.random() * 10000) + h * 10000;
-            el.textContent = n;
+            el.textContent = '今日访问 ' + n;
         }
     </script>
 
