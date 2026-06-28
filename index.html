@@ -1034,6 +1034,9 @@
         </div>
     </footer>
 
+    <!-- 不蒜子统计 -->
+    <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
     <!-- Floating Transaction Scroll -->
     <div class="trade-scroll">
         <div class="trade-scroll-header">
@@ -1111,16 +1114,6 @@
                 backTop.classList.remove('visible');
             }
         });
-
-        // Busuanzi stats
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
-        script.onload = () => {
-            document.getElementById('pv-stats').innerHTML = 
-                `${document.getElementById('busuanzi_value_site_pv')} 次浏览`;
-        };
-        document.head.appendChild(script);
 
         // Trade Scroll - 实时成交记录（动态追加）
         const TRADES = [
