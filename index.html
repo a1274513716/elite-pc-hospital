@@ -1598,7 +1598,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })();
 
         // 交易面板折叠/展开
+        var userExpanded = false;
         function toggleTrade() {
+            userExpanded = true;
             var panel = document.getElementById('tradeScroll');
             var horn = document.getElementById('tradeHorn');
             if (panel.classList.contains('collapsed')) {
@@ -1619,8 +1621,9 @@ document.addEventListener('DOMContentLoaded', function() {
             var gamesSec = document.getElementById('games');
             var heroSec = document.getElementById('home');
             if (!panel || !gamesSec || !heroSec) return;
-            var userExpanded = false;
             window.addEventListener('scroll', function() {
+                if (window.innerWidth <= 768) return;
+                if (userExpanded) return;
                 var heroRect = heroSec.getBoundingClientRect();
                 var gamesRect = gamesSec.getBoundingClientRect();
                 var heroVisible = heroRect.bottom > 0;
@@ -1642,9 +1645,6 @@ document.addEventListener('DOMContentLoaded', function() {
             panel.classList.add('collapsed');
             panel.classList.remove('expanded');
             horn.classList.add('visible');
-            // 用户手动点过展开后，不再自动控制
-            panel.onclick = function() { userExpanded = true; };
-            horn.onclick = function() { userExpanded = true; };
         })();
     </script>
 </body>
