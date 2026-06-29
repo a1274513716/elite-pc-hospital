@@ -545,29 +545,38 @@
             display: block;
         }
 
-        /* 9. Floating QQ Bar */
+        /* 9. Floating QQ Bar - iOS 液态玻璃风格 */
         .float-qq {
             position: fixed;
             bottom: 24px;
             right: 24px;
             z-index: 999;
-            background: var(--accent-red);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: white;
-            padding: 16px 24px;
+            padding: 14px 24px;
             border-radius: 99px;
-            box-shadow: 0 10px 30px rgba(255, 23, 68, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 600;
+            gap: 10px;
+            font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             text-decoration: none;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
         .float-qq:hover {
             transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         /* 10. Transaction Scroll (Left Side) */
