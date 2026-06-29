@@ -192,6 +192,70 @@
             100% { opacity: 1; transform: scale(1.08); }
         }
 
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(242, 201, 76, 0.15);
+            border: 1px solid #f2c94c;
+            color: #f2c94c;
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            transform: skewX(-15deg);
+        }
+        .hero-tag span {
+            display: inline-block;
+            transform: skewX(15deg);
+        }
+        .hero h1 {
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: linear-gradient(180deg, #fff 0%, #ccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .btn-secondary:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 48px; }
+        }
+
+        .text-gold {
+            color: #f2c94c;
+        }
+
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -929,9 +993,14 @@
             src="bg_mobile.mp4">
         </video>
         <div class="hero-overlay"></div>
-        <div class="hero-btns fade-in">
-            <a href="#games" class="btn btn-primary">浏览游戏宏</a>
-            <a href="#contact" class="btn btn-outline">联系我们</a>
+        <div class="hero-content">
+            <div class="hero-tag"><span>PRO GAMING MACRO</span></div>
+            <h1>主宰战场<br><span class="text-gold">唯快不破</span></h1>
+            <p>李大爷鼠标宏科技 —— 为职业玩家打造极致手速与精准度</p>
+            <div class="hero-btns">
+                <a href="#games" class="btn btn-primary">浏览游戏宏</a>
+                <a href="#contact" class="btn btn-secondary">联系我们</a>
+            </div>
         </div>
     </section>
 
