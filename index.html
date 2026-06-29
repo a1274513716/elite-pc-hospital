@@ -1428,15 +1428,21 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </footer>
 
-    <!-- 访问统计 -->
+    <!-- 访问统计 - 不蒜子 -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <script>
-        var el = document.getElementById('busuanzi_value_site_pv');
-        if (el) {
-            var h = new Date().getHours();
-            // 每小时+10000：0点0-10000，12点120000-130000，23点230000-240000
-            var n = Math.floor(Math.random() * 10000) + h * 10000;
-            el.textContent = '今日访问 ' + n;
-        }
+        // 显示真实PV
+        setTimeout(function() {
+            var el = document.getElementById('busuanzi_value_site_pv');
+            if (el) {
+                var pv = parseInt(el.textContent);
+                if (pv && pv > 0) {
+                    el.textContent = '总访问 ' + pv.toLocaleString() + ' 次';
+                } else {
+                    el.textContent = '加载中...';
+                }
+            }
+        }, 2000);
     </script>
 
     <!-- 小喇叭（折叠时显示） -->
