@@ -232,9 +232,6 @@
         }
 
         .hero > .fade-in,
-        .hero > .hero-tags,
-        .hero > .hero-stats,
-        .hero > .hero-btns,
         .hero > .brand-strip {
             position: relative;
             z-index: 2;
@@ -271,44 +268,16 @@
             font-weight: 400;
         }
 
-        .hero-tags {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-
-        .hero-tags span {
-            background: rgba(255,255,255,0.1);
-            padding: 8px 16px;
-            border-radius: 99px;
-            font-size: 14px;
-            color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 64px;
-            margin-bottom: 48px;
-        }
-
-        .stat-item h3 {
-            font-size: 36px;
-            color: var(--accent-gold);
-            font-weight: 700;
-        }
-
-        .stat-item p {
-            color: var(--text-sub);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
         .hero-btns {
             display: flex;
-            gap: 16px;
+            justify-content: center;
+            gap: 120px;
+            margin-top: 80px;
+        }
+
+        .hero-btns .btn {
+            min-width: 200px;
+            text-align: center;
         }
 
         /* 3. Game List (Cards) */
@@ -887,6 +856,7 @@
             .trade-scroll { display: none; }
             .trade-horn { display: none; }
             .trade-marquee { display: flex; }
+            .hero-btns { gap: 40px; flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -967,32 +937,12 @@
         <div class="hero-overlay"></div>
         <h1 class="fade-in">李大爷鼠标宏科技</h1>
         <h2 class="fade-in">专业游戏宏解决方案</h2>
-        <div class="hero-tags fade-in">
-            <span>🎯 精准稳定</span>
-            <span>🔄 持续更新</span>
-            <span>🛡️ 安全可靠</span>
-            <span>💬 QQ服务</span>
-            <span>🎮 多游戏支持</span>
-        </div>
-        <div class="hero-stats fade-in">
-            <div class="stat-item">
-                <h3>9</h3>
-                <p>款游戏</p>
-            </div>
-            <div class="stat-item">
-                <h3>150+</h3>
-                <p>武器宏</p>
-            </div>
-            <div class="stat-item">
-                <h3>100%</h3>
-                <p>好评率</p>
-            </div>
-        </div>
-        <div class="hero-btns fade-in">
-            <a href="#games" class="btn btn-primary">浏览游戏宏</a>
-            <a href="#contact" class="btn btn-outline">联系我们</a>
-        </div>
     </section>
+
+    <div class="hero-btns fade-in">
+        <a href="#games" class="btn btn-primary">浏览游戏宏</a>
+        <a href="#contact" class="btn btn-outline">联系我们</a>
+    </div>
 
     <!-- Games List -->
     <section id="games">
