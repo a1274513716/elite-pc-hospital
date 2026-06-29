@@ -232,6 +232,7 @@
         }
 
         .hero > .fade-in,
+        .hero > .hero-btns,
         .hero > .brand-strip {
             position: relative;
             z-index: 2;
@@ -272,7 +273,8 @@
             display: flex;
             justify-content: center;
             gap: 120px;
-            margin-top: 80px;
+            margin-top: auto;
+            padding-bottom: 40px;
         }
 
         .hero-btns .btn {
@@ -856,7 +858,8 @@
             .trade-scroll { display: none; }
             .trade-horn { display: none; }
             .trade-marquee { display: flex; }
-            .hero-btns { gap: 40px; flex-direction: column; align-items: center; }
+            .hero-btns { flex-direction: column; gap: 16px; align-items: center; }
+            .hero-btns .btn { min-width: 160px; }
         }
     </style>
 </head>
@@ -937,12 +940,11 @@
         <div class="hero-overlay"></div>
         <h1 class="fade-in">李大爷鼠标宏科技</h1>
         <h2 class="fade-in">专业游戏宏解决方案</h2>
+        <div class="hero-btns fade-in">
+            <a href="#games" class="btn btn-primary">浏览游戏宏</a>
+            <a href="#contact" class="btn btn-outline">联系我们</a>
+        </div>
     </section>
-
-    <div class="hero-btns fade-in">
-        <a href="#games" class="btn btn-primary">浏览游戏宏</a>
-        <a href="#contact" class="btn btn-outline">联系我们</a>
-    </div>
 
     <!-- Games List -->
     <section id="games">
