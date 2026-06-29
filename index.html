@@ -434,40 +434,129 @@
         }
 
         /* 5. Reviews */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 100px;
-        }
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 100px;
+}
 
-        .review-card {
-            background: #1c1c1e;
-            padding: 24px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
+/* 核心评价 - 金色边框高亮 */
+.review-card.featured {
+    background: linear-gradient(135deg, #1c1c1e 0%, #2a2a2e 100%);
+    border: 2px solid #f2c94c;
+    box-shadow: 0 0 20px rgba(242, 201, 76, 0.15);
+    position: relative;
+    overflow: hidden;
+}
 
-        .stars {
-            color: var(--accent-gold);
-            margin-bottom: 12px;
-        }
+.review-card.featured::before {
+    content: "⭐ 核心评价";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #f2c94c;
+    color: #1c1c1e;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 0 0 0 8px;
+}
 
-        .review-text {
-            color: #d1d1d1;
-            font-size: 14px;
-            line-height: 1.5;
-            font-style: italic;
-        }
+.review-card.featured .stars {
+    color: #f2c94c;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
 
-        .reviewer {
-            margin-top: 16px;
-            font-size: 12px;
-            color: var(--text-sub);
-            text-align: right;
-        }
+/* 折叠区域样式 */
+.more-reviews-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
 
-        /* 6. Services */
+.more-reviews-toggle:hover {
+    color: #f2c94c;
+}
+
+.more-reviews-toggle::before {
+    content: "▼";
+    margin-right: 8px;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.more-reviews-toggle.active::before {
+    transform: rotate(180deg);
+}
+
+.more-reviews-toggle .toggle-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: underline;
+}
+
+/* 隐藏的评价卡片 */
+.review-card.hidden {
+    display: none;
+}
+
+/* 显示的评价卡片 */
+.review-card.visible {
+    display: block;
+}
+
+/* 评价卡片基础样式 */
+.review-card {
+    background: #1c1c1e;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.review-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.stars {
+    color: #f2c94c;
+    margin-bottom: 12px;
+}
+
+.review-text {
+    color: #d1d1d1;
+    font-size: 14px;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.reviewer {
+    margin-top: 16px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+}
+
+/* 淡入动画 */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+        /* 6./* 6. Services */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -1081,86 +1170,155 @@
     </section>
 
     <!-- Reviews -->
-            <section id="reviews">
-        <h2 class="section-title fade-in">客户<span>评价</span></h2>
-        <div class="container reviews-grid">
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍，半夜还在更，售后神了"</p>
-                <div class="reviewer">- CFHD老玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"和平精英模拟器26把枪幽灵宏，一键拾取太爽，模拟器党福音，推荐！"</p>
-                <div class="reviewer">- 手游模拟器玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"彩虹六号53把主武器+3把副武器，压枪稳如狗，更新比官方还快"</p>
-                <div class="reviewer">- 彩虹六号玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"The Finals AK和FCAR压枪绝了，扫射不飘，这把血赚"</p>
-                <div class="reviewer">- The Finals玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"高能英雄15把枪冲锋步枪都有，全自动压枪，新手也能乱杀"</p>
-                <div class="reviewer">- 高能英雄玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"生死狙击2突击步枪宏，后座力直接消失，手感起飞"</p>
-                <div class="reviewer">- 生死狙击玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"AVA四服通用的宏太难找了，李大爷这个直接一个宏跑四个服"</p>
-                <div class="reviewer">- AVA国际服玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"三角洲行动全套宏，血手鼠标插上即用，体验丝滑"</p>
-                <div class="reviewer">- 三角洲行动玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"界外狂潮全鼠标宏，更新速度感人，李大爷YYDS"</p>
-                <div class="reviewer">- 界外狂潮玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"CFHD鬼跳+大跳上箱子，身法直接起飞，瞬狙也准"</p>
-                <div class="reviewer">- CFHD身法玩家</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"深圳上门装机，李大爷走线太帅了，理线强迫症福音，价格公道"</p>
-                <div class="reviewer">- 深圳装机客户</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"远程出配置单，图吧元老果然专业，性价比拉满，小白放心冲"</p>
-                <div class="reviewer">- 远程装机客户</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"鼠标DPI调到16000超准，回报率1000Hz零延迟，深度定制真香"</p>
-                <div class="reviewer">- 鼠标参数党</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"本地AI模型部署，小白也能一键跑大模型，省得折腾环境，省心"</p>
-                <div class="reviewer">- 本地AI部署客户</div>
-            </div>
-            <div class="review-card fade-in">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"视频VIP集成软件，一个软件看全网，李大爷整合得太好了"</p>
-                <div class="reviewer">- 视频VIP用户</div>
-            </div>
+<section id="reviews">
+    <h2 class="section-title fade-in">客户<span>评价</span></h2>
+    <div class="container reviews-grid">
+        <!-- 核心评价1 -->
+        <div class="review-card featured fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"一口气从CFHD买到彩虹六号再买到The Finals，绑定不封号，稳！"</p>
+            <div class="reviewer">- CFHD-买断客户（消费1000+）</div>
         </div>
-    </section>
+        
+        <!-- 核心评价2 -->
+        <div class="review-card featured fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"买的彩虹六号宏用了一年了，封号包赔真的兑现了，售后无敌"</p>
+            <div class="reviewer">- 彩虹六号老客户（使用1年+）</div>
+        </div>
+        
+        <!-- 核心评价3 -->
+        <div class="review-card featured fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"彩虹六号续费，用着舒服就一直用，封号包赔让我一点不慌"</p>
+            <div class="reviewer">- 彩虹六号-续费客户</div>
+        </div>
+        
+        <!-- 折叠开关 -->
+        <div class="more-reviews-toggle fade-in" id="toggleReviews">
+            <span class="toggle-text">查看更多评价</span>
+        </div>
+        
+        <!-- 其他评价（初始隐藏） -->
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍，半夜还在更，售后神了"</p>
+            <div class="reviewer">- CFHD老玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"和平精英模拟器26把枪幽灵宏，一键拾取太爽，模拟器党福音，推荐！"</p>
+            <div class="reviewer">- 手游模拟器玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"彩虹六号53把主武器+3把副武器，压枪稳如狗，更新比官方还快"</p>
+            <div class="reviewer">- 彩虹六号玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"The Finals AK和FCAR压枪绝了，扫射不飘，这把血赚"</p>
+            <div class="reviewer">- The Finals玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"高能英雄15把枪冲锋步枪都有，全自动压枪，新手也能乱杀"</p>
+            <div class="reviewer">- 高能英雄玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"生死狙击2突击步枪宏，后座力直接消失，手感起飞"</p>
+            <div class="reviewer">- 生死狙击玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"AVA四服通用的宏太难找了，李大爷这个直接一个宏跑四个服"</p>
+            <div class="reviewer">- AVA国际服玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"三角洲行动全套宏，血手鼠标插上即用，体验丝滑"</p>
+            <div class="reviewer">- 三角洲行动玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"界外狂潮全鼠标宏，更新速度感人，李大爷YYDS"</p>
+            <div class="reviewer">- 界外狂潮玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"CFHD鬼跳+大跳上箱子，身法直接起飞，瞬狙也准"</p>
+            <div class="reviewer">- CFHD身法玩家</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"深圳上门装机，李大爷走线太帅了，理线强迫症福音，价格公道"</p>
+            <div class="reviewer">- 深圳装机客户</div>
+        </div>
+        
+        <div class="review-card hidden fade-in">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"本地AI模型部署太强了，35B干翻了市面上一堆在线API，生产力拉满"</p>
+            <div class="reviewer">- AI玩家</div>
+        </div>
+    </div>
+</section>
+
+<script>
+// 折叠/展开评价功能
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('toggleReviews');
+    const hiddenCards = document.querySelectorAll('.review-card.hidden');
+    let isExpanded = false;
+    
+    toggleBtn.addEventListener('click', function() {
+        isExpanded = !isExpanded;
+        
+        if (isExpanded) {
+            toggleBtn.classList.add('active');
+            toggleBtn.querySelector('.toggle-text').textContent = '收起评价';
+            
+            hiddenCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.remove('hidden');
+                    card.classList.add('visible');
+                }, index * 100); // 依次显示
+            });
+        } else {
+            toggleBtn.classList.remove('active');
+            toggleBtn.querySelector('.toggle-text').textContent = '查看更多评价';
+            
+            hiddenCards.forEach(card => {
+                card.classList.add('hidden');
+                card.classList.remove('visible');
+            });
+        }
+    });
+    
+    // 淡入动画
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
 
 <section id="services">
         <h2 class="section-title fade-in">增值<span>服务</span></h2>
