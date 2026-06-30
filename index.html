@@ -1018,42 +1018,68 @@
             position: relative;
         }
 
-        .service-detail {
-            aspect-ratio: auto;
-            background: #1c1c1e;
+        /* 3D卡片翻转弹窗 */
+        .flip-card {
+            width: 90%;
             max-width: 500px;
-            padding: 48px 36px 36px;
+            perspective: 1200px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            min-height: 380px;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            transform: scale(0.1) rotateY(15deg) rotateX(10deg);
+        }
+        .flip-card-inner.flipped {
+            transform: scale(1) rotateY(0) rotateX(0);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 380px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 36px;
+            box-sizing: border-box;
+            background: #1c1c1e;
             border: 1px solid rgba(255,255,255,0.08);
-            animation: cardFlipIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            transform-origin: center center;
         }
-
-        @keyframes cardFlipIn {
-            0% {
-                transform: perspective(900px) rotateX(15deg) rotateY(-8deg) scale(0.2) translateZ(-300px);
-                opacity: 0;
-            }
-            40% {
-                transform: perspective(900px) rotateX(5deg) rotateY(-3deg) scale(1.05) translateZ(20px);
-                opacity: 0.9;
-            }
-            70% {
-                transform: perspective(900px) rotateX(2deg) rotateY(-1deg) scale(0.98) translateZ(-5px);
-                opacity: 1;
-            }
-            100% {
-                transform: perspective(900px) rotateX(0) rotateY(0) scale(1) translateZ(0);
-                opacity: 1;
-            }
+        .flip-card-front {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
-
-        .service-detail .s-icon { font-size: 48px; margin-bottom: 16px; }
-        .service-detail h3 { font-size: 24px; margin-bottom: 8px; }
-        .service-detail .s-desc { color: var(--text-sub); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
-        .service-detail .s-price { font-size: 28px; font-weight: 700; color: var(--accent-gold); margin-bottom: 20px; }
-        .service-detail .s-price span { font-size: 14px; color: var(--text-sub); font-weight: 400; }
-        .service-detail .s-cta { margin-top: 16px; }
-        .service-detail .s-cta .btn { min-width: 180px; }
+        .flip-card-front .fc-icon { font-size: 72px; margin-bottom: 16px; }
+        .flip-card-front h3 { font-size: 28px; margin-bottom: 8px; }
+        .flip-card-front p { color: var(--text-sub); font-size: 15px; max-width: 300px; }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            padding: 48px 36px 36px;
+        }
+        .flip-card-back .s-icon { font-size: 48px; margin-bottom: 16px; }
+        .flip-card-back h3 { font-size: 24px; margin-bottom: 8px; }
+        .flip-card-back .s-desc { color: var(--text-sub); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
+        .flip-card-back .s-price { font-size: 28px; font-weight: 700; color: var(--accent-gold); margin-bottom: 20px; }
+        .flip-card-back .s-price span { font-size: 14px; color: var(--text-sub); font-weight: 400; }
+        .flip-card-back .s-cta { margin-top: 16px; }
+        .flip-card-back .s-cta .btn { min-width: 180px; }
+        .modal-close-back {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            color: rgba(255,255,255,0.5);
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close-back:hover { color: #fff; }
 
         .modal-close {
             position: absolute;
@@ -1542,9 +1568,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Service Detail Modal -->
     <div class="modal" id="serviceModal" onclick="closeService()">
-        <div class="modal-content service-detail" onclick="event.stopPropagation()">
-            <div class="modal-close" onclick="closeService()">×</div>
-            <div id="serviceDetailBody"></div>
+        <div class="flip-card" onclick="event.stopPropagation()">
+            <div class="flip-card-inner" id="flipCardInner">
+                <!-- 正面：原卡片内容 -->
+                <div class="flip-card-front">
+                    <div id="serviceFrontContent"></div>
+                </div>
+                <!-- 背面：详情内容 -->
+                <div class="flip-card-back">
+                    <div class="modal-close-back" onclick="closeService()">×</div>
+                    <div id="serviceDetailBody"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1723,18 +1758,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function openService(idx) {
             var s = SERVICE_DATA[idx];
-            var body = document.getElementById('serviceDetailBody');
-            body.innerHTML = '<div class="s-icon">' + s.icon + '</div>' +
+            // 正面：图标+标题+简短描述
+            var frontContent = '<div class="fc-icon">' + s.icon + '</div>' +
+                '<h3>' + s.title + '</h3>' +
+                '<p style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:8px;">点击展开详情 →</p>';
+            document.getElementById('serviceFrontContent').innerHTML = frontContent;
+            // 背面：完整详情
+            var backContent = '<div class="s-icon">' + s.icon + '</div>' +
                 '<h3>' + s.title + '</h3>' +
                 '<div class="s-desc">' + s.desc + '</div>' +
                 '<div class="s-price">' + s.price + ' <span>' + s.priceNote + '</span></div>' +
                 '<div class="s-cta"><a href="#contact" class="btn btn-primary" onclick="closeService()">立即咨询</a></div>';
-            document.getElementById('serviceModal').classList.add('active');
+            document.getElementById('serviceDetailBody').innerHTML = backContent;
+            // 弹窗 + 翻转
+            var modal = document.getElementById('serviceModal');
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            // 先展示正面（小卡片由远及近），再翻转
+            var inner = document.getElementById('flipCardInner');
+            inner.classList.remove('flipped');
+            // 强制回流后触发动画
+            void inner.offsetWidth;
+            setTimeout(function() {
+                inner.classList.add('flipped');
+            }, 50);
         }
 
         function closeService() {
-            document.getElementById('serviceModal').classList.remove('active');
+            var modal = document.getElementById('serviceModal');
+            var inner = document.getElementById('flipCardInner');
+            inner.classList.remove('flipped');
+            modal.classList.remove('active');
             document.body.style.overflow = '';
         }
 
