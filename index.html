@@ -1160,20 +1160,35 @@
             .site-nav { min-width: auto; }
             .nav-links { display: none; }
             .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: rgba(17,17,17,0.95);
-                backdrop-filter: blur(20px);
-                padding: 24px;
-                gap: 16px;
-            }
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    top: 70px;
+                    left: 0;
+                    width: 100%;
+                    background: rgba(17, 17, 17, 0.92);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    padding: 20px 0;
+                    gap: 0;
+                    border-bottom: 1px solid rgba(255, 23, 68, 0.1);
+                }
+                .nav-links.active a {
+                    height: 48px;
+                    padding: 0 24px;
+                    justify-content: flex-start;
+                    width: 100%;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                }
+                .nav-links.active a:last-child {
+                    border-bottom: none;
+                }
+                .nav-links.active a:hover {
+                    background: rgba(242, 170, 0, 0.12);
+                    color: var(--accent-gold);
+                }
             .mobile-toggle { display: block; }
             .site-nav { min-width: auto; }
-            .nav-links a { height: 44px; padding: 0 24px; justify-content: flex-start; width: 100%; }
             .nav-brand img { height: 32px; }
             .brand-title { font-size: 16px; }
             .brand-sub { font-size: 11px; }
