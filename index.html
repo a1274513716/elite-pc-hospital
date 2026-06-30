@@ -572,99 +572,80 @@
     transform: translateY(-2px);
 }
 
-/* 评价轮播 */
-.reviews-carousel-container {
-    max-width: 1000px;
-    margin: 0 auto 40px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 50px;
-}
-.reviews-carousel {
-    display: flex;
-    overflow: hidden;
-    gap: 16px;
-    width: 100%;
-    scroll-behavior: smooth;
-}
-.reviews-carousel .review-card {
-    flex: 0 0 calc((100% - 32px) / 3);
-    min-width: 0;
-    background: #1c1c1e;
-    padding: 24px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
-.reviews-carousel .review-card.featured {
-    background: linear-gradient(135deg, #1c1c1e 0%, #2a2a2e 100%);
-    border: 2px solid #f2c94c;
-    box-shadow: 0 0 20px rgba(242, 201, 76, 0.15);
-    position: relative;
-    overflow: hidden;
-}
-.reviews-carousel .review-card.featured::before {
-    content: "⭐ 核心评价";
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #f2c94c;
-    color: #1c1c1e;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 4px 12px;
-    border-radius: 0 0 0 8px;
-}
-.carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.6);
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 2;
-    line-height: 1;
-}
-.carousel-arrow:hover {
-    background: rgba(255,255,255,0.15);
-    color: var(--accent-gold);
-    border-color: var(--accent-gold);
-}
-.carousel-prev { left: 0; }
-.carousel-next { right: 0; }
-.carousel-dots {
-    text-align: center;
-    margin: 20px 0 60px;
-}
-.carousel-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    margin: 0 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.carousel-dot.active {
-    background: var(--accent-gold);
-    width: 24px;
-    border-radius: 4px;
-}
+/* 评价轮播 - 35B设计 */
+        .reviews-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .reviews-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .review-card {
+            min-width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .review-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .review-content.gold-border {
+            border: 2px solid #f2c94c;
+            box-shadow: 0 0 20px rgba(255, 214, 0, 0.1);
+        }
+        .review-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .review-author {
+            color: #f2c94c;
+            font-weight: bold;
+        }
+        .review-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            font-size: 18px;
+        }
+        .nav-arrow:hover { background: var(--accent-red); }
+        .dots { display: flex; gap: 10px; }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .dot.active { background: #f2c94c; transform: scale(1.2); }
 
-.stars {
+        .stars {
     color: #f2c94c;
     margin-bottom: 12px;
 }
@@ -1374,148 +1355,85 @@
         </div>
     </section>
 
-    <!-- Reviews -->
-<section id="reviews">
-    <h2 class="section-title fade-in">客户<span>评价</span></h2>
-    <div class="reviews-carousel-container">
-        <button class="carousel-arrow carousel-prev" onclick="moveCarousel(-1)">‹</button>
-        <div class="reviews-carousel" id="reviewsCarousel">
-            <div class="review-card featured">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"一口气从CFHD买到彩虹六号再买到The Finals（终极角逐），绑定不封号，稳！"</p>
-                <div class="reviewer">- CFHD-买断客户（消费1000+）</div>
-            </div>
-            <div class="review-card featured">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"CFHD+彩虹六号+The Finals（终极角逐）三件套一起入的，每把枪都调得舒服，李大爷耐心，推荐"</p>
-                <div class="reviewer">- 三件套客户</div>
-            </div>
-            <div class="review-card featured">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"彩虹六号续费，用着舒服就一直用，封号包赔让我一点不慌"</p>
-                <div class="reviewer">- 彩虹六号-续费客户</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍，半夜还在更，售后神了"</p>
-                <div class="reviewer">- CFHD老玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"和平精英模拟器26把枪幽灵宏，一键拾取太爽，模拟器党福音，推荐！"</p>
-                <div class="reviewer">- 手游模拟器玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"彩虹六号53把主武器+3把副武器，压枪稳如狗，更新比官方还快"</p>
-                <div class="reviewer">- 彩虹六号玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"The Finals（终极角逐） AK和FCAR压枪绝了，扫射不飘，这把血赚"</p>
-                <div class="reviewer">- The Finals（终极角逐）玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"高能英雄15把枪冲锋步枪都有，全自动压枪，新手也能乱杀"</p>
-                <div class="reviewer">- 高能英雄玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"生死狙击2突击步枪宏，后座力直接消失，手感起飞"</p>
-                <div class="reviewer">- 生死狙击玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"AVA（战地之王）四服通用的宏太难找了，李大爷这个直接一个宏跑四个服"</p>
-                <div class="reviewer">- AVA（战地之王）国际服玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"三角洲行动全套宏，血手鼠标插上即用，体验丝滑"</p>
-                <div class="reviewer">- 三角洲行动玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"界外狂潮全鼠标宏，更新速度感人，李大爷YYDS"</p>
-                <div class="reviewer">- 界外狂潮玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"CFHD鬼跳+大跳上箱子，身法直接起飞，瞬狙也准"</p>
-                <div class="reviewer">- CFHD身法玩家</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"深圳上门装机，李大爷走线太帅了，理线强迫症福音，价格公道"</p>
-                <div class="reviewer">- 深圳装机客户</div>
-            </div>
-            <div class="review-card">
-                <div class="stars">★★★★★</div>
-                <p class="review-text">"本地AI模型部署太强了，35B干翻了市面上一堆在线API，生产力拉满"</p>
-                <div class="reviewer">- AI玩家</div>
+    <!-- Reviews - 35B设计 -->
+    <section id="reviews">
+        <h2 class="section-title fade-in">客户<span>评价</span></h2>
+        <div class="container">
+            <div class="reviews-container" id="reviewsContainer">
+                <div class="reviews-track" id="reviewsTrack">
+                    <!-- 评价卡片由JS生成 -->
+                </div>
+                <div class="review-nav">
+                    <button class="nav-arrow" onclick="prevReview()">←</button>
+                    <div class="dots" id="dots"></div>
+                    <button class="nav-arrow" onclick="nextReview()">→</button>
+                </div>
             </div>
         </div>
-        <button class="carousel-arrow carousel-next" onclick="moveCarousel(1)">›</button>
-    </div>
-    <div class="carousel-dots" id="carouselDots"></div>
-</section>
+    </section>
 
 <script>
-// 评价轮播
-(function() {
-    const carousel = document.getElementById('reviewsCarousel');
-    if (!carousel) return;
-    const cards = carousel.querySelectorAll('.review-card');
-    const totalSlides = cards.length;
-    const perPage = 3;
-    const totalPages = Math.ceil(totalSlides / perPage);
-    let currentPage = 0;
-    let autoTimer = null;
+// 评价数据 - 35B设计
+const reviewData = [
+    { text: "一口气从CFHD买到彩虹六号再买到The Finals（终极角逐），绑定不封号，稳！", author: "CFHD-买断客户（消费1000+）", highlight: true },
+    { text: "CFHD+彩虹六号+The Finals（终极角逐）三件套一起入的，每把枪都调得舒服，李大爷耐心，推荐", author: "三件套客户", highlight: true },
+    { text: "彩虹六号续费，用着舒服就一直用，封号包赔让我一点不慌", author: "彩虹六号-续费客户", highlight: true },
+    { text: "CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍，半夜还在更，售后神了", author: "CFHD老玩家" },
+    { text: "和平精英模拟器26把枪幽灵宏，一键拾取太爽，模拟器党福音，推荐！", author: "手游模拟器玩家" },
+    { text: "彩虹六号53把主武器+3把副武器，压枪稳如狗，更新比官方还快", author: "彩虹六号玩家" },
+    { text: "The Finals（终极角逐）AK和FCAR压枪绝了，扫射不飘，这把血赚", author: "The Finals（终极角逐）玩家" },
+    { text: "高能英雄15把枪冲锋步枪都有，全自动压枪，新手也能乱杀", author: "高能英雄玩家" },
+    { text: "生死狙击2突击步枪宏，后座力直接消失，手感起飞", author: "生死狙击玩家" },
+    { text: "AVA（战地之王）四服通用的宏太难找了，李大爷这个直接一个宏跑四个服", author: "AVA（战地之王）国际服玩家" },
+    { text: "三角洲行动全套宏，血手鼠标插上即用，体验丝滑", author: "三角洲行动玩家" },
+    { text: "界外狂潮全鼠标宏，更新速度感人", author: "界外狂潮玩家" },
+    { text: "CFHD鬼跳+大跳上箱子，身法直接起飞，瞬狙也准", author: "CFHD身法玩家" },
+    { text: "深圳上门装机，李大爷走线太帅了，理线强迫症福音，价格公道", author: "深圳装机客户" },
+    { text: "本地AI模型部署太强了，35B干翻了市面上一堆在线API，生产力拉满", author: "AI玩家" }
+];
 
-    // 创建指示点
-    const dotsContainer = document.getElementById('carouselDots');
-    for (let i = 0; i < totalPages; i++) {
-        const dot = document.createElement('span');
-        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        dot.onclick = function() { goToPage(i); };
-        dotsContainer.appendChild(dot);
-    }
+let curReview = 0;
+let reviewTimer = null;
 
-    function goToPage(page) {
-        if (page < 0) page = 0;
-        if (page >= totalPages) page = totalPages - 1;
-        currentPage = page;
-        // 直接滚动到对应位置，clientWidth = 每页宽度
-        carousel.scrollTo({ left: currentPage * carousel.clientWidth, behavior: 'smooth' });
-        // 更新dot
-        dotsContainer.querySelectorAll('.carousel-dot').forEach(function(d, i) {
-            d.className = 'carousel-dot' + (i === currentPage ? ' active' : '');
-        });
-    }
-
-    window.moveCarousel = function(dir) {
-        goToPage(currentPage + dir);
-        resetAuto();
-    };
-
-    function resetAuto() {
-        if (autoTimer) clearInterval(autoTimer);
-        autoTimer = setInterval(function() {
-            goToPage((currentPage + 1) % totalPages);
-        }, 5000);
-    }
-
-    // 悬停暂停
-    carousel.addEventListener('mouseenter', function() {
-        if (autoTimer) clearInterval(autoTimer);
+function initReviews() {
+    var track = document.getElementById('reviewsTrack');
+    var dots = document.getElementById('dots');
+    if (!track) return;
+    reviewData.forEach(function(r, i) {
+        var card = document.createElement('div');
+        card.className = 'review-card';
+        card.innerHTML = '<div class="review-content' + (r.highlight ? ' gold-border' : '') + '">' +
+            '<p class="review-text">"' + r.text + '"</p>' +
+            '<p class="review-author">- ' + r.author + '</p></div>';
+        track.appendChild(card);
+        var dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.onclick = function() { goReview(i); };
+        dots.appendChild(dot);
     });
-    carousel.addEventListener('mouseleave', resetAuto);
+    startReviewAuto();
+}
 
-    resetAuto();
-})();
+function goReview(i) {
+    var track = document.getElementById('reviewsTrack');
+    var dots = document.querySelectorAll('.dot');
+    curReview = i;
+    track.style.transform = 'translateX(-' + (i * 100) + '%)';
+    dots.forEach(function(d, j) { d.className = 'dot' + (j === i ? ' active' : ''); });
+}
 
-// 淡入动画
+function nextReview() { goReview((curReview + 1) % reviewData.length); }
+function prevReview() { goReview((curReview - 1 + reviewData.length) % reviewData.length); }
+function startReviewAuto() { reviewTimer = setInterval(nextReview, 5000); }
+function stopReviewAuto() { clearInterval(reviewTimer); }
+
+document.addEventListener('DOMContentLoaded', function() {
+    initReviews();
+    var c = document.getElementById('reviewsContainer');
+    if (c) { c.addEventListener('mouseenter', stopReviewAuto); c.addEventListener('mouseleave', startReviewAuto); }
+});
+
+// 服务数据
 document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
