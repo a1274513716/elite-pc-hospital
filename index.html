@@ -1432,6 +1432,21 @@ document.addEventListener('DOMContentLoaded', function() {
     initReviews();
     var c = document.getElementById('reviewsContainer');
     if (c) { c.addEventListener('mouseenter', stopReviewAuto); c.addEventListener('mouseleave', startReviewAuto); }
+    
+    // 移动端触屏滑动支持
+    var touchStartX = 0;
+    var touchEndX = 0;
+    c.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+    c.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextReview();
+            else prevReview();
+        }
+    }, {passive: true});
 });
 
 // 服务数据
