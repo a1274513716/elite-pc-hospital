@@ -1024,7 +1024,29 @@
             max-width: 500px;
             padding: 48px 36px 36px;
             border: 1px solid rgba(255,255,255,0.08);
+            animation: cardFlipIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            transform-origin: center center;
         }
+
+        @keyframes cardFlipIn {
+            0% {
+                transform: perspective(900px) rotateX(15deg) rotateY(-8deg) scale(0.2) translateZ(-300px);
+                opacity: 0;
+            }
+            40% {
+                transform: perspective(900px) rotateX(5deg) rotateY(-3deg) scale(1.05) translateZ(20px);
+                opacity: 0.9;
+            }
+            70% {
+                transform: perspective(900px) rotateX(2deg) rotateY(-1deg) scale(0.98) translateZ(-5px);
+                opacity: 1;
+            }
+            100% {
+                transform: perspective(900px) rotateX(0) rotateY(0) scale(1) translateZ(0);
+                opacity: 1;
+            }
+        }
+
         .service-detail .s-icon { font-size: 48px; margin-bottom: 16px; }
         .service-detail h3 { font-size: 24px; margin-bottom: 8px; }
         .service-detail .s-desc { color: var(--text-sub); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
