@@ -1028,48 +1028,36 @@
             position: relative;
             width: 100%;
             min-height: 380px;
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-            transform: scale(0.1) rotateY(15deg) rotateX(10deg);
-        }
-        .flip-card-inner.flipped {
-            transform: scale(1) rotateY(0) rotateX(0);
-        }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            min-height: 380px;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            border-radius: 20px;
-            padding: 36px;
-            box-sizing: border-box;
             background: #1c1c1e;
+            border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.08);
-        }
-        .flip-card-front {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        .flip-card-front .fc-icon { font-size: 72px; margin-bottom: 16px; }
-        .flip-card-front h3 { font-size: 28px; margin-bottom: 8px; }
-        .flip-card-front p { color: var(--text-sub); font-size: 15px; max-width: 300px; }
-        .flip-card-back {
-            transform: rotateY(180deg);
             padding: 48px 36px 36px;
+            box-sizing: border-box;
+            animation: cardFlipIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            transform-origin: center center;
+            backface-visibility: hidden;
         }
-        .flip-card-back .s-icon { font-size: 48px; margin-bottom: 16px; }
-        .flip-card-back h3 { font-size: 24px; margin-bottom: 8px; }
-        .flip-card-back .s-desc { color: var(--text-sub); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
-        .flip-card-back .s-price { font-size: 28px; font-weight: 700; color: var(--accent-gold); margin-bottom: 20px; }
-        .flip-card-back .s-price span { font-size: 14px; color: var(--text-sub); font-weight: 400; }
-        .flip-card-back .s-cta { margin-top: 16px; }
-        .flip-card-back .s-cta .btn { min-width: 180px; }
+        @keyframes cardFlipIn {
+            0% {
+                transform: perspective(900px) rotateX(20deg) rotateY(-10deg) scale(0.15) translateZ(-400px);
+                opacity: 0;
+            }
+            50% {
+                transform: perspective(900px) rotateX(8deg) rotateY(-4deg) scale(1.08) translateZ(30px);
+                opacity: 0.95;
+            }
+            100% {
+                transform: perspective(900px) rotateX(0) rotateY(0) scale(1) translateZ(0);
+                opacity: 1;
+            }
+        }
+        .flip-card-inner .s-icon { font-size: 48px; margin-bottom: 16px; }
+        .flip-card-inner h3 { font-size: 24px; margin-bottom: 8px; }
+        .flip-card-inner .s-desc { color: var(--text-sub); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
+        .flip-card-inner .s-price { font-size: 28px; font-weight: 700; color: var(--accent-gold); margin-bottom: 20px; }
+        .flip-card-inner .s-price span { font-size: 14px; color: var(--text-sub); font-weight: 400; }
+        .flip-card-inner .s-cta { margin-top: 16px; }
+        .flip-card-inner .s-cta .btn { min-width: 180px; }
         .modal-close-back {
             position: absolute;
             top: 12px;
@@ -1570,11 +1558,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="modal" id="serviceModal" onclick="closeService()">
         <div class="flip-card" onclick="event.stopPropagation()">
             <div class="flip-card-inner" id="flipCardInner">
-                <!-- 正面：原卡片内容 -->
-                <div class="flip-card-front">
-                    <div id="serviceFrontContent"></div>
-                </div>
-                <!-- 背面：详情内容 -->
                 <div class="flip-card-back">
                     <div class="modal-close-back" onclick="closeService()">×</div>
                     <div id="serviceDetailBody"></div>
@@ -1758,37 +1741,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function openService(idx) {
             var s = SERVICE_DATA[idx];
-            // 正面：图标+标题+简短描述
-            var frontContent = '<div class="fc-icon">' + s.icon + '</div>' +
-                '<h3>' + s.title + '</h3>' +
-                '<p style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:8px;">点击展开详情 →</p>';
-            document.getElementById('serviceFrontContent').innerHTML = frontContent;
-            // 背面：完整详情
-            var backContent = '<div class="s-icon">' + s.icon + '</div>' +
+            var body = document.getElementById('serviceDetailBody');
+            body.innerHTML = '<div class="s-icon">' + s.icon + '</div>' +
                 '<h3>' + s.title + '</h3>' +
                 '<div class="s-desc">' + s.desc + '</div>' +
                 '<div class="s-price">' + s.price + ' <span>' + s.priceNote + '</span></div>' +
                 '<div class="s-cta"><a href="#contact" class="btn btn-primary" onclick="closeService()">立即咨询</a></div>';
-            document.getElementById('serviceDetailBody').innerHTML = backContent;
-            // 弹窗 + 翻转
-            var modal = document.getElementById('serviceModal');
-            modal.classList.add('active');
+            document.getElementById('serviceModal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            // 先展示正面（小卡片由远及近），再翻转
-            var inner = document.getElementById('flipCardInner');
-            inner.classList.remove('flipped');
-            // 强制回流后触发动画
-            void inner.offsetWidth;
-            setTimeout(function() {
-                inner.classList.add('flipped');
-            }, 50);
+            // 卡片由远及近翻转展开动画（CSS animation已处理）
         }
 
         function closeService() {
-            var modal = document.getElementById('serviceModal');
-            var inner = document.getElementById('flipCardInner');
-            inner.classList.remove('flipped');
-            modal.classList.remove('active');
+            document.getElementById('serviceModal').classList.remove('active');
             document.body.style.overflow = '';
         }
 
