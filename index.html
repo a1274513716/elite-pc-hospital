@@ -821,130 +821,34 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
-        /* 10. Transaction Scroll - 热敏收据纸风格 */
-        .trade-scroll {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 998;
-            width: 310px;
-            max-height: 440px;
-            background: #f7f3ec;
-            border-radius: 0 4px 4px 0;
-            padding: 20px 16px 14px;
-            box-shadow: 4px 0 30px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-            color: #222;
-        }
-        /* 锯齿上边缘 */
-        .trade-scroll::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: radial-gradient(8px circle at 8px 0, transparent 99%, #f7f3ec 100%);
-            background-size: 16px 8px;
-            background-repeat: repeat-x;
-        }
-        /* 锯齿下边缘 */
-        .trade-scroll::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: radial-gradient(8px circle at 8px 8px, transparent 99%, #f7f3ec 100%);
-            background-size: 16px 8px;
-            background-repeat: repeat-x;
-        }
+        /* 10. 全局悬浮收据面板（利落版撕边 + 真实价目关联 + 15%售罄划线） */
+                .receipt-panel {
+                    position: fixed; left: 24px; top: 50%; transform: translateY(-50%) translateX(-360px); z-index: 999;
+                    width: 310px; background: #faf6ee; color: #111; padding: 24px 16px 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+                    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s; opacity: 0; font-family: 'Courier New', monospace;
+                }
+                .receipt-panel.active { transform: translateY(-50%) translateX(0); opacity: 1; }
 
-        .trade-scroll.collapsed {
-            transform: translateY(-50%) translateX(-310px);
-            opacity: 0;
-            pointer-events: none;
-        }
-        .trade-scroll.collapsed:hover { opacity: 0.5; }
-        .trade-scroll.expanded {
-            transform: translateY(-50%) translateX(0);
-            opacity: 1;
-        }
+                /* 纯CSS连续无缝锯齿撕边 */
+                .receipt-panel::before, .receipt-panel::after { content: ''; position: absolute; left: 0; width: 100%; height: 6px; background-size: 12px 6px; }
+                .receipt-panel::before { top: -6px; background-image: linear-gradient(135deg, transparent 50%, #faf6ee 50%), linear-gradient(45deg, #faf6ee 50%, transparent 50%); }
+                .receipt-panel::after { bottom: -6px; background-image: linear-gradient(45deg, transparent 50%, #faf6ee 50%), linear-gradient(135deg, #faf6ee 50%, transparent 50%); }
 
-        /* 收据头部 */
-        .trade-scroll-header {
-            text-align: center;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed #ccc;
-            margin-bottom: 10px;
-            position: sticky;
-            top: 0;
-            background: #f7f3ec;
-        }
-        .trade-scroll-header .store-name {
-            font-size: 16px;
-            font-weight: 800;
-            color: #222;
-            letter-spacing: 2px;
-        }
-        .trade-scroll-header .store-sub {
-            font-size: 10px;
-            color: #999;
-            margin-top: 2px;
-            letter-spacing: 1px;
-        }
-        .trade-scroll-header .receipt-divider {
-            font-size: 10px;
-            color: #bbb;
-            margin-top: 6px;
-            letter-spacing: 4px;
-        }
-        .trade-scroll-header .dot {
-            display: none;
-        }
+                .receipt-header { text-align: center; border-bottom: 1px dashed #bbb; padding-bottom: 12px; margin-bottom: 12px; }
+                .receipt-header h4 { font-size: 15px; font-weight: 800; letter-spacing: 1px; color: #222; }
+                .receipt-header p { font-size: 10px; color: #666; margin-top: 2px; }
+                .receipt-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 310px; overflow: hidden; }
 
-        /* 小喇叭按钮 */
-        .trade-horn {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 999;
-            width: 4px;
-            height: 40px;
-            background: rgba(255, 23, 68, 0.15);
-            border-radius: 0 2px 2px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-        .trade-horn.visible { opacity: 1; pointer-events: auto; }
-        .trade-horn:hover { 
-            width: 6px;
-            background: rgba(255, 23, 68, 0.5);
-        }
+                .receipt-item { font-size: 12px; border-bottom: 1px dashed #eae6dd; padding-bottom: 6px; animation: itemIn 0.4s ease forwards; }
+                .receipt-item.sold-out { text-decoration: line-through; color: #999; opacity: 0.65; }
+                .receipt-item .highlight { color: #e67e22; font-weight: 700; }
+                .receipt-item .price { color: #e74c3c; font-weight: 700; }
+                @keyframes itemIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .trade-list-wrap { overflow: hidden; max-height: 340px; }
-        .trade-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+                .receipt-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1000; width: 36px; height: 48px; background: var(--accent-red); border-radius: 0 6px 6px 0; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; font-size: 16px; box-shadow: 2px 0 10px rgba(255,51,51,0.3); transition: all 0.3s; }
+                .receipt-trigger.hidden { opacity: 0; pointer-events: none; }
 
-        .trade-item {
-            font-size: 11px;
-            color: #555;
-            padding: 6px 0;
-            border-bottom: 1px dashed #e0ddd6;
-            line-height: 1.5;
-            font-family: 'Courier New', monospace;
-        }
-        .trade-item:last-child { border-bottom: none; }
-        .trade-item .highlight { color: #e67e22; font-weight: 700; }
-        .trade-item .price { color: #e74c3c; font-weight: 700; }
-
-        @keyframes fadeInItem { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutItem { from { opacity: 1; } to { opacity: 0; } }
-        footer {
+                footer {
             border-top: 1px solid rgba(255,255,255,0.05);
             padding: 40px 0;
             text-align: center;
@@ -1171,8 +1075,8 @@
                 border-radius: 0;
                 padding: 12px;
             }
-            .trade-scroll { display: none; }
-            .trade-horn { display: none; }
+            .receipt-panel { display: none !important; }
+            .receipt-trigger { display: none !important; }
             .trade-marquee { display: flex; }
             .hero-btns { flex-direction: column; gap: 16px; align-items: center; }
             .hero-btns .btn { min-width: 160px; }
@@ -1578,21 +1482,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     </script>
 
-    <!-- 小喇叭（折叠时显示） -->
-    <div class="trade-horn" id="tradeHorn" onclick="toggleTrade()">📢</div>
+    <!-- 全局悬浮收据系统 -->
+    <div class="receipt-trigger" id="receiptTrigger" onclick="toggleReceipt()">📢</div>
+    <div class="receipt-panel" id="receiptPanel">
+        <div class="receipt-header">
+            <h4>李大爷科技小票凭证</h4>
+            <p>REAL-TIME TRANSACTION LOG</p>
+            <div style="color: #bbb; margin-top: 4px; font-size: 10px; letter-spacing: 2px;">--------------------------</div>
+        </div>
+        <ul class="receipt-list" id="receiptList"></ul>
+    </div>
 
-    <!-- Floating Transaction Scroll -->
-    <div class="trade-scroll collapsed" id="tradeScroll" onclick="toggleTrade()">
-        <div class="trade-scroll-header">
-            <div>
-                <div class="store-name">李大爷鼠标宏</div>
-                <div class="store-sub">今日交易凭证</div>
-                <div class="receipt-divider">- - - - - - - - - - - -</div>
-            </div>
-        </div>
-        <div class="trade-list-wrap">
-            <ul class="trade-list" id="tradeList"></ul>
-        </div>
+    <!-- 移动端跑马条 -->
+    <div class="trade-marquee" id="tradeMarquee">
+        <div class="trade-marquee-inner" id="tradeMarqueeInner"></div>
     </div>
 
     <!-- Back to Top -->
@@ -1706,136 +1609,75 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Trade Scroll - 实时成交记录（动态追加）
-        const TRADES = [
-            { game: '彩虹六号', item: '全套', price: 368 },
-            { game: 'CFHD', item: '全套', price: 288 },
-            { game: '和平精英', item: '全套', price: 328 },
-            { game: 'The Finals（终极角逐）', item: '全套', price: 268 },
-            { game: '高能英雄', item: '全套', price: 298 },
-            { game: '生死狙击2', item: '全套', price: 198 },
-            { game: 'AVA（战地之王）', item: '全套', price: 258 },
-            { game: '三角洲行动', item: '全套', price: 328 },
-            { game: '界外狂潮', item: '全套', price: 298 },
-            { game: '彩虹六号', item: '全套', price: 368 },
-            { game: 'CFHD', item: '全套', price: 288 },
-            { game: '和平精英', item: '全套', price: 328 },
-            { game: '电脑装机', item: '全套主机', price: 0 }, // price在生成时随机
-            { game: '鼠标参数', item: '深度定制', price: 68 },
-            { game: '本地模型', item: '部署服务', price: 588 },
-            { game: 'The Finals（终极角逐）', item: '全套', price: 268 },
-            { game: 'AVA（战地之王）', item: '全套', price: 258 },
-            { game: '界外狂潮', item: '全套', price: 298 },
-            { game: '高能英雄', item: '全套', price: 298 },
-            { game: '视频VIP', item: '年卡', price: 168 },
+        // 收据系统数据
+        const TRADES_DATA = [
+            { name: '彩虹六号全套宏', price: 368 },
+            { name: 'CFHD全枪族特配宏', price: 288 },
+            { name: 'The Finals（终极角逐）全武器宏', price: 268 },
+            { name: '高能英雄身法控制宏', price: 298 },
+            { name: '生死狙击2多功能宏', price: 198 },
+            { name: 'AVA（战地之王）多服通用宏', price: 258 },
+            { name: '三角洲行动定点宏', price: 328 },
+            { name: '界外狂潮全套精密宏', price: 298 },
+            { name: '和平精英模拟器幽灵宏', price: 328 },
         ];
+        const PHONE_PREFIX = ['138', '139', '135', '158', '159', '150', '177', '186'];
 
-        function genPhone() {
-            let p = '1';
-            const prefixes = ['38', '35', '36', '58', '59', '50', '37', '39', '30', '31'];
-            p += prefixes[Math.floor(Math.random() * prefixes.length)];
-            for (let i = 0; i < 4; i++) p += Math.floor(Math.random() * 10);
-            p += 'xxxx';
-            return p;
-        }
-
-        function makeTradeHTML() {
-            const t = TRADES[Math.floor(Math.random() * TRADES.length)];
-            const phone = genPhone();
-            const price = t.price || (1999 + Math.floor(Math.random() * 18001));
-            return `<li class="trade-item" style="animation: fadeInItem 0.5s ease">用户 <span class="highlight">${phone}</span> 购买${t.game} ${t.item} <span class="price">¥${price}</span></li>`;
-        }
-
-        function makeMarqueeHTML() {
-            const t = TRADES[Math.floor(Math.random() * TRADES.length)];
-            const phone = genPhone();
-            const price = t.price || (1999 + Math.floor(Math.random() * 18001));
-            return '<span>📢 用户 <span class="m-highlight">' + phone + '</span> 购买' + t.game + ' ' + t.item + ' <span class="m-price">¥' + price + '</span></span>';
-        }
-
-        (function initTrades() {
-            const list = document.getElementById('tradeList');
-            for (let i = 0; i < 10; i++) {
-                list.innerHTML += makeTradeHTML();
+        // 15%概率生成售罄划线记录
+        function makeReceiptItem() {
+            const list = document.getElementById('receiptList');
+            if (!list) return;
+            const item = TRADES_DATA[Math.floor(Math.random() * TRADES_DATA.length)];
+            const phone = PHONE_PREFIX[Math.floor(Math.random() * PHONE_PREFIX.length)] + '****' + Math.floor(1000 + Math.random() * 9000);
+            const isSoldOut = Math.random() < 0.15;
+            const li = document.createElement('li');
+            if (isSoldOut) {
+                li.className = 'receipt-item sold-out';
+                li.innerHTML = '用户 <span class="highlight">' + phone + '</span> 抢购 ' + item.name + ' <span class="price">[今日限额已售罄/升级维护]</span>';
+            } else {
+                li.className = 'receipt-item';
+                li.innerHTML = '用户 <span class="highlight">' + phone + '</span> 成功购买 ' + item.name + ' <span class="price">¥' + item.price + '</span>';
             }
-            // 每4-8秒追加一条新成交到顶部
-            setInterval(() => {
-                const first = list.firstElementChild;
-                if (first) {
-                    // 旧记录滑出效果
-                    first.style.animation = 'fadeOutItem 0.5s ease';
-                    setTimeout(() => {
-                        if (first.parentNode) first.remove();
-                    }, 500);
-                }
-                // 新记录插到顶部
-                list.innerHTML = makeTradeHTML() + list.innerHTML;
-                // 控制列表长度不超过15条
-                while (list.children.length > 15) {
-                    list.lastElementChild.remove();
-                }
-            }, 4000 + Math.random() * 4000);
-        })();
+            if (list.children.length >= 7) list.removeChild(list.firstElementChild);
+            list.appendChild(li);
+        }
+
+        // 收据面板折叠/展开 + 滚动联动
+        var userClickedReceipt = false;
+        function toggleReceipt() {
+            userClickedReceipt = true;
+            document.getElementById('receiptPanel').classList.toggle('active');
+            document.getElementById('receiptTrigger').classList.toggle('hidden');
+        }
+        window.addEventListener('scroll', function() {
+            if (window.innerWidth <= 768 || userClickedReceipt) return;
+            var triggerZone = document.getElementById('games');
+            var p = document.getElementById('receiptPanel');
+            var t = document.getElementById('receiptTrigger');
+            if (triggerZone && triggerZone.getBoundingClientRect().top < window.innerHeight / 2) {
+                p.classList.add('active'); t.classList.add('hidden');
+            } else {
+                p.classList.remove('active'); t.classList.remove('hidden');
+            }
+        });
 
         // 移动端跑马条
-        (function initMarquee() {
+        (function() {
             var inner = document.getElementById('tradeMarqueeInner');
             if (!inner) return;
             var html = '';
             for (var i = 0; i < 15; i++) {
-                html += makeMarqueeHTML();
+                var item = TRADES_DATA[Math.floor(Math.random() * TRADES_DATA.length)];
+                var phone = PHONE_PREFIX[Math.floor(Math.random() * PHONE_PREFIX.length)] + '****';
+                html += '<span>📢 用户 ' + phone + ' 成功购买 ' + item.name + ' <span style="color:#e74c3c;font-weight:700;">¥' + item.price + '</span></span>';
             }
             inner.innerHTML = html + html;
         })();
 
-        // 交易面板折叠/展开
-        var userExpanded = false;
-        function toggleTrade() {
-            userExpanded = true;
-            var panel = document.getElementById('tradeScroll');
-            var horn = document.getElementById('tradeHorn');
-            if (panel.classList.contains('collapsed')) {
-                panel.classList.remove('collapsed');
-                panel.classList.add('expanded');
-                horn.classList.remove('visible');
-            } else {
-                panel.classList.add('collapsed');
-                panel.classList.remove('expanded');
-                horn.classList.add('visible');
-            }
-        }
-
-        // 滚动控制：首页收起喇叭，滚到游戏区自动展开，回到首页自动收起
+        // 初始化收据
         (function() {
-            var panel = document.getElementById('tradeScroll');
-            var horn = document.getElementById('tradeHorn');
-            var gamesSec = document.getElementById('games');
-            var heroSec = document.getElementById('home');
-            if (!panel || !gamesSec || !heroSec) return;
-            window.addEventListener('scroll', function() {
-                if (window.innerWidth <= 768) return;
-                if (userExpanded) return;
-                var heroRect = heroSec.getBoundingClientRect();
-                var gamesRect = gamesSec.getBoundingClientRect();
-                var heroVisible = heroRect.bottom > 0;
-                // 如果用户手动展开过，不再自动控制
-                if (userExpanded) return;
-                if (heroVisible) {
-                    // 在首页范围 → 收起
-                    panel.classList.add('collapsed');
-                    panel.classList.remove('expanded');
-                    horn.classList.add('visible');
-                } else if (gamesRect.top < window.innerHeight) {
-                    // 滚到游戏区 → 展开
-                    panel.classList.remove('collapsed');
-                    panel.classList.add('expanded');
-                    horn.classList.remove('visible');
-                }
-            });
-            // 初始状态：在首页收起
-            panel.classList.add('collapsed');
-            panel.classList.remove('expanded');
-            horn.classList.add('visible');
+            for (var i = 0; i < 6; i++) makeReceiptItem();
+            setInterval(makeReceiptItem, 4500);
         })();
     </script>
 </body>
