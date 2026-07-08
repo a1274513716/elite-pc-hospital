@@ -1,1095 +1,90 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李大爷鼠标宏科技 - 专业游戏宏解决方案</title>
-    <meta property="og:title" content="李大爷鼠标宏科技 - 专业游戏宏解决方案">
-    <meta name="description" content="李大爷鼠标宏科技 — 精准控枪，扭转战局。支持CFHD、彩虹六号、The Finals（终极角逐）、生死狙击2等主流FPS游戏宏定制，硬件级稳定压枪，全鼠标通用。">
-    <meta property="og:description" content="精准控枪，扭转战局。支持CFHD、彩虹六号、The Finals（终极角逐）等主流FPS游戏宏定制，硬件级稳定压枪。">
-    <meta property="og:image" content="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg">
-    <meta property="og:type" content="website">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
-    <style>
-        :root {
-            --bg-color: #111111;
-            --card-bg: rgba(28, 28, 30, 0.6);
-            --accent-red: #ff1744;
-            --accent-gold: #ffd600;
-            --text-main: #ffffff;
-            --text-sub: #86868b;
-            --blur: blur(20px);
-            --radius: 20px;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* Utilities */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .text-gradient {
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border-radius: 999px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background: var(--text-main);
-            color: #000;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-outline {
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--text-main);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--text-main);
-            background: rgba(255,255,255,0.1);
-        }
-
-        .tag {
-            background: rgba(255, 23, 68, 0.15);
-            color: var(--accent-red);
-            padding: 6px 12px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 600;
-            border: 1px solid rgba(255, 23, 68, 0.3);
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* 1. Navigation - 自定义毛玻璃 */
-                .site-nav {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 70px;
-                    z-index: 1000;
-                    background: transparent;
-                    backdrop-filter: blur(20px);
-                    -webkit-backdrop-filter: blur(20px);
-                    border-bottom: 1px solid rgba(255, 23, 68, 0.08);
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 0 40px;
-                    transition: var(--transition);
-                }
-                .nav-brand {
-                    display: flex;
-                    align-items: center;
-                    gap: 14px;
-                    text-decoration: none;
-                    flex-shrink: 0;
-                }
-                .nav-brand img { height: 40px; width: auto; display: block; }
-                .nav-brand-text { display: flex; flex-direction: column; }
-                .brand-title { font-size: 20px; color: var(--accent-gold); font-weight: 700; line-height: 1.3; }
-                .brand-sub { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 400; line-height: 1.3; }
-                .nav-links {
-                    display: flex;
-                    align-items: center;
-                    height: 70px;
-                }
-                .nav-links a {
-                    position: relative;
-                    font-size: 14px;
-                    color: rgba(255,255,255,0.6);
-                    font-weight: 600;
-                    height: 70px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0 18px;
-                    transition: color 0.2s, background 0.2s;
-                    letter-spacing: 0.5px;
-                    text-decoration: none;
-                }
-                .nav-links a:hover { color: var(--accent-gold); background: rgba(242,170,0,0.1); }
-                .mobile-toggle { display: none; font-size: 24px; color: rgba(255,255,255,0.7); cursor: pointer; background: none; border: none; }
-
-        /* 2. Hero Section */
-        .hero {
-            height: 100vh;
-            height: 100dvh;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background: #111111;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIDY MACRO - 战术控制游戏官网</title>
+<meta name="description" content="LIDY MACRO 战术控制系统，覆盖CFHD、彩虹六号、The Finals、三角洲行动等FPS项目。">
+<meta property="og:title" content="LIDY MACRO - 战术控制游戏官网">
+<meta property="og:description" content="硬件级手感调校，FPS战术控制系统。">
+<meta property="og:image" content="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23e63028' d='M50 5l12 30h32L68 54l10 32-28-19-28 19 10-32L6 35h32z'/%3E%3C/svg%3E">
+<style>
+:root{
+  --void:#050607;
+  --charcoal:#0b0e11;
+  --steel:#131820;
+  --steel-2:#1b222c;
+  --line:rgba(255,255,255,.13);
+  --line-hot:rgba(230,48,40,.55);
+  --text:#f4f1e8;
+  --muted:#a6a49e;
+  --dim:#666b70;
+  --red:#e63028;
+  --amber:#f0b23f;
+  --cyan:#7fd7ff;
+  --green:#93d66b;
+  --shadow:0 26px 80px rgba(0,0,0,.55);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--void)}
+body{min-height:100vh;background:var(--void);color:var(--text);font-family:Inter,Roboto,'Segoe UI','Microsoft YaHei',Arial,sans-serif;overflow-x:hidden;letter-spacing:0}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+img,video{max-width:100%}
+body::before{content:"";position:fixed;inset:0;z-index:-3;background:
+  linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+  linear-gradient(0deg,rgba(255,255,255,.025) 1px,transparent 1px),#050607;background-size:72px 72px;mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.75) 45%,transparent 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.075;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,.45) 4px,transparent 5px)}
+.noise{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}
+.container{width:min(1200px,calc(100% - 44px));margin:0 auto}
+.nav,.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:linear-gradient(180deg,rgba(5,6,7,.9),rgba(5,6,7,.45));backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.1)}
+.brand{display:flex;align-items:center;gap:14px;font-weight:950;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}.brand-mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line-hot);background:linear-gradient(135deg,rgba(230,48,40,.25),rgba(240,178,63,.08));box-shadow:0 0 30px rgba(230,48,40,.18);clip-path:polygon(16% 0,100% 0,84% 100%,0 100%)}.brand-mark::before{content:"";width:14px;height:14px;border:2px solid var(--red);transform:rotate(45deg)}.brand small{display:block;font-size:10px;font-weight:700;color:var(--amber);letter-spacing:3px;margin-top:2px}.nav-links{display:flex;align-items:center;gap:4px}.nav-links a{height:72px;display:flex;align-items:center;padding:0 13px;font-size:12px;font-weight:800;color:rgba(244,241,232,.68);letter-spacing:1.4px;text-transform:uppercase;position:relative}.nav-links a::after{content:"";position:absolute;left:13px;right:13px;bottom:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .24s var(--ease)}.nav-links a:hover{color:#fff}.nav-links a:hover::after{transform:scaleX(1)}.menu-btn{display:none;width:46px;height:46px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer}.menu-btn span{display:block;width:20px;height:2px;background:#fff;margin:5px auto}.nav-cta{height:42px;padding:0 18px;border:1px solid rgba(240,178,63,.55);background:rgba(240,178,63,.08);color:var(--amber);display:flex;align-items:center;font-size:12px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
 
         .hero-bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
             display: none;
         }
-
-        .desktop-bg { display: none; }
-        .mobile-bg { display: none; }
-
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+            display: block;
+        }
         @media (min-width: 769px) {
             .desktop-bg { display: block; }
             .mobile-bg { display: none; }
         }
-
         @media (max-width: 768px) {
             .desktop-bg { display: none; }
             .mobile-bg { display: block; }
         }
-
-        .hero-bg-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        /* 微信静态背景上的CSS动效 - 呼吸光晕 */
         .hero-glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(ellipse at 20% 30%, rgba(255,23,68,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(255,214,0,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 60%);
-            animation: heroGlow 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes heroGlow {
-            0% { opacity: 0.4; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.08); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-        .hero-tag {
-            display: inline-block;
-            background: rgba(242, 201, 76, 0.15);
-            border: 1px solid #f2c94c;
-            color: #f2c94c;
-            padding: 6px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            transform: skewX(-15deg);
-        }
-        .hero-tag span {
-            display: inline-block;
-            transform: skewX(15deg);
-        }
-        .hero h1 {
-            font-size: 80px;
-            line-height: 1;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-style: italic;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            color: #ffb400;
-        }
-        .hero p {
-            font-size: 18px;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 40px;
-            letter-spacing: 1px;
-        }
-        .text-gold {
-            color: #ffb400;
-        }
-
-        .hero-btns {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        .btn-secondary:hover {
-            border-color: #fff;
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-3px);
-        }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 48px; }
-        }
-
-        .text-gold {
-            color: #f2c94c;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.4) 50%, rgba(17,17,17,0.95) 85%, #111 100%);
-            z-index: 1;
-        }
-
-        .hero > .fade-in,
-        .hero > .hero-btns,
-        .hero > .brand-strip {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255,23,68,0.15) 0%, rgba(0,0,0,0) 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            display: none;
-        }
-
-        .hero h2 {
-            font-size: 28px;
-            color: var(--text-sub);
-            font-weight: 400;
-            line-height: 1.6;
-            margin-bottom: 0;
-        }
-
-        .hero-spacer {
-            flex: 1;
-        }
-
-        .hero-btns .btn {
-            min-width: 200px;
-            text-align: center;
-        }
-
-        .hero-btns {
-            display: flex;
-            justify-content: center;
-            gap: 120px;
-            margin-top: 50vh;
-        }
-
-        /* 3. Game List (Cards) */
-        .section-title {
-            font-size: 40px;
-            font-weight: 700;
-            text-align: center;
-            margin: 100px 0 60px;
-        }
-
-        .section-title span {
-            color: var(--accent-red);
-        }
-
-        /* Games section - 自然衔接 */
-        #games {
-            padding-top: 20px;
-        }
-
-        .games-header {
-            text-align: center;
-            padding: 60px 0 20px;
-        }
-
-        .games-header .section-title {
-            margin: 0 0 16px;
-        }
-
-        .games-subtitle {
-            font-size: 14px;
-            color: rgba(255,255,255,0.4);
-            letter-spacing: 6px;
-            font-weight: 300;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            padding-bottom: 100px;
-        }
-
-        .game-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 24px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 23, 68, 0.5);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        .game-card h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .game-card p {
-            color: var(--text-sub);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .update-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--accent-red);
-            color: white;
-            font-size: 10px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        /* 4. Portfolio */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-bottom: 100px;
-        }
-
-        .portfolio-item {
-            aspect-ratio: 16/9;
-            border-radius: var(--radius);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            background: rgba(0,0,0,0.2);
-        }
-
-        .play-btn {
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .play-btn::after {
-            content: '';
-            border-left: 20px solid white;
-            border-top: 12px solid transparent;
-            border-bottom: 12px solid transparent;
-            margin-left: 4px;
-        }
-
-        /* 5. Reviews */
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    margin-bottom: 100px;
-}
-
-/* 核心评价 - 金色边框高亮 */
-.review-card.featured {
-    background: linear-gradient(135deg, #1c1c1e 0%, #2a2a2e 100%);
-    border: 2px solid #f2c94c;
-    box-shadow: 0 0 20px rgba(242, 201, 76, 0.15);
-    position: relative;
-    overflow: hidden;
-}
-
-.review-card.featured::before {
-    content: "⭐ 核心评价";
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #f2c94c;
-    color: #1c1c1e;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 4px 12px;
-    border-radius: 0 0 0 8px;
-}
-
-.review-card.featured .stars {
-    color: #f2c94c;
-    font-size: 18px;
-    margin-bottom: 16px;
-}
-
-/* 折叠区域样式 */
-.more-reviews-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 32px 0;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.3s ease;
-}
-
-.more-reviews-toggle:hover {
-    color: #f2c94c;
-}
-
-.more-reviews-toggle::before {
-    content: "▼";
-    margin-right: 8px;
-    font-size: 12px;
-    transition: transform 0.3s ease;
-}
-
-.more-reviews-toggle.active::before {
-    transform: rotate(180deg);
-}
-
-.more-reviews-toggle .toggle-text {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: underline;
-}
-
-/* 隐藏的评价卡片 */
-.review-card.hidden {
-    display: none;
-}
-
-/* 显示的评价卡片 */
-.review-card.visible {
-    display: block;
-}
-
-/* 评价卡片基础样式 */
-.review-card {
-    background: #1c1c1e;
-    padding: 24px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-}
-
-.review-card:hover {
-    border-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-}
-
-/* 评价轮播 - 35B设计 */
-        .reviews-container {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-        .reviews-track {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        .review-card {
-            min-width: 100%;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-        .review-content {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 40px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-        .review-content.gold-border {
-            border: 2px solid #f2c94c;
-            box-shadow: 0 0 20px rgba(255, 214, 0, 0.1);
-        }
-        .review-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-        .review-author {
-            color: #f2c94c;
-            font-weight: bold;
-        }
-        .review-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-            gap: 20px;
-        }
-        .nav-arrow {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-            font-size: 18px;
-        }
-        .nav-arrow:hover { background: var(--accent-red); }
-        .dots { display: flex; gap: 10px; }
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .dot.active { background: #f2c94c; transform: scale(1.2); }
-
-        .stars {
-    color: #f2c94c;
-    margin-bottom: 12px;
-}
-
-.review-text {
-    color: #d1d1d1;
-    font-size: 14px;
-    line-height: 1.5;
-    font-style: italic;
-}
-
-.reviewer {
-    margin-top: 16px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
-    text-align: right;
-}
-
-/* 淡入动画 */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-        /* 6./* 6. Services */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-bottom: 100px;
-        }
-
-        .service-card {
-            background: linear-gradient(145deg, #1c1c1e, #111);
-            padding: 32px 24px;
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: var(--transition);
-        }
-
-        .service-card:hover {
-            border-color: var(--accent-gold);
-        }
-
-        .service-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
-        }
-
-        .service-card h4 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
-        .service-card p {
-            color: var(--text-sub);
-            font-size: 13px;
-        }
-
-        /* 7. FAQ */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto 100px;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 0;
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 24px 0;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            text-align: left;
-            font-size: 18px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-question::after {
-            content: '+';
-            font-size: 24px;
-            color: var(--accent-red);
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .faq-question::after {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            color: var(--text-sub);
-            line-height: 1.6;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding-bottom: 24px;
-        }
-
-        /* 8. Contact */
-        .contact-section {
-            background: linear-gradient(180deg, #111 0%, #1a1a1a 100%);
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .contact-box {
-            background: rgba(255, 23, 68, 0.1);
-            border: 1px solid var(--accent-red);
-            border-radius: var(--radius);
-            padding: 48px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .qq-num {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--accent-red);
-            font-family: monospace;
-            margin: 16px 0;
-            display: block;
-        }
-
-        /* 9. Floating QQ Bar - iOS 液态玻璃风格 */
-        .float-qq {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 999;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 99px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-        }
-
-        .float-qq:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 12px 40px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        /* 10. 全局悬浮收据面板（利落版撕边 + 真实价目关联 + 15%售罄划线） */
-                .receipt-panel {
-                    position: fixed; left: 24px; top: 50%; transform: translateY(-50%) translateX(-360px); z-index: 999;
-                    width: 310px; background: #faf6ee; color: #111; padding: 24px 16px 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-                    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s; opacity: 0; font-family: 'Courier New', monospace;
-                }
-                .receipt-panel.active { transform: translateY(-50%) translateX(0); opacity: 1; }
-
-                /* 纯CSS连续无缝锯齿撕边 */
-                .receipt-panel::before, .receipt-panel::after { content: ''; position: absolute; left: 0; width: 100%; height: 6px; background-size: 12px 6px; }
-                .receipt-panel::before { top: -6px; background-image: linear-gradient(135deg, transparent 50%, #faf6ee 50%), linear-gradient(45deg, #faf6ee 50%, transparent 50%); }
-                .receipt-panel::after { bottom: -6px; background-image: linear-gradient(45deg, transparent 50%, #faf6ee 50%), linear-gradient(135deg, #faf6ee 50%, transparent 50%); }
-
-                .receipt-header { text-align: center; border-bottom: 1px dashed #bbb; padding-bottom: 12px; margin-bottom: 12px; }
-                .receipt-header h4 { font-size: 15px; font-weight: 800; letter-spacing: 1px; color: #222; }
-                .receipt-header p { font-size: 10px; color: #666; margin-top: 2px; }
-                .receipt-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 310px; overflow: hidden; }
-
-                .receipt-item { font-size: 12px; border-bottom: 1px dashed #eae6dd; padding-bottom: 6px; animation: itemIn 0.4s ease forwards; }
-                .receipt-item.sold-out { text-decoration: line-through; color: #999; opacity: 0.65; }
-                .receipt-item .highlight { color: #e67e22; font-weight: 700; }
-                .receipt-item .price { color: #e74c3c; font-weight: 700; }
-                @keyframes itemIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-
-                .receipt-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1000; width: 4px; height: 40px; background: rgba(255, 23, 68, 0.15); border-radius: 0 2px 2px 0; cursor: pointer; transition: all 0.3s; }
-                .receipt-trigger.hidden { opacity: 0; pointer-events: none; }
-                .receipt-trigger:hover { width: 6px; background: rgba(255, 23, 68, 0.5); }
-
-                footer {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding: 40px 0;
-            text-align: center;
-            color: var(--text-sub);
-            font-size: 12px;
-        }
-
-        #pv-stats {
-            margin-top: 8px;
-            font-family: monospace;
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            width: 90%;
-            max-width: 900px;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* 3D卡片翻转弹窗 */
-        .flip-card {
-            width: 90%;
-            max-width: 500px;
-            perspective: 1200px;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            min-height: 380px;
-            background: #1c1c1e;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 48px 36px 36px;
-            box-sizing: border-box;
-            animation: cardFlipIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            transform-origin: center center;
-            backface-visibility: hidden;
-        }
-        @keyframes cardFlipIn {
-            0% {
-                transform: perspective(900px) rotateX(20deg) rotateY(-10deg) scale(0.15) translateZ(-400px);
-                opacity: 0;
-            }
-            50% {
-                transform: perspective(900px) rotateX(8deg) rotateY(-4deg) scale(1.08) translateZ(30px);
-                opacity: 0.95;
-            }
-            100% {
-                transform: perspective(900px) rotateX(0) rotateY(0) scale(1) translateZ(0);
-                opacity: 1;
-            }
-        }
-        .flip-card-inner .s-icon { font-size: 48px; margin-bottom: 16px; }
-        .flip-card-inner h3 { font-size: 24px; margin-bottom: 8px; }
-        .flip-card-inner .s-desc { color: var(--text-sub); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
-        .flip-card-inner .s-price { font-size: 28px; font-weight: 700; color: var(--accent-gold); margin-bottom: 20px; }
-        .flip-card-inner .s-price span { font-size: 14px; color: var(--text-sub); font-weight: 400; }
-        .flip-card-inner .s-cta { margin-top: 16px; }
-        .flip-card-inner .s-cta .btn { min-width: 180px; }
-        .modal-close-back {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            color: rgba(255,255,255,0.5);
-            font-size: 28px;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-close-back:hover { color: #fff; }
-
-        .modal-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: white;
-            font-size: 32px;
-            cursor: pointer;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Back to Top */
-        .back-top {
-            position: fixed;
-            bottom: 80px;
-            right: 30px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: var(--transition);
-            color: white;
-            text-decoration: none;
-        }
-
-        .back-top.visible {
-            opacity: 1;
-        }
-
-        /* 移动端交易跑马条（桌面隐藏） */
-        .trade-marquee {
-            display: none;
-            height: 32px;
-            background: linear-gradient(90deg, rgba(255,23,68,0.15), rgba(17,17,17,0.95));
-            border-bottom: 1px solid rgba(255,23,68,0.2);
-            overflow: hidden;
-            align-items: center;
-            position: sticky;
-            top: 70px;
-            z-index: 997;
-        }
-
-        .trade-marquee-inner {
-            display: flex;
-            gap: 48px;
-            white-space: nowrap;
-            animation: marqueeScroll 30s linear infinite;
-            font-size: 12px;
-            color: var(--text-sub);
-            padding: 0 16px;
-        }
-
-        .trade-marquee-inner span {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .trade-marquee-inner .m-highlight {
-            color: var(--accent-gold);
-            font-weight: 600;
-        }
-
-        .trade-marquee-inner .m-price {
-            color: var(--accent-red);
-            font-weight: 700;
-        }
-
-        @keyframes marqueeScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 42px; }
-            .hero h2 { font-size: 18px; }
-            .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
-            .mobile-toggle { display: block; }
-            .site-nav { min-width: auto; }
-            .nav-links { display: none; }
-            .nav-links.active {
-                    display: flex;
-                    flex-direction: column;
-                    position: absolute;
-                    top: 70px;
-                    left: 0;
-                    width: 100%;
-                    height: auto;
-                    background: #111;
-                    padding: 20px 0;
-                    gap: 0;
-                    border-bottom: 1px solid rgba(255, 23, 68, 0.15);
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-                }
-                .nav-links.active a {
-                    height: 48px;
-                    padding: 0 24px;
-                    justify-content: flex-start;
-                    width: 100%;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-                    color: rgba(255,255,255,0.7);
-                }
-                .nav-links.active a:last-child { border-bottom: none; }
-                .nav-links.active a:hover {
-                    background: rgba(242, 170, 0, 0.15);
-                    color: var(--accent-gold);
-                }
-                .nav-links.active a:active {
-                    background: rgba(242, 170, 0, 0.2);
-                }
-            .mobile-toggle { display: block; }
-            .site-nav { min-width: auto; }
-            .nav-brand img { height: 32px; }
-            .brand-title { font-size: 16px; }
-            .brand-sub { font-size: 11px; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .float-qq {
-                bottom: 0;
-                right: 0;
-                left: 0; 
-                justify-content: center; 
-                border-radius: 0;
-                padding: 12px;
-            }
-            .receipt-panel { display: none !important; }
-            .receipt-trigger { display: none !important; }
-            .trade-marquee { display: flex; }
-            .hero-btns { flex-direction: column; gap: 16px; align-items: center; }
-            .hero-btns .btn { min-width: 160px; }
-            body { padding-bottom: 60px; }
-            .reviews-carousel-container { padding: 0 40px; }
-            .reviews-carousel .review-card { flex: 0 0 calc((100% - 16px) / 2); }
-            .carousel-arrow { width: 32px; height: 32px; font-size: 18px; }
-        }
-    </style>
+            position: absolute; width: 600px; height: 600px;
+            top: 20%; left: 50%; transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(230,48,40,0.25) 0%, transparent 70%);
+            z-index: 1; pointer-events: none;
+            animation: heroPulse 6s ease-in-out infinite alternate;
+        }
+        @keyframes heroPulse {
+            0% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.8; transform: translateX(-50%) scale(1.2); }
+        }
+
+.hero{position:relative;min-height:100vh;min-height:100dvh;display:flex;align-items:center;overflow:hidden;background:#000}.hero-media{position:absolute;inset:0;z-index:0}.hero-media img,.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.08) contrast(1.06) brightness(.68)}.hero-media img{display:block}.hero-media video{display:none}.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(5,6,7,.92) 0%,rgba(5,6,7,.58) 38%,rgba(5,6,7,.2) 66%,rgba(5,6,7,.82) 100%),linear-gradient(180deg,rgba(5,6,7,.2) 0%,rgba(5,6,7,.2) 58%,var(--void) 100%)}.hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(circle at 75% 30%,rgba(230,48,40,.24),transparent 34%),linear-gradient(115deg,transparent 0 47%,rgba(240,178,63,.22) 47.1%,transparent 48.8%)}.hero-inner{position:relative;z-index:3;width:100%;padding-top:70px}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:44px;align-items:end}.kicker{display:inline-flex;align-items:center;gap:12px;margin-bottom:22px;color:var(--amber);font-size:12px;font-weight:950;letter-spacing:4px;text-transform:uppercase}.kicker::before{content:"";width:48px;height:2px;background:var(--red);box-shadow:0 0 18px var(--red)}h1{font-size:clamp(48px,8.5vw,118px);line-height:.88;max-width:900px;font-weight:1000;text-transform:uppercase;letter-spacing:-1px;text-shadow:0 18px 50px rgba(0,0,0,.65)}h1 span{display:block;color:transparent;-webkit-text-stroke:1px rgba(244,241,232,.9);text-shadow:none}.hero-copy{max-width:700px;margin-top:26px;font-size:clamp(15px,1.4vw,19px);line-height:1.8;color:rgba(244,241,232,.74);font-weight:500}.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:34px}.btn{min-height:50px;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:13px;font-weight:950;letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;transition:transform .22s var(--ease),background .22s,border-color .22s,box-shadow .22s;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}.btn:hover{transform:translateY(-2px);border-color:rgba(240,178,63,.8)}.btn-primary{background:linear-gradient(135deg,var(--red),#9d1712);border-color:rgba(230,48,40,.9);box-shadow:0 20px 46px rgba(230,48,40,.24)}.btn-ghost{background:rgba(5,6,7,.45)}.btn .arrow{width:22px;height:1px;background:currentColor;position:relative}.btn .arrow::after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border-right:1px solid currentColor;border-top:1px solid currentColor;transform:rotate(45deg)}.intel-panel{border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(15,20,27,.76),rgba(7,8,10,.66));backdrop-filter:blur(18px);box-shadow:var(--shadow);padding:18px;position:relative;overflow:hidden}.intel-panel::before{content:"OPERATION STATUS";display:block;color:var(--amber);font-size:11px;font-weight:950;letter-spacing:2px;margin-bottom:16px}.intel-panel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(230,48,40,.15),transparent 35%)}.stat-line{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding:15px 0;gap:20px}.stat-line strong{font-size:22px;font-weight:1000}.stat-line span{font-size:11px;color:var(--muted);letter-spacing:1.4px;text-align:right}.ticker{position:absolute;left:0;right:0;bottom:0;z-index:5;height:42px;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(240,178,63,.24);border-bottom:1px solid rgba(240,178,63,.16);background:rgba(5,6,7,.76);backdrop-filter:blur(14px)}.ticker-track{display:flex;gap:42px;white-space:nowrap;animation:ticker 26s linear infinite;color:var(--muted);font-size:12px;font-weight:800;letter-spacing:1px}.ticker b{color:var(--amber)}@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.section{position:relative;padding:112px 0}.section.alt{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))}.section-head{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;margin-bottom:44px}.eyebrow{color:var(--red);font-size:12px;font-weight:950;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}.section h2{font-size:clamp(34px,5vw,68px);line-height:.98;text-transform:uppercase;font-weight:1000}.section h2 span{color:var(--amber)}.section-desc{max-width:460px;color:var(--muted);font-size:14px;line-height:1.8;text-align:right}.campaign-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}.feature-card,.panel,.game-card,.service-card,.review-card,.faq-item{border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 18px 60px rgba(0,0,0,.22)}.feature-card{min-height:430px;position:relative;overflow:hidden;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;background-image:linear-gradient(180deg,rgba(5,6,7,.05),rgba(5,6,7,.86)),url('https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg');background-size:cover;background-position:center}.feature-card::before{content:"LIVE PATCH";position:absolute;top:24px;left:24px;background:var(--red);color:#fff;font-size:11px;font-weight:950;letter-spacing:2px;padding:8px 12px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}.feature-card h3{font-size:34px;line-height:1.05;margin-bottom:14px}.feature-card p{max-width:560px;color:rgba(244,241,232,.76);line-height:1.75}.side-stack{display:grid;gap:20px}.panel{padding:26px;position:relative;overflow:hidden}.panel h3{font-size:18px;text-transform:uppercase;margin-bottom:14px}.loadout{display:grid;gap:12px}.load-row{display:grid;grid-template-columns:90px 1fr 44px;gap:12px;align-items:center;font-size:12px;color:var(--muted)}.bar{height:8px;background:rgba(255,255,255,.1);overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--amber))}.tag-cloud{display:flex;flex-wrap:wrap;gap:10px}.tag{border:1px solid rgba(240,178,63,.3);background:rgba(240,178,63,.08);color:var(--amber);font-size:12px;font-weight:800;padding:8px 10px}.games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.game-card{position:relative;min-height:220px;padding:24px;overflow:hidden;transition:transform .24s var(--ease),border-color .24s,background .24s}.game-card:hover{transform:translateY(-4px);border-color:var(--line-hot);background:linear-gradient(180deg,rgba(230,48,40,.12),rgba(255,255,255,.018))}.game-card::before{content:attr(data-code);position:absolute;right:16px;top:14px;color:rgba(255,255,255,.09);font-size:42px;font-weight:1000}.game-card .status{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-size:11px;font-weight:950;letter-spacing:2px;text-transform:uppercase}.game-card .status::before{content:"";width:8px;height:8px;background:var(--green);box-shadow:0 0 14px var(--green)}.game-card h3{margin-top:38px;font-size:24px;text-transform:uppercase}.game-card p{margin-top:12px;color:var(--muted);font-size:13px;line-height:1.7}.game-card .meta{position:absolute;left:24px;bottom:20px;color:var(--amber);font-size:11px;font-weight:900;letter-spacing:2px}.video-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.video-card{position:relative;aspect-ratio:16/22;overflow:hidden;border:1px solid rgba(255,255,255,.13);background:#111;cursor:pointer;transition:transform .24s var(--ease),border-color .24s}.video-card:hover{transform:translateY(-5px);border-color:rgba(240,178,63,.75)}.video-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.86));z-index:1}.video-card::after{content:"PLAY";position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);width:78px;height:78px;border:1px solid rgba(255,255,255,.72);border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:950;letter-spacing:2px;color:#fff;background:rgba(5,6,7,.38);backdrop-filter:blur(6px)}.video-card:hover::after{border-color:var(--red);box-shadow:0 0 34px rgba(230,48,40,.38)}.video-card img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.04)}.video-title{position:absolute;left:18px;right:18px;bottom:18px;z-index:2}.video-title small{display:block;color:var(--amber);font-size:11px;font-weight:950;letter-spacing:2px;margin-bottom:8px}.video-title strong{font-size:18px}.reviews{max-width:920px;margin:0 auto}.review-card{min-width:100%;padding:42px;text-align:center}.review-card.highlight{border-color:rgba(240,178,63,.55);box-shadow:0 0 60px rgba(240,178,63,.08)}.review-track{display:flex;transition:transform .55s var(--ease)}.review-window{overflow:hidden}.review-text{font-size:20px;line-height:1.8;color:rgba(244,241,232,.88)}.review-author{margin-top:22px;color:var(--amber);font-size:13px;font-weight:950;letter-spacing:2px}.review-controls{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:24px}.icon-btn{width:44px;height:44px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer}.icon-btn:hover{border-color:var(--red);color:var(--red)}.dots{display:flex;gap:8px}.dot{width:24px;height:3px;background:rgba(255,255,255,.18);cursor:pointer}.dot.active{background:var(--red)}.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.service-card{min-height:250px;padding:26px;cursor:pointer;transition:transform .24s var(--ease),border-color .24s}.service-card:hover{transform:translateY(-4px);border-color:rgba(127,215,255,.55)}.service-card .service-code{color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:2px}.service-card h3{font-size:22px;margin-top:44px;margin-bottom:12px}.service-card p{color:var(--muted);font-size:13px;line-height:1.7}.faq-wrap{max-width:860px;margin:0 auto}.faq-item{margin-bottom:12px}.faq-q{width:100%;min-height:66px;background:transparent;border:0;display:flex;align-items:center;justify-content:space-between;text-align:left;padding:0 22px;cursor:pointer;font-weight:900}.faq-q span:first-child{font-size:16px}.faq-icon{width:22px;height:22px;position:relative}.faq-icon::before,.faq-icon::after{content:"";position:absolute;left:50%;top:50%;background:var(--red);transform:translate(-50%,-50%)}.faq-icon::before{width:18px;height:2px}.faq-icon::after{width:2px;height:18px}.faq-item.active .faq-icon::after{opacity:0}.faq-a{max-height:0;overflow:hidden;color:var(--muted);line-height:1.8;padding:0 22px;transition:max-height .28s var(--ease),padding .28s}.faq-item.active .faq-a{max-height:180px;padding:0 22px 22px}.contact{position:relative;padding:124px 0;background:linear-gradient(180deg,rgba(230,48,40,.06),rgba(5,6,7,1));overflow:hidden}.contact::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(920px,90%);height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--amber),transparent)}.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:38px;align-items:center}.contact h2{font-size:clamp(42px,6vw,86px);line-height:.95;text-transform:uppercase}.contact h2 span{color:var(--red)}.contact p{margin-top:20px;color:var(--muted);line-height:1.8}.contact-box{border:1px solid var(--line-hot);background:linear-gradient(180deg,rgba(230,48,40,.12),rgba(255,255,255,.03));padding:28px;box-shadow:var(--shadow)}.qq-label{color:var(--amber);font-size:12px;font-weight:950;letter-spacing:2px;text-transform:uppercase}.qq-num{display:block;margin:10px 0 24px;font-size:36px;font-family:Consolas,'Courier New',monospace;font-weight:1000;color:#fff}.float-contact{position:fixed;right:22px;bottom:22px;z-index:900;background:linear-gradient(135deg,var(--red),#8d1611);border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 50px rgba(230,48,40,.28);height:52px;padding:0 22px;display:flex;align-items:center;font-size:13px;font-weight:950;letter-spacing:1.6px;text-transform:uppercase;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}.back-top{position:fixed;right:24px;bottom:86px;z-index:880;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(5,6,7,.72);opacity:0;pointer-events:none;transition:opacity .2s}.back-top.visible{opacity:1;pointer-events:auto}footer{border-top:1px solid rgba(255,255,255,.1);padding:34px 0;color:var(--dim);font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:20px}.modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);opacity:0;transition:opacity .2s}.modal.active{display:flex;opacity:1}.modal-content{width:min(1060px,92vw);aspect-ratio:16/9;background:#000;border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow);position:relative}.modal-close{position:absolute;right:0;top:-48px;width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);font-size:28px;cursor:pointer}.modal iframe{width:100%;height:100%;border:0}.service-modal-card{width:min(560px,92vw);border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,#151b22,#080a0d);box-shadow:var(--shadow);padding:34px;position:relative}.service-close{position:absolute;right:18px;top:14px;font-size:30px;color:var(--muted);cursor:pointer}.service-modal-card h3{font-size:30px;margin:16px 0 12px}.service-modal-card p{color:var(--muted);line-height:1.8}.service-price{margin:24px 0;color:var(--amber);font-size:34px;font-weight:1000}.service-price span{font-size:13px;color:var(--muted);font-weight:700}.fade{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}.fade.visible{opacity:1;transform:none}
+@media(min-width:769px){.hero-media img{display:none}.hero-media video.desktop-bg{display:block}}
+@media(max-width:980px){.hero-grid,.campaign-grid,.contact-grid{grid-template-columns:1fr}.intel-panel{max-width:480px}.section-head{grid-template-columns:1fr}.section-desc{text-align:left}.games-grid{grid-template-columns:repeat(2,1fr)}.video-grid,.services-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.nav{height:64px;padding:0 18px}.brand{font-size:14px}.brand small{font-size:9px}.menu-btn{display:block}.nav-cta{display:none}.nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(5,6,7,.98);border-bottom:1px solid var(--line);padding:10px 0}.nav-links.active{display:block}.nav-links a{height:46px;padding:0 22px}.hero{min-height:760px}.hero-inner{padding-top:86px;padding-bottom:62px}.hero-grid{gap:26px}.hero-copy{font-size:14px}.btn{width:100%;min-height:48px}.intel-panel{display:none}.ticker{height:36px}.section{padding:74px 0}.games-grid,.video-grid,.services-grid{grid-template-columns:1fr}.feature-card{min-height:390px;padding:24px}.video-card{aspect-ratio:16/11}.contact-box{padding:22px}.qq-num{font-size:30px}.float-contact{left:0;right:0;bottom:0;justify-content:center;clip-path:none}.back-top{display:none}footer{padding-bottom:76px}.footer-inner{flex-direction:column}.modal-content{width:96vw}.review-card{padding:28px 20px}.review-text{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-    <script>
+<script>
         // 微信浏览器强制置顶（微信会自动恢复滚动位置，必须多重兜底）
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         !function() {
@@ -1127,332 +122,149 @@
             requestAnimationFrame(check);
         }();
     </script>
-
-    <!-- Navigation - 自定义毛玻璃 -->
-    <nav class="site-nav">
-        <a href="#" class="nav-brand">
-            <img src="logo.png" alt="李大爷">
-            <div class="nav-brand-text">
-                <span class="brand-title">鼠标宏科技</span>
-                <span class="brand-sub">专业游戏宏解决方案</span>
-            </div>
-        </a>
-        <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
-        <div class="nav-links" id="navLinks">
-            <a href="#home">首页</a>
-            <a href="#games">游戏宏</a>
-            <a href="#portfolio">演示</a>
-            <a href="#reviews">评价</a>
-            <a href="#services">服务</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contact">联系</a>
-        </div>
-    </nav>
-
-    <!-- 移动端交易跑马条 -->
-    <div class="trade-marquee" id="tradeMarquee">
-        <div class="trade-marquee-inner" id="tradeMarqueeInner"></div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+<div class="noise"></div>
+<nav class="nav">
+  <a class="brand" href="#home" aria-label="李大爷鼠标宏科技"><img src="logo.png" alt="李大爷" style="height:36px;width:auto;"><span>LIDY MACRO<small>TACTICAL CONTROL</small></span></a>
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="打开菜单"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#home">首页</a><a href="#campaign">赛季情报</a><a href="#games">武器库</a><a href="#media">实战影像</a><a href="#reviews">反馈</a><a href="#services">军需服务</a><a href="#faq">FAQ</a><a href="#contact">联系</a>
+  </div>
+  <a class="nav-cta" href="#contact">立即接入</a>
+</nav>
+<header class="hero" id="home">
+  <div class="hero-media">
         <img class="hero-bg-img"
             src="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"
             alt="">
-        <div class="hero-glow"></div>
-        <video class="hero-bg-video desktop-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
-            src="https://gp.lv.game.qq.com/dis_kt_20c1aad60f29ffdbc6700da41b6788df_1763950354/0b53xiaauaaaxaall2bdzbu6powdbk5aacqa.f0.mp4"
-            poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg">
-        </video>
-        <video class="hero-bg-video mobile-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
-            src="https://a1274513716.github.io/elite-pc-hospital/bg_mobile.mp4"
-            poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="hero-tag"><span>LIDY NB</span></div>
-            <h1>精准控枪<br><span class="text-gold">扭转战局</span></h1>
-            <div class="hero-btns">
-                <a href="#games" class="btn btn-primary">浏览游戏宏</a>
-                <a href="#contact" class="btn btn-secondary">联系我们</a>
-            </div>
+      </div>
+  <div class="hero-inner container">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Season 2026 / Operator Ready</div>
+        <h1>进入战场<br><span>锁定后坐力</span></h1>
+        <p class="hero-copy">LIDY MACRO 为主流FPS玩家提供手感调校、宏脚本与远程售后支持。覆盖CFHD、彩虹六号、The Finals、三角洲行动等项目，按武器和鼠标习惯做细分适配。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#games">查看武器库 <i class="arrow"></i></a>
+          <a class="btn btn-ghost" href="#media">播放实战影像 <i class="arrow"></i></a>
         </div>
-    </section>
-
-    <!-- Games List -->
-    <section id="games">
-        <div class="games-header fade-in">
-            <h2 class="section-title">游戏宏<span>库</span></h2>
-            <p class="games-subtitle">全鼠标通用 · 持续更新</p>
-        </div>
-        <div class="container games-grid">
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>生死狙击2</h3>
-                <p>全武器宏支持，稳定压枪，精准射击</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>彩虹六号</h3>
-                <p>53把主武器 + 3把副武器宏，全枪械覆盖</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>The Finals（终极角逐）</h3>
-                <p>AK47, FCAR, V95, M11, XP54, 刘易斯, LH1 全覆盖</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>高能英雄</h3>
-                <p>15+武器宏支持，稳定压枪体验</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>和平精英模拟器</h3>
-                <p>26幽灵宏，全武器精准控制</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>CFHD</h3>
-                <p>28把枪宏 + 瞬狙鬼跳大跳，全功能支持</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>AVA（战地之王）</h3>
-                <p>四服通用，全武器宏支持</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>三角洲行动</h3>
-                <p>全武器宏，稳定压枪体验</p>
-            </div>
-            <div class="game-card fade-in">
-                <span class="update-badge">持续更新</span>
-                <h3>界外狂潮</h3>
-                <p>全武器宏支持，精准射击</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio -->
-    <section id="portfolio">
-        <h2 class="section-title fade-in">产品<span>效果演示</span></h2>
-        <div class="container portfolio-grid">
-            <div class="portfolio-item fade-in" style="background-image: url('https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg')" onclick="openModal('BV1oKSnBkEEa')">
-                <div class="portfolio-overlay">
-                    <div class="play-btn"></div>
-                </div>
-            </div>
-            <div class="portfolio-item fade-in" style="background-image: url('https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg')" onclick="openModal('BV1oYJu6gEqg')">
-                <div class="portfolio-overlay">
-                    <div class="play-btn"></div>
-                </div>
-            </div>
-            <div class="portfolio-item fade-in" style="background-image: url('https://game.gtimg.cn/images/cfhd/cp/a20260601mact/act0-2.jpg')" onclick="openModal('BV1H6Gb6QEHE')">
-                <div class="portfolio-overlay">
-                    <div class="play-btn"></div>
-                </div>
-            </div>
-            <div class="portfolio-item fade-in" style="background-image: url('https://static.gametalk.qq.com/image/182/1780387636_1b377d594325819fa771fa10c4ead3bc.jpg')" onclick="openModal('BV1mvq5BLEbu')">
-                <div class="portfolio-overlay">
-                    <div class="play-btn"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews - 35B设计 -->
-    <section id="reviews">
-        <h2 class="section-title fade-in">客户<span>评价</span></h2>
-        <div class="container">
-            <div class="reviews-container" id="reviewsContainer">
-                <div class="reviews-track" id="reviewsTrack">
-                    <!-- 评价卡片由JS生成 -->
-                </div>
-                <div class="review-nav">
-                    <button class="nav-arrow" onclick="prevReview()">←</button>
-                    <div class="dots" id="dots"></div>
-                    <button class="nav-arrow" onclick="nextReview()">→</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<script>
-// 评价数据 - 35B设计
-const reviewData = [
-    { text: "一口气从CFHD买到彩虹六号再买到The Finals（终极角逐），三款全入手，稳！", author: "CFHD-买断客户（消费1000+）", highlight: true },
-    { text: "CFHD+彩虹六号+The Finals（终极角逐）三件套一起入的，每把枪都调得舒服，李大爷耐心，推荐", author: "三件套客户", highlight: true },
-    { text: "彩虹六号续费，用着舒服就一直用，售后省心让我一点不慌", author: "彩虹六号-续费客户", highlight: true },
-    { text: "CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍，半夜还在更，售后神了", author: "CFHD老玩家" },
-    { text: "和平精英模拟器26把枪幽灵宏，一键拾取太爽，模拟器党福音，推荐！", author: "手游模拟器玩家" },
-    { text: "彩虹六号53把主武器+3把副武器，压枪稳如狗，更新比官方还快", author: "彩虹六号玩家" },
-    { text: "The Finals（终极角逐）AK和FCAR压枪绝了，扫射不飘，这把血赚", author: "The Finals（终极角逐）玩家" },
-    { text: "高能英雄15把枪冲锋步枪都有，全自动压枪，新手也能乱杀", author: "高能英雄玩家" },
-    { text: "生死狙击2突击步枪宏，后座力直接消失，手感起飞", author: "生死狙击玩家" },
-    { text: "AVA（战地之王）四服通用的宏太难找了，李大爷这个直接一个宏跑四个服", author: "AVA（战地之王）国际服玩家" },
-    { text: "三角洲行动全套宏，血手鼠标插上即用，体验丝滑", author: "三角洲行动玩家" },
-    { text: "界外狂潮全鼠标宏，更新速度感人", author: "界外狂潮玩家" },
-    { text: "CFHD鬼跳+大跳上箱子，身法直接起飞，瞬狙也准", author: "CFHD身法玩家" },
-    { text: "深圳上门装机，李大爷走线太帅了，理线强迫症福音，价格公道", author: "深圳装机客户" },
-    { text: "本地AI模型部署太强了，35B干翻了市面上一堆在线API，生产力拉满", author: "AI玩家" }
-];
-
-let curReview = 0;
-let reviewTimer = null;
-
-function initReviews() {
-    var track = document.getElementById('reviewsTrack');
-    var dots = document.getElementById('dots');
-    if (!track) return;
-    reviewData.forEach(function(r, i) {
-        var card = document.createElement('div');
-        card.className = 'review-card';
-        card.innerHTML = '<div class="review-content' + (r.highlight ? ' gold-border' : '') + '">' +
-            '<p class="review-text">"' + r.text + '"</p>' +
-            '<p class="review-author">- ' + r.author + '</p></div>';
-        track.appendChild(card);
-        var dot = document.createElement('div');
-        dot.className = 'dot' + (i === 0 ? ' active' : '');
-        dot.onclick = function() { goReview(i); };
-        dots.appendChild(dot);
-    });
-    startReviewAuto();
-}
-
-function goReview(i) {
-    var track = document.getElementById('reviewsTrack');
-    var dots = document.querySelectorAll('.dot');
-    curReview = i;
-    track.style.transform = 'translateX(-' + (i * 100) + '%)';
-    dots.forEach(function(d, j) { d.className = 'dot' + (j === i ? ' active' : ''); });
-}
-
-function nextReview() { goReview((curReview + 1) % reviewData.length); }
-function prevReview() { goReview((curReview - 1 + reviewData.length) % reviewData.length); }
-function startReviewAuto() { reviewTimer = setInterval(nextReview, 5000); }
-function stopReviewAuto() { clearInterval(reviewTimer); }
-
-document.addEventListener('DOMContentLoaded', function() {
-    initReviews();
-    var c = document.getElementById('reviewsContainer');
-    if (c) { c.addEventListener('mouseenter', stopReviewAuto); c.addEventListener('mouseleave', startReviewAuto); }
-    
-    // 移动端触屏滑动支持
-    var touchStartX = 0;
-    var touchEndX = 0;
-    c.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-    c.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        var diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) nextReview();
-            else prevReview();
-        }
-    }, {passive: true});
-});
-
-// 服务数据
-document.addEventListener('DOMContentLoaded', function() {
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(function(el) {
-        observer.observe(el);
-    });
-});
-</script>
-
-<section id="services">
-        <h2 class="section-title fade-in">增值<span>服务</span></h2>
-        <div class="container services-grid">
-            <div class="service-card fade-in" onclick="openService(0)">
-                <div class="service-icon">🤖</div>
-                <h4>本地模型部署</h4>
-                <p>各大模型API / 35B大模型本地化部署，API成本直降90%</p>
-            </div>
-            <div class="service-card fade-in" onclick="openService(1)">
-                <div class="service-icon">📺</div>
-                <h4>视频VIP集成</h4>
-                <p>B站大会员等视频服务</p>
-            </div>
-            <div class="service-card fade-in" onclick="openService(2)">
-                <div class="service-icon">🖱️</div>
-                <h4>鼠标参数修改</h4>
-                <p>专业调整鼠标DPI和参数</p>
-            </div>
-            <div class="service-card fade-in" onclick="openService(3)">
-                <div class="service-icon">🖥️</div>
-                <h4>电脑装机服务</h4>
-                <p>深圳本地上门 / 外地远程指导</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Service Detail Modal -->
-    <div class="modal" id="serviceModal" onclick="closeService()">
-        <div class="flip-card" onclick="event.stopPropagation()">
-            <div class="flip-card-inner" id="flipCardInner">
-                <div class="flip-card-back">
-                    <div class="modal-close-back" onclick="closeService()">×</div>
-                    <div id="serviceDetailBody"></div>
-                </div>
-            </div>
-        </div>
+      </div>
+      <aside class="intel-panel" aria-label="状态面板">
+        <div class="stat-line"><strong>09</strong><span>已覆盖游戏项目</span></div>
+        <div class="stat-line"><strong>24H</strong><span>售后与微调响应</span></div>
+        <div class="stat-line"><strong>ALL</strong><span>主流鼠标方案适配</span></div>
+        <div class="stat-line"><strong>946408366</strong><span>技术交流群</span></div>
+      </aside>
     </div>
-
-    <!-- FAQ -->
-    <section id="faq">
-        <h2 class="section-title fade-in">常见<span>问题</span></h2>
-        <div class="container faq-container">
-            <div class="faq-item fade-in">
-                <button class="faq-question" onclick="toggleFaq(this)">全鼠标通用吗？</button>
-                <div class="faq-answer">是的，我们的宏支持所有主流鼠标，包括罗技、雷蛇、赛睿等品牌，即插即用。</div>
+  </div>
+  <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+</header>
+<main>
+  <section class="section" id="campaign">
+    <div class="container">
+      <div class="section-head fade">
+        <div><div class="eyebrow">Campaign Briefing</div><h2>赛季<span>情报</span></h2></div>
+        
+      </div>
+      <div class="campaign-grid">
+        <article class="feature-card fade">
+          <h3>实战手感优先</h3>
+          <p>围绕武器后坐力、DPI、鼠标驱动和玩家习惯做方案，减少无效参数堆叠，重点追求稳定、跟手、容易上手。</p>
+        </article>
+        <div class="side-stack">
+          <div class="panel fade">
+            <h3>作战参数</h3>
+            <div class="loadout">
+              <div class="load-row"><span>稳定性</span><div class="bar"><i style="width:94%"></i></div><b>94</b></div>
+              <div class="load-row"><span>覆盖度</span><div class="bar"><i style="width:89%"></i></div><b>89</b></div>
+              <div class="load-row"><span>售后响应</span><div class="bar"><i style="width:96%"></i></div><b>96</b></div>
+              <div class="load-row"><span>适配效率</span><div class="bar"><i style="width:91%"></i></div><b>91</b></div>
             </div>
-            <div class="faq-item fade-in">
-                <button class="faq-question" onclick="toggleFaq(this)">使用安全可靠吗？</button>
-                <div class="faq-answer">我们采用硬件级宏技术，模拟真实鼠标信号，安全可靠。</div>
-            </div>
-            <div class="faq-item fade-in">
-                <button class="faq-question" onclick="toggleFaq(this)">如何使用？</button>
-                <div class="faq-answer">购买后我们会提供详细的使用说明和视频教程，如有疑问可随时联系客服。</div>
-            </div>
-            <div class="faq-item fade-in">
-                <button class="faq-question" onclick="toggleFaq(this)">更新频率如何？</button>
-                <div class="faq-answer">我们持续更新，新武器、新枪械会第一时间推出宏，确保您始终使用最新版本。</div>
-            </div>
-            <div class="faq-item fade-in">
-                <button class="faq-question" onclick="toggleFaq(this)">售后服务怎么样？</button>
-                <div class="faq-answer">我们提供QQ客服和QQ群服务，QQ: 1274513716，群: 946408366，随时为您解答问题。</div>
-            </div>
-            <div class="faq-item fade-in">
-                <button class="faq-question" onclick="toggleFaq(this)">装机服务收费吗？</button>
-                <div class="faq-answer">装机服务根据配置和需求收费，具体价格请联系客服咨询。</div>
-            </div>
+          </div>
+          <div class="panel fade">
+            <h3>当前支持</h3>
+            <div class="tag-cloud"><span class="tag">罗技</span><span class="tag">雷蛇</span><span class="tag">血手</span><span class="tag">赛睿</span><span class="tag">CFHD</span><span class="tag">R6S</span><span class="tag">THE FINALS</span><span class="tag">三角洲</span></div>
+          </div>
         </div>
-    </section>
-
-    <!-- 联系我们 -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="section-title fade-in">联系<span>我们</span></h2>
-            <div class="contact-box fade-in">
-                <p style="color: var(--text-sub); margin-bottom: 8px;">加入技术交流群</p>
-                <span class="qq-num">946408366</span>
-                <p style="color: var(--text-sub); margin-top: 16px; font-size: 14px;">官方客服唯一QQ：1274513716</p>
-                <p style="color: var(--text-sub); margin-top: 4px; font-size: 13px;">24小时提供售后固件更新及手感微调支持</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
+      </div>
+    </div>
+  </section>
+  <section class="section alt" id="games">
+    <div class="container">
+      <div class="section-head fade">
+        <div><div class="eyebrow">Armory Database</div><h2>战术<span>武器库</span></h2></div>
+        
+      </div>
+      <div class="games-grid">
+        <article class="game-card fade" data-code="01"><span class="status">Live</span><h3>生死狙击2</h3><p>全武器宏支持，稳定压枪，精准射击。</p><div class="meta">FPS / FULL SET</div></article>
+        <article class="game-card fade" data-code="02"><span class="status">Live</span><h3>彩虹六号</h3><p>53把主武器 + 3把副武器宏，全枪械覆盖。</p><div class="meta">R6S / 56 WEAPONS</div></article>
+        <article class="game-card fade" data-code="03"><span class="status">Live</span><h3>The Finals</h3><p>AK47、FCAR、V95、M11、XP54、刘易斯、LH1覆盖。</p><div class="meta">ARENA / CORE LOADOUT</div></article>
+        <article class="game-card fade" data-code="04"><span class="status">Live</span><h3>高能英雄</h3><p>15+武器宏支持，冲锋枪、步枪手感稳定。</p><div class="meta">HERO FPS</div></article>
+        <article class="game-card fade" data-code="05"><span class="status">Live</span><h3>和平精英模拟器</h3><p>26幽灵宏，全武器精准控制。</p><div class="meta">EMULATOR</div></article>
+        <article class="game-card fade" data-code="06"><span class="status">Live</span><h3>CFHD</h3><p>28把枪宏 + 瞬狙、鬼跳、大跳上箱。</p><div class="meta">CLASSIC / ADVANCED</div></article>
+        <article class="game-card fade" data-code="07"><span class="status">Live</span><h3>AVA 战地之王</h3><p>四服通用，全武器宏支持。</p><div class="meta">MULTI SERVER</div></article>
+        <article class="game-card fade" data-code="08"><span class="status">Live</span><h3>三角洲行动</h3><p>全武器宏，适合长时间稳定压枪。</p><div class="meta">TACTICAL FPS</div></article>
+        <article class="game-card fade" data-code="09"><span class="status">Live</span><h3>界外狂潮</h3><p>全武器宏支持，持续更新。</p><div class="meta">NEW PATCH</div></article>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="media">
+    <div class="container">
+      <div class="section-head fade">
+        <div><div class="eyebrow">Gameplay Footage</div><h2>实战<span>影像</span></h2></div>
+        
+      </div>
+      <div class="video-grid">
+        <article class="video-card fade" onclick="openModal('BV1oKSnBkEEa')"><img src="https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg" alt="彩虹六号演示"><div class="video-title"><small>DEMO 01</small><strong>彩虹六号</strong></div></article>
+        <article class="video-card fade" onclick="openModal('BV1oYJu6gEqg')"><img src="https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg" alt="The Finals演示"><div class="video-title"><small>DEMO 02</small><strong>The Finals</strong></div></article>
+        <article class="video-card fade" onclick="openModal('BV1H6Gb6QEHE')"><img src="https://game.gtimg.cn/images/cfhd/cp/a20260601mact/act0-2.jpg" alt="CFHD演示"><div class="video-title"><small>DEMO 03</small><strong>CFHD</strong></div></article>
+        <article class="video-card fade" onclick="openModal('BV1mvq5BLEbu')"><img src="https://static.gametalk.qq.com/image/182/1780387636_1b377d594325819fa771fa10c4ead3bc.jpg" alt="实战演示"><div class="video-title"><small>DEMO 04</small><strong>实战演示</strong></div></article>
+      </div>
+    </div>
+  </section>
+  <section class="section alt" id="reviews">
+    <div class="container">
+      <div class="section-head fade">
+        <div><div class="eyebrow">Player Reports</div><h2>玩家<span>反馈</span></h2></div>
+        
+      </div>
+      <div class="reviews fade"><div class="review-window"><div class="review-track" id="reviewTrack"></div></div><div class="review-controls"><button class="icon-btn" onclick="prevReview()">←</button><div class="dots" id="reviewDots"></div><button class="icon-btn" onclick="nextReview()">→</button></div></div>
+    </div>
+  </section>
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-head fade">
+        <div><div class="eyebrow">Support Arsenal</div><h2>军需<span>服务</span></h2></div>
+        
+      </div>
+      <div class="services-grid">
+        <article class="service-card fade" onclick="openService(0)"><div class="service-code">SERVICE 01</div><h3>本地模型部署</h3><p>35B大模型本地化部署，一键启动脚本和远程调优。</p></article>
+        <article class="service-card fade" onclick="openService(1)"><div class="service-code">SERVICE 02</div><h3>视频VIP集成</h3><p>B站大会员等视频服务，稳定靠谱。</p></article>
+        <article class="service-card fade" onclick="openService(2)"><div class="service-code">SERVICE 03</div><h3>鼠标参数修改</h3><p>按DPI、回报率和手感习惯做深度定制。</p></article>
+        <article class="service-card fade" onclick="openService(3)"><div class="service-code">SERVICE 04</div><h3>电脑装机服务</h3><p>深圳本地上门，外地远程指导选配。</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section alt" id="faq">
+    <div class="container">
+      <div class="section-head fade"><div><div class="eyebrow">FAQ</div><h2>常见<span>问题</span></h2></div></div>
+      <div class="faq-wrap">
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>全鼠标通用吗？</span><i class="faq-icon"></i></button><div class="faq-a">支持多数主流鼠标方案，包括罗技、雷蛇、赛睿、血手等，具体按你的设备和游戏项目确认。</div></div>
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>如何使用？</span><i class="faq-icon"></i></button><div class="faq-a">购买后提供说明和视频教程，需要远程协助也可以联系QQ客服。</div></div>
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>更新频率如何？</span><i class="faq-icon"></i></button><div class="faq-a">新武器、新版本会持续调整，优先保证热门项目稳定可用。</div></div>
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>售后服务怎么联系？</span><i class="faq-icon"></i></button><div class="faq-a">客服QQ：1274513716，技术交流群：946408366，可咨询固件更新和手感微调。</div></div>
+      </div>
+    </div>
+  </section>
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <div class="fade"><div class="eyebrow">Join The Operation</div><h2>准备好<br><span>接入战局</span></h2><p>先发游戏项目、鼠标型号、DPI和主要武器需求，客服按你的设备和玩法给方案。</p></div>
+      <div class="contact-box fade"><div class="qq-label">技术交流群</div><span class="qq-num">946408366</span><div class="qq-label">官方客服唯一QQ</div><span class="qq-num">1274513716</span><a class="btn btn-primary" href="tencent://message/?uin=1274513716&Site=&Menu=yes">打开QQ咨询 <i class="arrow"></i></a></div>
+    </div>
+  </section>
+</main>
+<a class="float-contact" href="#contact">联系接入</a>
+<a href="#home" class="back-top" id="backTop">↑</a>
+<footer>
         <div class="container">
             <p>© 1980-2026 李大爷鼠标宏科技. All rights reserved.</p>
             <div id="pv-stats">
@@ -1460,225 +272,45 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </footer>
-
-    <!-- 不蒜子统计（彻底隐藏，仅后台采集） -->
     <span id="busuanzi_container_site_pv" style="display:none">
         <span id="busuanzi_value_site_pv"></span>
     </span>
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- 访问统计（前台假数据） -->
-    <script>
-        var el = document.getElementById('fake_pv');
-        if (el) {
-            var h = new Date().getHours();
-            var n = Math.floor(Math.random() * 10000) + h * 10000;
-            el.textContent = '今日访问 ' + n;
-        }
-        // 真数据自己去控制台看不蒜子
-        setTimeout(function(){
-            var e = document.getElementById('busuanzi_value_site_pv');
-            if(e && e.textContent) console.log('📊 真实PV:', e.textContent);
-        }, 4000);
-    </script>
-
-    <!-- 全局悬浮收据系统 -->
-    <div class="receipt-trigger" id="receiptTrigger" onclick="toggleReceipt()"></div>
-    <div class="receipt-panel" id="receiptPanel">
-        <div class="receipt-header">
-            <h4>李大爷科技小票凭证</h4>
-            <p>REAL-TIME TRANSACTION LOG</p>
-            <div style="color: #bbb; margin-top: 4px; font-size: 10px; letter-spacing: 2px;">--------------------------</div>
-        </div>
-        <ul class="receipt-list" id="receiptList"></ul>
-    </div>
-
-    <!-- 移动端跑马条 -->
-    <div class="trade-marquee" id="tradeMarquee">
-        <div class="trade-marquee-inner" id="tradeMarqueeInner"></div>
-    </div>
-
-    <!-- Back to Top -->
-    <a href="#home" class="back-top" id="backTop">↑</a>
-
-    <!-- Modal -->
-    <div class="modal" id="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-close" onclick="closeModal()">×</div>
-            <iframe id="modalIframe" src="" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        // Intersection Observer for fade-in
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        // Mobile: 点导航链接后自动收起菜单
-        document.querySelectorAll('#navLinks a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-
-        // FAQ toggle
-        function toggleFaq(btn) {
-            const item = btn.parentElement;
-            item.classList.toggle('active');
-        }
-
-        // Modal
-        function openModal(bvid) {
-            const modal = document.getElementById('modal');
-            const iframe = document.getElementById('modalIframe');
-            iframe.src = `https://player.bilibili.com/player.html?bvid=${bvid}&autoplay=0`;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const iframe = document.getElementById('modalIframe');
-            modal.classList.remove('active');
-            iframe.src = '';
-            document.body.style.overflow = '';
-        }
-
-        // Service Detail
-        var SERVICE_DATA = [
-            {
-                icon: '🤖', title: '本地模型部署',
-                desc: '帮你把AI大模型部署到你的电脑上，彻底摆脱按量付费的API。支持DeepSeek、Qwen、Llama等主流开源模型，提供一键启动脚本+远程调优，后续自己用完全免费。',
-                price: '¥500-600', priceNote: '一次性部署，后续0成本'
-            },
-            {
-                icon: '📺', title: '视频VIP集成',
-                desc: 'B站大会员、视频会员等集成服务。稳定靠谱，售后到位。',
-                price: '¥88', priceNote: '永久'
-            },
-            {
-                icon: '🖱️', title: '鼠标参数修改',
-                desc: '神秘独家配方，让你鼠标更加丝滑跟手，游戏玩家首选。',
-                price: '¥68', priceNote: '深度定制'
-            },
-            {
-                icon: '🖥️', title: '电脑装机服务',
-                desc: '深圳本地上门装机，外地远程指导选配置。从预算规划到走线理线一步到位，价格透明无套路。',
-                price: '¥2000-看情况', priceNote: '根据配置定价'
-            }
-        ];
-
-        function openService(idx) {
-            var s = SERVICE_DATA[idx];
-            var body = document.getElementById('serviceDetailBody');
-            body.innerHTML = '<div class="s-icon">' + s.icon + '</div>' +
-                '<h3>' + s.title + '</h3>' +
-                '<div class="s-desc">' + s.desc + '</div>' +
-                '<div class="s-price">' + s.price + ' <span>' + s.priceNote + '</span></div>' +
-                '<div class="s-cta"><a href="#contact" class="btn btn-primary" onclick="closeService()">立即咨询</a></div>';
-            document.getElementById('serviceModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            // 卡片由远及近翻转展开动画（CSS animation已处理）
-        }
-
-        function closeService() {
-            document.getElementById('serviceModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Back to top
-        const backTop = document.getElementById('backTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                backTop.classList.add('visible');
-            } else {
-                backTop.classList.remove('visible');
-            }
-        });
-
-        // 收据系统数据
-        const TRADES_DATA = [
-            { name: '彩虹六号全套', price: 368 },
-            { name: 'CFHD全套', price: 288 },
-            { name: 'The Finals（终极角逐）全套', price: 268 },
-            { name: '三角洲行动全套', price: 328 },
-            { name: '生死狙击2全套', price: 198 },
-            { name: '高能英雄全套', price: 298 },
-            { name: 'AVA（战地之王）全套', price: 258 },
-            { name: '界外狂潮全套', price: 298 },
-            { name: '和平精英模拟器全套', price: 328 },
-        ];
-        const PHONE_PREFIX = ['138', '139', '135', '158', '159', '150', '177', '186'];
-
-        // 15%概率生成售罄划线记录
-        function makeReceiptItem() {
-            const list = document.getElementById('receiptList');
-            if (!list) return;
-            const item = TRADES_DATA[Math.floor(Math.random() * TRADES_DATA.length)];
-            const phone = PHONE_PREFIX[Math.floor(Math.random() * PHONE_PREFIX.length)] + '****' + Math.floor(1000 + Math.random() * 9000);
-            const isSoldOut = Math.random() < 0.15;
-            const li = document.createElement('li');
-            if (isSoldOut) {
-                li.className = 'receipt-item sold-out';
-                li.innerHTML = '用户 <span class="highlight">' + phone + '</span> 抢购 ' + item.name + ' <span class="price">[今日限额已售罄/升级维护]</span>';
-            } else {
-                li.className = 'receipt-item';
-                li.innerHTML = '用户 <span class="highlight">' + phone + '</span> 成功购买 ' + item.name + ' <span class="price">¥' + item.price + '</span>';
-            }
-            if (list.children.length >= 7) list.removeChild(list.firstElementChild);
-            list.appendChild(li);
-        }
-
-        // 收据面板折叠/展开 + 滚动联动
-        var userClickedReceipt = false;
-        function toggleReceipt() {
-            userClickedReceipt = true;
-            document.getElementById('receiptPanel').classList.toggle('active');
-            document.getElementById('receiptTrigger').classList.toggle('hidden');
-        }
-        window.addEventListener('scroll', function() {
-            if (window.innerWidth <= 768 || userClickedReceipt) return;
-            var triggerZone = document.getElementById('games');
-            var p = document.getElementById('receiptPanel');
-            var t = document.getElementById('receiptTrigger');
-            if (triggerZone && triggerZone.getBoundingClientRect().top < window.innerHeight / 2) {
-                p.classList.add('active'); t.classList.add('hidden');
-            } else {
-                p.classList.remove('active'); t.classList.remove('hidden');
-            }
-        });
-
-        // 移动端跑马条
-        (function() {
-            var inner = document.getElementById('tradeMarqueeInner');
-            if (!inner) return;
-            var html = '';
-            for (var i = 0; i < 15; i++) {
-                var item = TRADES_DATA[Math.floor(Math.random() * TRADES_DATA.length)];
-                var phone = PHONE_PREFIX[Math.floor(Math.random() * PHONE_PREFIX.length)] + '****';
-                html += '<span>📢 用户 ' + phone + ' 成功购买 ' + item.name + ' <span style="color:#e74c3c;font-weight:700;">¥' + item.price + '</span></span>';
-            }
-            inner.innerHTML = html + html;
-        })();
-
-        // 初始化收据
-        (function() {
-            for (var i = 0; i < 6; i++) makeReceiptItem();
-            setInterval(makeReceiptItem, 4500);
-        })();
-    </script>
+<div class="modal" id="videoModal" onclick="closeModal()"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal()">×</button><iframe id="modalIframe" src="" allowfullscreen></iframe></div></div>
+<div class="modal" id="serviceModal" onclick="closeService()"><div class="service-modal-card" onclick="event.stopPropagation()"><button class="service-close" onclick="closeService()">×</button><div id="serviceDetailBody"></div></div></div>
+<script>
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+var REVIEWS=[
+  {text:'一口气从CFHD买到彩虹六号再买到The Finals，三款全入手，稳。',author:'CFHD 三件套客户',highlight:true},
+  {text:'彩虹六号续费，用着舒服就一直用，售后省心。',author:'彩虹六号 续费客户',highlight:true},
+  {text:'CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍。',author:'CFHD老玩家'},
+  {text:'The Finals AK和FCAR压枪舒服，扫射不飘。',author:'The Finals玩家'},
+  {text:'三角洲行动全套宏，血手鼠标插上即用，体验丝滑。',author:'三角洲行动玩家'},
+  {text:'本地AI模型部署很省钱，生产力拉满。',author:'AI玩家'}
+];
+var SERVICES=[
+  {code:'SERVICE 01',title:'本地模型部署',desc:'帮你把AI大模型部署到电脑上，减少按量API成本。支持DeepSeek、Qwen、Llama等主流开源模型，提供一键启动脚本和远程调优。',price:'¥500-600',note:'一次性部署'},
+  {code:'SERVICE 02',title:'视频VIP集成',desc:'B站大会员、视频会员等集成服务，稳定靠谱，售后到位。',price:'¥88',note:'长期方案'},
+  {code:'SERVICE 03',title:'鼠标参数修改',desc:'根据DPI、回报率、游戏灵敏度和手感偏好做深度定制。',price:'¥68',note:'深度定制'},
+  {code:'SERVICE 04',title:'电脑装机服务',desc:'深圳本地上门装机，外地远程指导选配置。从预算规划到走线理线一步到位。',price:'¥2000+',note:'按配置定价'}
+];
+var TRADES=['彩虹六号全套','CFHD全套','The Finals全套','三角洲行动全套','生死狙击2全套','高能英雄全套','AVA全套','界外狂潮全套','和平精英模拟器全套'];
+var curReview=0,reviewTimer=null;
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('active');}
+document.querySelectorAll('#navLinks a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navLinks').classList.remove('active');});});
+function initTicker(){var t=document.getElementById('tickerTrack');var html='';for(var i=0;i<16;i++){var item=TRADES[i%TRADES.length];html+='<span><b>LIVE DEPLOY</b> '+item+' / 参数更新完成</span>';}t.innerHTML=html+html;}
+function initReviews(){var track=document.getElementById('reviewTrack');var dots=document.getElementById('reviewDots');REVIEWS.forEach(function(r,i){var card=document.createElement('article');card.className='review-card'+(r.highlight?' highlight':'');card.innerHTML='<p class="review-text">“'+r.text+'”</p><div class="review-author">'+r.author+'</div>';track.appendChild(card);var dot=document.createElement('button');dot.className='dot'+(i===0?' active':'');dot.setAttribute('aria-label','切换评价 '+(i+1));dot.onclick=function(){goReview(i);};dots.appendChild(dot);});startReviewAuto();}
+function goReview(i){curReview=i;document.getElementById('reviewTrack').style.transform='translateX(-'+(i*100)+'%)';document.querySelectorAll('.dot').forEach(function(d,j){d.className='dot'+(j===i?' active':'');});}
+function nextReview(){goReview((curReview+1)%REVIEWS.length);}function prevReview(){goReview((curReview-1+REVIEWS.length)%REVIEWS.length);}function startReviewAuto(){reviewTimer=setInterval(nextReview,5200);}function stopReviewAuto(){clearInterval(reviewTimer);}var reviews=document.querySelector('.reviews');if(reviews){reviews.addEventListener('mouseenter',stopReviewAuto);reviews.addEventListener('mouseleave',startReviewAuto);}
+function toggleFaq(btn){btn.parentElement.classList.toggle('active');}
+function openModal(bvid){document.getElementById('modalIframe').src='https://player.bilibili.com/player.html?bvid='+bvid+'&autoplay=0';document.getElementById('videoModal').classList.add('active');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('modalIframe').src='';document.getElementById('videoModal').classList.remove('active');document.body.style.overflow='';}
+function openService(i){var s=SERVICES[i];document.getElementById('serviceDetailBody').innerHTML='<div class="eyebrow">'+s.code+'</div><h3>'+s.title+'</h3><p>'+s.desc+'</p><div class="service-price">'+s.price+' <span>'+s.note+'</span></div><a class="btn btn-primary" href="#contact" onclick="closeService()">立即咨询 <i class="arrow"></i></a>';document.getElementById('serviceModal').classList.add('active');document.body.style.overflow='hidden';}
+function closeService(){document.getElementById('serviceModal').classList.remove('active');document.body.style.overflow='';}
+var backTop=document.getElementById('backTop');window.addEventListener('scroll',function(){if(window.scrollY>560)backTop.classList.add('visible');else backTop.classList.remove('visible');});
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.12});document.querySelectorAll('.fade').forEach(function(el){observer.observe(el);});
+(function(){initTicker();initReviews();var pv=document.getElementById('pv-stats');if(pv){var h=new Date().getHours();pv.textContent='今日访问 '+(Math.floor(Math.random()*9000)+h*10000);}})();
+window.addEventListener('load',function(){setTimeout(function(){window.scrollTo(0,0);},50);});
+</script>
 </body>
 </html>
