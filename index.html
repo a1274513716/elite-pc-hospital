@@ -1,501 +1,550 @@
-1|<!DOCTYPE html>
-2|
-3|<html lang="zh-CN">
-4|
-5|<head>
-6|
-7|<meta charset="UTF-8">
-8|
-9|<meta name="viewport" content="width=device-width, initial-scale=1.0">
-10|
-11|<title>LIDY MACRO - 战术控制游戏官网</title>
-12|
-13|<meta name="description" content="LIDY MACRO 战术控制系统，覆盖CFHD、彩虹六号、The Finals、三角洲行动等FPS项目。">
-14|
-15|<meta property="og:title" content="LIDY MACRO - 战术控制游戏官网">
-16|
-17|<meta property="og:description" content="硬件级手感调校，FPS战术控制系统。">
-18|
-19|<meta property="og:image" content="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg">
-20|
-21|<meta property="og:type" content="website">
-22|
-23|<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
-24|
-25|<style>
-26|
-27|:root{
-28|
-29|  --void:#050607;
-30|
-31|  --charcoal:#0b0e11;
-32|
-33|  --steel:#131820;
-34|
-35|  --steel-2:#1b222c;
-36|
-37|  --line:rgba(255,255,255,.13);
-38|
-39|  --line-hot:rgba(230,48,40,.55);
-40|
-41|  --text:#f4f1e8;
-42|
-43|  --muted:#a6a49e;
-44|
-45|  --dim:#666b70;
-46|
-47|  --red:#e63028;
-48|
-49|  --amber:#f0b23f;
-50|
-51|  --cyan:#7fd7ff;
-52|
-53|  --green:#93d66b;
-54|
-55|  --shadow:0 26px 80px rgba(0,0,0,.55);
-56|
-57|  --ease:cubic-bezier(.2,.8,.2,1);
-58|
-59|}
-60|
-61|*{box-sizing:border-box;margin:0;padding:0}
-62|
-63|html{scroll-behavior:smooth;background:var(--void)}
-64|
-65|body{min-height:100vh;background:var(--void);color:var(--text);font-family:Inter,Roboto,'Segoe UI','Microsoft YaHei',Arial,sans-serif;overflow-x:hidden;letter-spacing:0}
-66|
-67|a{color:inherit;text-decoration:none}
-68|
-69|button{font:inherit;color:inherit}
-70|
-71|img,video{max-width:100%}
-72|
-73|body::before{content:"";position:fixed;inset:0;z-index:-3;background:
-74|
-75|  linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
-76|
-77|  linear-gradient(0deg,rgba(255,255,255,.025) 1px,transparent 1px),#050607;background-size:72px 72px;mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.75) 45%,transparent 100%)}
-78|
-79|body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.075;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,.45) 4px,transparent 5px)}
-80|
-81|.noise{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}
-82|
-83|.container{width:min(1200px,calc(100% - 44px));margin:0 auto}
-84|
-85|.nav,.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:linear-gradient(180deg,rgba(5,6,7,.9),rgba(5,6,7,.45));backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.1)}
-86|
-87|.brand{display:flex;align-items:center;gap:14px;font-weight:950;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}.brand-mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line-hot);background:linear-gradient(135deg,rgba(230,48,40,.25),rgba(240,178,63,.08));box-shadow:0 0 30px rgba(230,48,40,.18);clip-path:polygon(16% 0,100% 0,84% 100%,0 100%)}.brand-mark::before{content:"";width:14px;height:14px;border:2px solid var(--red);transform:rotate(45deg)}.brand small{display:block;font-size:10px;font-weight:700;color:var(--amber);letter-spacing:3px;margin-top:2px}.nav-links{display:flex;align-items:center;gap:4px}.nav-links a{height:72px;display:flex;align-items:center;padding:0 13px;font-size:12px;font-weight:800;color:rgba(244,241,232,.68);letter-spacing:1.4px;text-transform:uppercase;position:relative}.nav-links a::after{content:"";position:absolute;left:13px;right:13px;bottom:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .24s var(--ease)}.nav-links a:hover{color:#fff}.nav-links a:hover::after{transform:scaleX(1)}.menu-btn{display:none;width:46px;height:46px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer}.menu-btn span{display:block;width:20px;height:2px;background:#fff;margin:5px auto}.nav-cta{height:42px;padding:0 18px;border:1px solid rgba(240,178,63,.55);background:rgba(240,178,63,.08);color:var(--amber);display:flex;align-items:center;font-size:12px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
-88|
-89|
-90|        .hero-bg-video {
-91|            position: absolute; top: 0; left: 0;
-92|            width: 100%; height: 100%;
-93|            object-fit: cover; z-index: 0;
-94|            display: none;
-95|        }
-96|        .hero-bg-img {
-97|            position: absolute; top: 0; left: 0;
-98|            width: 100%; height: 100%;
-99|            object-fit: cover; z-index: 0;
-100|            display: block;
-101|        }
-102|        @media (min-width: 769px) {
-103|            .desktop-bg { display: block; }
-104|            .mobile-bg { display: none; }
-105|        }
-106|        @media (max-width: 768px) {
-107|            .desktop-bg { display: none; }
-108|            .mobile-bg { display: block; }
-109|        }
-110|        .hero-glow {
-111|            position: absolute; width: 600px; height: 600px;
-112|            top: 20%; left: 50%; transform: translateX(-50%);
-113|            background: radial-gradient(circle, rgba(230,48,40,0.25) 0%, transparent 70%);
-114|            z-index: 1; pointer-events: none;
-115|            animation: heroPulse 6s ease-in-out infinite alternate;
-116|        }
-117|        @keyframes heroPulse {
-118|            0% { opacity: 0.3; transform: translateX(-50%) scale(1); }
-119|            100% { opacity: 0.8; transform: translateX(-50%) scale(1.2); }
-120|        }
-121|
-122|.hero{position:relative;min-height:100vh;min-height:100dvh;display:flex;align-items:center;overflow:hidden;background:#000}.hero-media{position:absolute;inset:0;z-index:0}.hero-media img,.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.08) contrast(1.06) brightness(.68)}.hero-media img{display:block}.hero-media video{display:none}.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(5,6,7,.92) 0%,rgba(5,6,7,.58) 38%,rgba(5,6,7,.2) 66%,rgba(5,6,7,.82) 100%),linear-gradient(180deg,rgba(5,6,7,.2) 0%,rgba(5,6,7,.2) 58%,var(--void) 100%)}.hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none}.hero-inner{position:relative;z-index:3;width:100%;padding-top:70px}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:44px;align-items:end}.kicker{display:inline-flex;align-items:center;gap:12px;margin-bottom:22px;color:var(--amber);font-size:12px;font-weight:950;letter-spacing:4px;text-transform:uppercase}.kicker::before{content:"";width:48px;height:2px;background:var(--red);box-shadow:0 0 18px var(--red)}h1{font-size:clamp(48px,8.5vw,118px);line-height:.88;max-width:900px;font-weight:1000;text-transform:uppercase;letter-spacing:-1px;text-shadow:0 18px 50px rgba(0,0,0,.65)}h1 span{display:block;color:transparent;-webkit-text-stroke:1px rgba(244,241,232,.9);text-shadow:none}.hero-copy{max-width:700px;margin-top:26px;font-size:clamp(15px,1.4vw,19px);line-height:1.8;color:rgba(244,241,232,.74);font-weight:500}.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:34px}.btn{min-height:50px;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:13px;font-weight:950;letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;transition:transform .22s var(--ease),background .22s,border-color .22s,box-shadow .22s;clip-path:polygon... [truncated]
-123|
-124|.section{position:relative;padding:112px 0}.section.alt{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))}.section-head{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;margin-bottom:44px}.eyebrow{color:var(--red);font-size:12px;font-weight:950;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}.section h2{font-size:clamp(34px,5vw,68px);line-height:.98;text-transform:uppercase;font-weight:1000}.section h2 span{color:var(--amber)}.section-desc{max-width:460px;color:var(--muted);font-size:14px;line-height:1.8;text-align:right}.campaign-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}.feature-card,.panel,.game-card,.service-card,.review-card,.faq-item{border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 18px 60px rgba(0,0,0,.22)}.feature-card{min-height:430px;position:relative;overflow:hidden;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;background-image:linear-gradient(180deg,rgba(5,6,7,.05),rgba(5,6,7,.86)),url('https://game.gtimg.cn/images/r6/cp/a20260611gwsj/new/feature5.jpg');background-size:cover;background-position:center}.feature-card::before{content:"LIVE PATCH";position:absolute;top:24px;left:24px;background:var(--red);color:#fff;font-size:11px;font-weight:950;letter-spacing:2px;padding:8px 12px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}.feature-card h3{font-size:34px;line-height:1.05;margin-bottom:14px}.feature-card p{max-width:560px;color:rgba(244,241,232,.76);line-height:1.75}.side-stack{display:grid;gap:20px}.panel{padding:26px;position:relative;overflow:hidden}.panel h3{font-size:18px;text-transform:uppercase;margin-bottom:14px}.loadout{display:grid;gap:12px}.load-row{display:grid;grid-template-columns:90px 1fr 44px;gap:12px;align-items:center;font-size:12px;color:var(--muted)}.bar{height:8px;background:rgba(255,255,255,.1);overflow:hidden}.bar i{display:b... [truncated]
-125|
-126|@media(min-width:769px){.hero-media img{display:none}.hero-media video.desktop-bg{display:block}}
-127|
-128|@media(max-width:980px){.hero-grid,.campaign-grid,.contact-grid{grid-template-columns:1fr}.intel-panel{max-width:480px}.section-head{grid-template-columns:1fr}.section-desc{text-align:left}.games-grid{grid-template-columns:repeat(2,1fr)}.video-grid,.services-grid{grid-template-columns:repeat(2,1fr)}}
-129|
-130|@media(max-width:720px){.nav{height:64px;padding:0 18px}.brand{font-size:14px}.brand small{font-size:9px}.menu-btn{display:block}.nav-cta{display:none}.nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(5,6,7,.98);border-bottom:1px solid var(--line);padding:10px 0}.nav-links.active{display:block}.nav-links a{height:46px;padding:0 22px}.hero{min-height:760px}.hero-inner{padding-top:86px;padding-bottom:62px}.hero-grid{gap:26px}.hero-copy{font-size:14px}.btn{width:100%;min-height:48px}.intel-panel{display:none}.ticker{height:36px}.section{padding:74px 0}.games-grid,.video-grid,.services-grid{grid-template-columns:1fr}.feature-card{min-height:390px;padding:24px}.video-card{aspect-ratio:16/11}.contact-box{padding:22px}.qq-num{font-size:30px}.float-contact{left:0;right:0;bottom:0;justify-content:center;clip-path:none}.back-top{display:none}footer{padding-bottom:76px}.footer-inner{flex-direction:column}.modal-content{width:96vw}.review-card{padding:28px 20px}.review-text{font-size:16px}}
-131|
-132|@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-133|
-134|</style>
-135|
-136|</head>
-137|
-138|<body>
-139|<script>
-140|        // 微信浏览器强制置顶（微信会自动恢复滚动位置，必须多重兜底）
-141|        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-142|        !function() {
-143|            // UA检测：微信显示图片，非微信显示视频
-144|            document.addEventListener('DOMContentLoaded', function() {
-145|                var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
-146|                var img = document.querySelector('.hero-bg-img');
-147|                var vids = document.querySelectorAll('.hero-bg-video');
-148|                if (isWeChat) {
-149|                    if (img) img.style.display = 'block';
-150|                    vids.forEach(function(v){ v.style.display = 'none'; });
-151|                } else {
-152|                    if (img) img.style.display = 'none';
-153|                    vids.forEach(function(v){ 
-154|                        v.style.display = ''; 
-155|                        v.play().catch(function(){});
-156|                    });
-157|                }
-158|            });
-159|            var t = function() { window.scrollTo(0, 0); };
-160|            t();
-161|            document.addEventListener('DOMContentLoaded', t);
-162|            window.addEventListener('load', t);
-163|            // 微信浏览器特有：从缓存恢复页面时（pageshow事件）
-164|            window.addEventListener('pageshow', function(e) {
-165|                if (e.persisted) { t(); }
-166|                t();
-167|            });
-168|            setTimeout(t, 100);
-169|            setTimeout(t, 500);
-170|            setTimeout(t, 1000);
-171|            var check = function() {
-172|                if (window.scrollY > 0) { window.scrollTo(0, 0); requestAnimationFrame(check); }
-173|            };
-174|            requestAnimationFrame(check);
-175|        }();
-176|    </script>
-177|
-178|<div class="noise"></div>
-179|
-180|<nav class="nav">
-181|
-182|  <a class="brand" href="#home" aria-label="李大爷鼠标宏科技"><img src="logo.png" alt="李大爷" style="height:36px;width:auto;"><span>LIDY MACRO<small>TACTICAL CONTROL</small></span></a>
-183|
-184|  <button class="menu-btn" onclick="toggleMenu()" aria-label="打开菜单"><span></span><span></span><span></span></button>
-185|
-186|  <div class="nav-links" id="navLinks">
-187|
-188|    <a href="#home">首页</a><a href="#campaign">赛季情报</a><a href="#games">武器库</a><a href="#media">实战影像</a><a href="#reviews">反馈</a><a href="#services">军需服务</a><a href="#faq">FAQ</a><a href="#contact">联系</a>
-189|
-190|  </div>
-191|
-192|  <a class="nav-cta" href="#contact">立即接入</a>
-193|
-194|</nav>
-195|
-196|<header class="hero" id="home">
-197|
-198|  <div class="hero-media">
-199|          <img class="hero-bg-img"
-200|              src="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"
-201|              alt="">
-202|          <video class="hero-bg-video desktop-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
-203|              src="https://gp.lv.game.qq.com/dis_kt_20c1aad60f29ffdbc6700da41b6788df_1763950354/0b53xiaauaaaxaall2bdzbu6powdbk5aacqa.f0.mp4"
-204|              poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"></video>
-205|          <video class="hero-bg-video mobile-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
-206|              src="https://a1274513716.github.io/elite-pc-hospital/bg_mobile.mp4"
-207|              poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"></video>
-208|        </div>
-209|  <div class="hero-inner container">
-210|
-211|    <div class="hero-grid">
-212|
-213|      <div>
-214|
-215|        <div class="kicker">Season 2026 / Operator Ready</div>
-216|
-217|        <h1>进入战场<br><span>锁定后坐力</span></h1>
-218|
-219|        <p class="hero-copy">LIDY MACRO 为主流FPS玩家提供手感调校、宏脚本与远程售后支持。覆盖CFHD、彩虹六号、The Finals、三角洲行动等项目，按武器和鼠标习惯做细分适配。</p>
-220|
-221|        <div class="hero-actions">
-222|
-223|          <a class="btn btn-primary" href="#games">查看武器库 <i class="arrow"></i></a>
-224|
-225|          <a class="btn btn-ghost" href="#media">播放实战影像 <i class="arrow"></i></a>
-226|
-227|        </div>
-228|
-229|      </div>
-230|
-231|      <aside class="intel-panel" aria-label="状态面板">
-232|
-233|        <div class="stat-line"><strong>09</strong><span>已覆盖游戏项目</span></div>
-234|
-235|        <div class="stat-line"><strong>24H</strong><span>售后与微调响应</span></div>
-236|
-237|        <div class="stat-line"><strong>ALL</strong><span>主流鼠标方案适配</span></div>
-238|
-239|        <div class="stat-line"><strong>946408366</strong><span>技术交流群</span></div>
-240|
-241|      </aside>
-242|
-243|    </div>
-244|
-245|  </div>
-246|
-247|  <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
-248|
-249|</header>
-250|
-251|<main>
-252|
-253|  <section class="section fade-left" id="campaign">
-254|
-255|    <div class="container">
-256|
-257|      <div class="section-head fade">
-258|
-259|        <div><div class="eyebrow">Campaign Briefing</div><h2>赛季<span>情报</span></h2></div>
-260|
-261|        
-262|
-263|      </div>
-264|
-265|      <div class="campaign-grid">
-266|
-267|        <article class="feature-card fade">
-268|
-269|          <h3>实战手感优先</h3>
-270|
-271|          <p>围绕武器后坐力、DPI、鼠标驱动和玩家习惯做方案，减少无效参数堆叠，重点追求稳定、跟手、容易上手。</p>
-272|
-273|        </article>
-274|
-275|        <div class="side-stack">
-276|
-277|          <div class="panel fade">
-278|
-279|            <h3>作战参数</h3>
-280|
-281|            <div class="loadout">
-282|
-283|              <div class="load-row"><span>稳定性</span><div class="bar"><i style="width:94%"></i></div><b>94</b></div>
-284|
-285|              <div class="load-row"><span>覆盖度</span><div class="bar"><i style="width:89%"></i></div><b>89</b></div>
-286|
-287|              <div class="load-row"><span>售后响应</span><div class="bar"><i style="width:96%"></i></div><b>96</b></div>
-288|
-289|              <div class="load-row"><span>适配效率</span><div class="bar"><i style="width:91%"></i></div><b>91</b></div>
-290|
-291|            </div>
-292|
-293|          </div>
-294|
-295|          <div class="panel fade">
-296|
-297|            <h3>当前支持</h3>
-298|
-299|            <div class="tag-cloud"><span class="tag">罗技</span><span class="tag">雷蛇</span><span class="tag">血手</span><span class="tag">赛睿</span><span class="tag">CFHD</span><span class="tag">R6S</span><span class="tag">THE FINALS</span><span class="tag">三角洲</span></div>
-300|
-301|          </div>
-302|
-303|        </div>
-304|
-305|      </div>
-306|
-307|    </div>
-308|
-309|  </section>
-310|
-311|  <section class="section alt fade-scale" id="games">
-312|
-313|    <div class="container">
-314|
-315|      <div class="section-head fade">
-316|
-317|        <div><div class="eyebrow">Armory Database</div><h2>战术<span>武器库</span></h2></div>
-318|
-319|        
-320|
-321|      </div>
-322|
-323|      <div class="games-grid">
-324|
-325|        <article class="game-card fade" data-code="01"><span class="status">Live</span><h3>生死狙击2</h3><p>全武器宏支持，稳定压枪，精准射击。</p><div class="meta">FPS / FULL SET</div></article>
-326|
-327|        <article class="game-card fade" data-code="02"><span class="status">Live</span><h3>彩虹六号</h3><p>53把主武器 + 3把副武器宏，全枪械覆盖。</p><div class="meta">R6S / 56 WEAPONS</div></article>
-328|
-329|        <article class="game-card fade" data-code="03"><span class="status">Live</span><h3>The Finals</h3><p>AK47、FCAR、V95、M11、XP54、刘易斯、LH1覆盖。</p><div class="meta">ARENA / CORE LOADOUT</div></article>
-330|
-331|        <article class="game-card fade" data-code="04"><span class="status">Live</span><h3>高能英雄</h3><p>15+武器宏支持，冲锋枪、步枪手感稳定。</p><div class="meta">HERO FPS</div></article>
-332|
-333|        <article class="game-card fade" data-code="05"><span class="status">Live</span><h3>和平精英模拟器</h3><p>26幽灵宏，全武器精准控制。</p><div class="meta">EMULATOR</div></article>
-334|
-335|        <article class="game-card fade" data-code="06"><span class="status">Live</span><h3>CFHD</h3><p>28把枪宏 + 瞬狙、鬼跳、大跳上箱。</p><div class="meta">CLASSIC / ADVANCED</div></article>
-336|
-337|        <article class="game-card fade" data-code="07"><span class="status">Live</span><h3>AVA 战地之王</h3><p>四服通用，全武器宏支持。</p><div class="meta">MULTI SERVER</div></article>
-338|
-339|        <article class="game-card fade" data-code="08"><span class="status">Live</span><h3>三角洲行动</h3><p>全武器宏，适合长时间稳定压枪。</p><div class="meta">TACTICAL FPS</div></article>
-340|
-341|        <article class="game-card fade" data-code="09"><span class="status">Live</span><h3>界外狂潮</h3><p>全武器宏支持，持续更新。</p><div class="meta">NEW PATCH</div></article>
-342|
-343|      </div>
-344|
-345|    </div>
-346|
-347|  </section>
-348|
-349|  <section class="section fade-right" id="media">
-350|
-351|    <div class="container">
-352|
-353|      <div class="section-head fade">
-354|
-355|        <div><div class="eyebrow">Gameplay Footage</div><h2>实战<span>影像</span></h2></div>
-356|
-357|        
-358|
-359|      </div>
-360|
-361|      <div class="video-grid">
-362|
-363|        <article class="video-card fade" onclick="openModal('BV1oKSnBkEEa')"><img src="https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg" alt="彩虹六号演示"><div class="video-title"><small>DEMO 01</small><strong>彩虹六号</strong></div></article>
-364|
-365|        <article class="video-card fade" onclick="openModal('BV1oYJu6gEqg')"><img src="https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg" alt="The Finals演示"><div class="video-title"><small>DEMO 02</small><strong>The Finals</strong></div></article>
-366|
-367|        <article class="video-card fade" onclick="openModal('BV1H6Gb6QEHE')"><img src="https://game.gtimg.cn/images/cfhd/cp/a20260601mact/act0-2.jpg" alt="CFHD演示"><div class="video-title"><small>DEMO 03</small><strong>CFHD</strong></div></article>
-368|
-369|        <article class="video-card fade" onclick="openModal('BV1mvq5BLEbu')"><img src="https://static.gametalk.qq.com/image/182/1780387636_1b377d594325819fa771fa10c4ead3bc.jpg" alt="实战演示"><div class="video-title"><small>DEMO 04</small><strong>实战演示</strong></div></article>
-370|
-371|      </div>
-372|
-373|    </div>
-374|
-375|  </section>
-376|
-377|  <section class="section alt" id="reviews">
-378|
-379|    <div class="container">
-380|
-381|      <div class="section-head fade">
-382|
-383|        <div><div class="eyebrow">Player Reports</div><h2>玩家<span>反馈</span></h2></div>
-384|
-385|        
-386|
-387|      </div>
-388|
-389|      <div class="reviews fade"><div class="review-window"><div class="review-track" id="reviewTrack"></div></div><div class="review-controls"><button class="icon-btn" onclick="prevReview()">←</button><div class="dots" id="reviewDots"></div><button class="icon-btn" onclick="nextReview()">→</button></div></div>
-390|
-391|    </div>
-392|
-393|  </section>
-394|
-395|  <section class="section fade-left" id="services">
-396|
-397|    <div class="container">
-398|
-399|      <div class="section-head fade">
-400|
-401|        <div><div class="eyebrow">Support Arsenal</div><h2>军需<span>服务</span></h2></div>
-402|
-403|        
-404|
-405|      </div>
-406|
-407|      <div class="services-grid">
-408|
-409|        <article class="service-card fade" onclick="openService(0)"><div class="service-code">SERVICE 01</div><h3>本地模型部署</h3><p>35B大模型本地化部署，一键启动脚本和远程调优。</p></article>
-410|
-411|        <article class="service-card fade" onclick="openService(1)"><div class="service-code">SERVICE 02</div><h3>视频VIP集成</h3><p>B站大会员等视频服务，稳定靠谱。</p></article>
-412|
-413|        <article class="service-card fade" onclick="openService(2)"><div class="service-code">SERVICE 03</div><h3>鼠标参数修改</h3><p>按DPI、回报率和手感习惯做深度定制。</p></article>
-414|
-415|        <article class="service-card fade" onclick="openService(3)"><div class="service-code">SERVICE 04</div><h3>电脑装机服务</h3><p>深圳本地上门，外地远程指导选配。</p></article>
-416|
-417|      </div>
-418|
-419|    </div>
-420|
-421|  </section>
-422|
-423|  <section class="section alt fade-scale" id="faq">
-424|
-425|    <div class="container">
-426|
-427|      <div class="section-head fade"><div><div class="eyebrow">FAQ</div><h2>常见<span>问题</span></h2></div></div>
-428|
-429|      <div class="faq-wrap">
-430|
-431|        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>全鼠标通用吗？</span><i class="faq-icon"></i></button><div class="faq-a">支持多数主流鼠标方案，包括罗技、雷蛇、赛睿、血手等，具体按你的设备和游戏项目确认。</div></div>
-432|
-433|        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>如何使用？</span><i class="faq-icon"></i></button><div class="faq-a">购买后提供说明和视频教程，需要远程协助也可以联系QQ客服。</div></div>
-434|
-435|        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>更新频率如何？</span><i class="faq-icon"></i></button><div class="faq-a">新武器、新版本会持续调整，优先保证热门项目稳定可用。</div></div>
-436|
-437|        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>售后服务怎么联系？</span><i class="faq-icon"></i></button><div class="faq-a">客服QQ：1274513716，技术交流群：946408366，可咨询固件更新和手感微调。</div></div>
-438|
-439|      </div>
-440|
-441|    </div>
-442|
-443|  </section>
-444|
-445|  <section class="contact" id="contact">
-446|
-447|    <div class="container contact-grid">
-448|
-449|      <div class="fade"><div class="eyebrow">Join The Operation</div><h2>准备好<br><span>接入战局</span></h2><p>先发游戏项目、鼠标型号、DPI和主要武器需求，客服按你的设备和玩法给方案。</p></div>
-450|
-451|      <div class="contact-box fade-right"><div class="qq-label">技术交流群</div><span class="qq-num">946408366</span><div class="qq-label">官方客服唯一QQ</div><span class="qq-num">1274513716</span><a class="btn btn-primary" href="tencent://message/?uin=1274513716&Site=&Menu=yes">打开QQ咨询 <i class="arrow"></i></a></div>
-452|
-453|    </div>
-454|
-455|  </section>
-456|
-457|</main>
-458|
-459|<a class="float-contact" href="#contact">联系接入</a>
-460|
-461|<a href="#home" class="back-top" id="backTop">↑</a>
-462|
-463|<footer>
-464|        <div class="container">
-465|            <p>© 1980-2026 李大爷鼠标宏科技. All rights reserved.</p>
-466|            <div id="pv-stats">
-467|                <span id="fake_pv">加载中...</span> 次浏览
-468|            </div>
-469|        </div>
-470|    </footer>
-471|    <span id="busuanzi_container_site_pv" style="display:none">
-472|        <span id="busuanzi_value_site_pv"></span>
-473|    </span>
-474|    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-475|
-476|<div class="modal" id="videoModal" onclick="closeModal()"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal()">×</button><iframe id="modalIframe" src="" allowfullscreen></iframe></div></div>
-477|
-478|<div class="modal" id="serviceModal" onclick="closeService()"><div class="service-modal-card" onclick="event.stopPropagation()"><button class="service-close" onclick="closeService()">×</button><div id="serviceDetailBody"></div></div></div>
-479|
-480|<script>
-481|
-482|if('scrollRestoration' in history) history.scrollRestoration='manual';
-483|
-484|var REVIEWS=[
-485|
-486|  {text:'一口气从CFHD买到彩虹六号再买到The Finals，三款全入手，稳。',author:'CFHD 三件套客户',highlight:true},
-487|
-488|  {text:'彩虹六号续费，用着舒服就一直用，售后省心。',author:'彩虹六号 续费客户',highlight:true},
-489|
-490|  {text:'CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍。',author:'CFHD老玩家'},
-491|
-492|  {text:'The Finals AK和FCAR压枪舒服，扫射不飘。',author:'The Finals玩家'},
-493|
-494|  {text:'三角洲行动全套宏，血手鼠标插上即用，体验丝滑。',author:'三角洲行动玩家'},
-495|
-496|  {text:'本地AI模型部署很省钱，生产力拉满。',author:'AI玩家'}
-497|
-498|];
-499|
-500|var SERVICES=[
-501|
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LIDY MACRO - 战术控制游戏官网</title>
+
+<meta name="description" content="LIDY MACRO 战术控制系统，覆盖CFHD、彩虹六号、The Finals、三角洲行动等FPS项目。">
+
+<meta property="og:title" content="LIDY MACRO - 战术控制游戏官网">
+
+<meta property="og:description" content="硬件级手感调校，FPS战术控制系统。">
+
+<meta property="og:image" content="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg">
+
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
+
+<style>
+
+:root{
+
+  --void:#050607;
+
+  --charcoal:#0b0e11;
+
+  --steel:#131820;
+
+  --steel-2:#1b222c;
+
+  --line:rgba(255,255,255,.13);
+
+  --line-hot:rgba(230,48,40,.55);
+
+  --text:#f4f1e8;
+
+  --muted:#a6a49e;
+
+  --dim:#666b70;
+
+  --red:#e63028;
+
+  --amber:#f0b23f;
+
+  --cyan:#7fd7ff;
+
+  --green:#93d66b;
+
+  --shadow:0 26px 80px rgba(0,0,0,.55);
+
+  --ease:cubic-bezier(.2,.8,.2,1);
+
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;background:var(--void)}
+
+body{min-height:100vh;background:var(--void);color:var(--text);font-family:Inter,Roboto,'Segoe UI','Microsoft YaHei',Arial,sans-serif;overflow-x:hidden;letter-spacing:0}
+
+a{color:inherit;text-decoration:none}
+
+button{font:inherit;color:inherit}
+
+img,video{max-width:100%}
+
+body::before{content:"";position:fixed;inset:0;z-index:-3;background:
+
+  linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+
+  linear-gradient(0deg,rgba(255,255,255,.025) 1px,transparent 1px),#050607;background-size:72px 72px;mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.75) 45%,transparent 100%)}
+
+body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.075;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,.45) 4px,transparent 5px)}
+
+.noise{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.055;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}
+
+.container{width:min(1200px,calc(100% - 44px));margin:0 auto}
+
+.nav,.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:linear-gradient(180deg,rgba(5,6,7,.9),rgba(5,6,7,.45));backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.1)}
+
+.brand{display:flex;align-items:center;gap:14px;font-weight:950;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}.brand-mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line-hot);background:linear-gradient(135deg,rgba(230,48,40,.25),rgba(240,178,63,.08));box-shadow:0 0 30px rgba(230,48,40,.18);clip-path:polygon(16% 0,100% 0,84% 100%,0 100%)}.brand-mark::before{content:"";width:14px;height:14px;border:2px solid var(--red);transform:rotate(45deg)}.brand small{display:block;font-size:10px;font-weight:700;color:var(--amber);letter-spacing:3px;margin-top:2px}.nav-links{display:flex;align-items:center;gap:4px}.nav-links a{height:72px;display:flex;align-items:center;padding:0 13px;font-size:12px;font-weight:800;color:rgba(244,241,232,.68);letter-spacing:1.4px;text-transform:uppercase;position:relative}.nav-links a::after{content:"";position:absolute;left:13px;right:13px;bottom:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .24s var(--ease)}.nav-links a:hover{color:#fff}.nav-links a:hover::after{transform:scaleX(1)}.menu-btn{display:none;width:46px;height:46px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer}.menu-btn span{display:block;width:20px;height:2px;background:#fff;margin:5px auto}.nav-cta{height:42px;padding:0 18px;border:1px solid rgba(240,178,63,.55);background:rgba(240,178,63,.08);color:var(--amber);display:flex;align-items:center;font-size:12px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+
+
+        .hero-bg-video {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+            display: none;
+        }
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+            display: block;
+        }
+        @media (min-width: 769px) {
+            .desktop-bg { display: block; }
+            .mobile-bg { display: none; }
+        }
+        @media (max-width: 768px) {
+            .desktop-bg { display: none; }
+            .mobile-bg { display: block; }
+        }
+        .hero-glow {
+            position: absolute; width: 600px; height: 600px;
+            top: 20%; left: 50%; transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(230,48,40,0.25) 0%, transparent 70%);
+            z-index: 1; pointer-events: none;
+            animation: heroPulse 6s ease-in-out infinite alternate;
+        }
+        @keyframes heroPulse {
+            0% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.8; transform: translateX(-50%) scale(1.2); }
+        }
+
+.hero{position:relative;min-height:100vh;min-height:100dvh;display:flex;align-items:center;overflow:hidden;background:#000}.hero-media{position:absolute;inset:0;z-index:0}.hero-media img,.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.08) contrast(1.06) brightness(.68)}.hero-media img{display:block}.hero-media video{display:none}.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(5,6,7,.92) 0%,rgba(5,6,7,.58) 38%,rgba(5,6,7,.2) 66%,rgba(5,6,7,.82) 100%),linear-gradient(180deg,rgba(5,6,7,.2) 0%,rgba(5,6,7,.2) 58%,var(--void) 100%)}.hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none}.hero-inner{position:relative;z-index:3;width:100%;padding-top:70px}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:44px;align-items:end}.kicker{display:inline-flex;align-items:center;gap:12px;margin-bottom:22px;color:var(--amber);font-size:12px;font-weight:950;letter-spacing:4px;text-transform:uppercase}.kicker::before{content:"";width:48px;height:2px;background:var(--red);box-shadow:0 0 18px var(--red)}h1{font-size:clamp(48px,8.5vw,118px);line-height:.88;max-width:900px;font-weight:1000;text-transform:uppercase;letter-spacing:-1px;text-shadow:0 18px 50px rgba(0,0,0,.65)}h1 span{display:block;color:transparent;-webkit-text-stroke:1px rgba(244,241,232,.9);text-shadow:none}.hero-copy{max-width:700px;margin-top:26px;font-size:clamp(15px,1.4vw,19px);line-height:1.8;color:rgba(244,241,232,.74);font-weight:500}.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:34px}.btn{min-height:50px;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:13px;font-weight:950;letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;transition:transform .22s var(--ease),background .22s,border-color .22s,box-shadow .22s;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}.btn:hover{transform:translateY(-2px);border-color:rgba(240,178,63,.8)}.btn-primary{background:linear-gradient(135deg,var(--red),#9d1712);border-color:rgba(230,48,40,.9);box-shadow:0 20px 46px rgba(230,48,40,.24)}.btn-ghost{background:rgba(5,6,7,.45)}.btn .arrow{width:22px;height:1px;background:currentColor;position:relative}.btn .arrow::after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border-right:1px solid currentColor;border-top:1px solid currentColor;transform:rotate(45deg)}.intel-panel{border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(15,20,27,.76),rgba(7,8,10,.66));backdrop-filter:blur(18px);box-shadow:var(--shadow);padding:18px;position:relative;overflow:hidden}.intel-panel::before{content:"OPERATION STATUS";display:block;color:var(--amber);font-size:11px;font-weight:950;letter-spacing:2px;margin-bottom:16px}.intel-panel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(230,48,40,.15),transparent 35%)}.stat-line{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding:15px 0;gap:20px}.stat-line strong{font-size:22px;font-weight:1000}.stat-line span{font-size:11px;color:var(--muted);letter-spacing:1.4px;text-align:right}.ticker{position:absolute;left:0;right:0;bottom:0;z-index:5;height:42px;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(240,178,63,.24);border-bottom:1px solid rgba(240,178,63,.16);background:rgba(5,6,7,.76);backdrop-filter:blur(14px)}.ticker-track{display:flex;gap:42px;white-space:nowrap;animation:ticker 26s linear infinite;color:var(--muted);font-size:12px;font-weight:800;letter-spacing:1px}.ticker b{color:var(--amber)}@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.section{position:relative;padding:112px 0}.section.alt{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))}.section-head{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;margin-bottom:44px}.eyebrow{color:var(--red);font-size:12px;font-weight:950;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}.section h2{font-size:clamp(34px,5vw,68px);line-height:.98;text-transform:uppercase;font-weight:1000}.section h2 span{color:var(--amber)}.section-desc{max-width:460px;color:var(--muted);font-size:14px;line-height:1.8;text-align:right}.campaign-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}.feature-card,.panel,.game-card,.service-card,.review-card,.faq-item{border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 18px 60px rgba(0,0,0,.22)}.feature-card{min-height:430px;position:relative;overflow:hidden;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;background-image:linear-gradient(180deg,rgba(5,6,7,.05),rgba(5,6,7,.86)),url('https://game.gtimg.cn/images/r6/cp/a20260611gwsj/new/feature5.jpg');background-size:cover;background-position:center}.feature-card::before{content:"LIVE PATCH";position:absolute;top:24px;left:24px;background:var(--red);color:#fff;font-size:11px;font-weight:950;letter-spacing:2px;padding:8px 12px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}.feature-card h3{font-size:34px;line-height:1.05;margin-bottom:14px}.feature-card p{max-width:560px;color:rgba(244,241,232,.76);line-height:1.75}.side-stack{display:grid;gap:20px}.panel{padding:26px;position:relative;overflow:hidden}.panel h3{font-size:18px;text-transform:uppercase;margin-bottom:14px}.loadout{display:grid;gap:12px}.load-row{display:grid;grid-template-columns:90px 1fr 44px;gap:12px;align-items:center;font-size:12px;color:var(--muted)}.bar{height:8px;background:rgba(255,255,255,.1);overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--amber))}.tag-cloud{display:flex;flex-wrap:wrap;gap:10px}.tag{border:1px solid rgba(240,178,63,.3);background:rgba(240,178,63,.08);color:var(--amber);font-size:12px;font-weight:800;padding:8px 10px}.games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.game-card{position:relative;min-height:220px;padding:24px;overflow:hidden;transition:transform .24s var(--ease),border-color .24s,background .24s}.game-card:hover{transform:translateY(-4px);border-color:var(--line-hot);background:linear-gradient(180deg,rgba(230,48,40,.12),rgba(255,255,255,.018))}.game-card::before{content:attr(data-code);position:absolute;right:16px;top:14px;color:rgba(255,255,255,.09);font-size:42px;font-weight:1000}.game-card .status{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-size:11px;font-weight:950;letter-spacing:2px;text-transform:uppercase}.game-card .status::before{content:"";width:8px;height:8px;background:var(--green);box-shadow:0 0 14px var(--green)}.game-card h3{margin-top:38px;font-size:24px;text-transform:uppercase}.game-card p{margin-top:12px;color:var(--muted);font-size:13px;line-height:1.7}.game-card .meta{position:absolute;left:24px;bottom:20px;color:var(--amber);font-size:11px;font-weight:900;letter-spacing:2px}.video-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.video-card{position:relative;aspect-ratio:16/22;overflow:hidden;border:1px solid rgba(255,255,255,.13);background:#111;cursor:pointer;transition:transform .24s var(--ease),border-color .24s}.video-card:hover{transform:translateY(-5px);border-color:rgba(240,178,63,.75)}.video-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.86));z-index:1}.video-card::after{content:"PLAY";position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);width:78px;height:78px;border:1px solid rgba(255,255,255,.72);border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:950;letter-spacing:2px;color:#fff;background:rgba(5,6,7,.38);backdrop-filter:blur(6px)}.video-card:hover::after{border-color:var(--red);box-shadow:0 0 34px rgba(230,48,40,.38)}.video-card img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.04)}.video-title{position:absolute;left:18px;right:18px;bottom:18px;z-index:2}.video-title small{display:block;color:var(--amber);font-size:11px;font-weight:950;letter-spacing:2px;margin-bottom:8px}.video-title strong{font-size:18px}.reviews{max-width:920px;margin:0 auto}.review-card{min-width:100%;padding:42px;text-align:center}.review-card.highlight{border-color:rgba(240,178,63,.55);box-shadow:0 0 60px rgba(240,178,63,.08)}.review-track{display:flex;transition:transform .55s var(--ease)}.review-window{overflow:hidden}.review-text{font-size:20px;line-height:1.8;color:rgba(244,241,232,.88)}.review-author{margin-top:22px;color:var(--amber);font-size:13px;font-weight:950;letter-spacing:2px}.review-controls{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:24px}.icon-btn{width:44px;height:44px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer}.icon-btn:hover{border-color:var(--red);color:var(--red)}.dots{display:flex;gap:8px}.dot{width:24px;height:3px;background:rgba(255,255,255,.18);cursor:pointer}.dot.active{background:var(--red)}.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.service-card{min-height:250px;padding:26px;cursor:pointer;transition:transform .24s var(--ease),border-color .24s}.service-card:hover{transform:translateY(-4px);border-color:rgba(127,215,255,.55)}.service-card .service-code{color:var(--cyan);font-size:12px;font-weight:950;letter-spacing:2px}.service-card h3{font-size:22px;margin-top:44px;margin-bottom:12px}.service-card p{color:var(--muted);font-size:13px;line-height:1.7}.faq-wrap{max-width:860px;margin:0 auto}.faq-item{margin-bottom:12px}.faq-q{width:100%;min-height:66px;background:transparent;border:0;display:flex;align-items:center;justify-content:space-between;text-align:left;padding:0 22px;cursor:pointer;font-weight:900}.faq-q span:first-child{font-size:16px}.faq-icon{width:22px;height:22px;position:relative}.faq-icon::before,.faq-icon::after{content:"";position:absolute;left:50%;top:50%;background:var(--red);transform:translate(-50%,-50%)}.faq-icon::before{width:18px;height:2px}.faq-icon::after{width:2px;height:18px}.faq-item.active .faq-icon::after{opacity:0}.faq-a{max-height:0;overflow:hidden;color:var(--muted);line-height:1.8;padding:0 22px;transition:max-height .28s var(--ease),padding .28s}.faq-item.active .faq-a{max-height:180px;padding:0 22px 22px}.contact{position:relative;padding:124px 0;background:linear-gradient(180deg,rgba(230,48,40,.06),rgba(5,6,7,1));overflow:hidden}.contact::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(920px,90%);height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--amber),transparent)}.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:38px;align-items:center}.contact h2{font-size:clamp(42px,6vw,86px);line-height:.95;text-transform:uppercase}.contact h2 span{color:var(--red)}.contact p{margin-top:20px;color:var(--muted);line-height:1.8}.contact-box{border:1px solid var(--line-hot);background:linear-gradient(180deg,rgba(230,48,40,.12),rgba(255,255,255,.03));padding:28px;box-shadow:var(--shadow)}.qq-label{color:var(--amber);font-size:12px;font-weight:950;letter-spacing:2px;text-transform:uppercase}.qq-num{display:block;margin:10px 0 24px;font-size:36px;font-family:Consolas,'Courier New',monospace;font-weight:1000;color:#fff}.float-contact{position:fixed;right:22px;bottom:22px;z-index:900;background:linear-gradient(135deg,var(--red),#8d1611);border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 50px rgba(230,48,40,.28);height:52px;padding:0 22px;display:flex;align-items:center;font-size:13px;font-weight:950;letter-spacing:1.6px;text-transform:uppercase;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}.back-top{position:fixed;right:24px;bottom:86px;z-index:880;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(5,6,7,.72);opacity:0;pointer-events:none;transition:opacity .2s}.back-top.visible{opacity:1;pointer-events:auto}footer{border-top:1px solid rgba(255,255,255,.1);padding:34px 0;color:var(--dim);font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:20px}.modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);opacity:0;transition:opacity .2s}.modal.active{display:flex;opacity:1}.modal-content{width:min(1060px,92vw);aspect-ratio:16/9;background:#000;border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow);position:relative}.modal-close{position:absolute;right:0;top:-48px;width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);font-size:28px;cursor:pointer}.modal iframe{width:100%;height:100%;border:0}.service-modal-card{width:min(560px,92vw);border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,#151b22,#080a0d);box-shadow:var(--shadow);padding:34px;position:relative;animation:serviceCardIn .68s cubic-bezier(.34,1.56,.64,1) forwards}.service-modal-card.closing{animation:serviceCardOut .3s ease-in forwards}@keyframes serviceCardIn{0%{opacity:0;transform:scale(.65) translateY(80px)}25%{opacity:1;transform:scale(1.12) translateY(-10px)}45%{transform:scale(.94) translateY(6px)}62%{transform:scale(1.04) translateY(-3px)}78%{transform:scale(.98) translateY(1px)}90%{transform:scale(1.01) translateY(0)}100%{opacity:1;transform:scale(1) translateY(0)}}@keyframes serviceCardOut{0%{opacity:1;transform:scale(1) translateY(0)}30%{opacity:1;transform:scale(1.08) translateY(-8px)}100%{opacity:0;transform:scale(.7) translateY(60px)}}.service-close{position:absolute;right:18px;top:14px;font-size:30px;color:var(--muted);cursor:pointer}.service-modal-card h3{font-size:30px;margin:16px 0 12px}.service-modal-card p{color:var(--muted);line-height:1.8}.service-price{margin:24px 0;color:var(--amber);font-size:34px;font-weight:1000}.service-price span{font-size:13px;color:var(--muted);font-weight:700}.fade{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}.fade.visible{opacity:1;transform:none}
+
+@media(min-width:769px){.hero-media img{display:none}.hero-media video.desktop-bg{display:block}}
+
+@media(max-width:980px){.hero-grid,.campaign-grid,.contact-grid{grid-template-columns:1fr}.intel-panel{max-width:480px}.section-head{grid-template-columns:1fr}.section-desc{text-align:left}.games-grid{grid-template-columns:repeat(2,1fr)}.video-grid,.services-grid{grid-template-columns:repeat(2,1fr)}}
+
+@media(max-width:720px){.nav{height:64px;padding:0 18px}.brand{font-size:14px}.brand small{font-size:9px}.menu-btn{display:block}.nav-cta{display:none}.nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(5,6,7,.98);border-bottom:1px solid var(--line);padding:10px 0}.nav-links.active{display:block}.nav-links a{height:46px;padding:0 22px}.hero{min-height:760px}.hero-inner{padding-top:86px;padding-bottom:62px}.hero-grid{gap:26px}.hero-copy{font-size:14px}.btn{width:100%;min-height:48px}.intel-panel{display:none}.ticker{height:36px}.section{padding:74px 0}.games-grid,.video-grid,.services-grid{grid-template-columns:1fr}.feature-card{min-height:390px;padding:24px}.video-card{aspect-ratio:16/11}.contact-box{padding:22px}.qq-num{font-size:30px}.float-contact{left:0;right:0;bottom:0;justify-content:center;clip-path:none}.back-top{display:none}footer{padding-bottom:76px}.footer-inner{flex-direction:column}.modal-content{width:96vw}.review-card{padding:28px 20px}.review-text{font-size:16px}}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+
+</head>
+
+<body>
+<script>
+        // 微信浏览器强制置顶（微信会自动恢复滚动位置，必须多重兜底）
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        !function() {
+            // UA检测：微信显示图片，非微信显示视频
+            document.addEventListener('DOMContentLoaded', function() {
+                var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+                var img = document.querySelector('.hero-bg-img');
+                var vids = document.querySelectorAll('.hero-bg-video');
+                if (isWeChat) {
+                    if (img) img.style.display = 'block';
+                    vids.forEach(function(v){ v.style.display = 'none'; });
+                } else {
+                    if (img) img.style.display = 'none';
+                    vids.forEach(function(v){ 
+                        v.style.display = ''; 
+                        v.play().catch(function(){});
+                    });
+                }
+            });
+            var t = function() { window.scrollTo(0, 0); };
+            t();
+            document.addEventListener('DOMContentLoaded', t);
+            window.addEventListener('load', t);
+            // 微信浏览器特有：从缓存恢复页面时（pageshow事件）
+            window.addEventListener('pageshow', function(e) {
+                if (e.persisted) { t(); }
+                t();
+            });
+            setTimeout(t, 100);
+            setTimeout(t, 500);
+            setTimeout(t, 1000);
+            var check = function() {
+                if (window.scrollY > 0) { window.scrollTo(0, 0); requestAnimationFrame(check); }
+            };
+            requestAnimationFrame(check);
+        }();
+    </script>
+
+<div class="noise"></div>
+
+<nav class="nav">
+
+  <a class="brand" href="#home" aria-label="李大爷鼠标宏科技"><img src="logo.png" alt="李大爷" style="height:36px;width:auto;"><span>LIDY MACRO<small>TACTICAL CONTROL</small></span></a>
+
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="打开菜单"><span></span><span></span><span></span></button>
+
+  <div class="nav-links" id="navLinks">
+
+    <a href="#home">首页</a><a href="#campaign">赛季情报</a><a href="#games">武器库</a><a href="#media">实战影像</a><a href="#reviews">反馈</a><a href="#services">军需服务</a><a href="#faq">FAQ</a><a href="#contact">联系</a>
+
+  </div>
+
+  <a class="nav-cta" href="#contact">立即接入</a>
+
+</nav>
+
+<header class="hero" id="home">
+
+  <div class="hero-media">
+          <img class="hero-bg-img"
+              src="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"
+              alt="">
+          <video class="hero-bg-video desktop-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
+              src="https://gp.lv.game.qq.com/dis_kt_20c1aad60f29ffdbc6700da41b6788df_1763950354/0b53xiaauaaaxaall2bdzbu6powdbk5aacqa.f0.mp4"
+              poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"></video>
+          <video class="hero-bg-video mobile-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
+              src="https://a1274513716.github.io/elite-pc-hospital/bg_mobile.mp4"
+              poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"></video>
+        </div>
+  <div class="hero-inner container">
+
+    <div class="hero-grid">
+
+      <div>
+
+        <div class="kicker">Season 2026 / Operator Ready</div>
+
+        <h1>进入战场<br><span>锁定后坐力</span></h1>
+
+        <p class="hero-copy">LIDY MACRO 为主流FPS玩家提供手感调校、宏脚本与远程售后支持。覆盖CFHD、彩虹六号、The Finals、三角洲行动等项目，按武器和鼠标习惯做细分适配。</p>
+
+        <div class="hero-actions">
+
+          <a class="btn btn-primary" href="#games">查看武器库 <i class="arrow"></i></a>
+
+          <a class="btn btn-ghost" href="#media">播放实战影像 <i class="arrow"></i></a>
+
+        </div>
+
+      </div>
+
+      <aside class="intel-panel" aria-label="状态面板">
+
+        <div class="stat-line"><strong>09</strong><span>已覆盖游戏项目</span></div>
+
+        <div class="stat-line"><strong>24H</strong><span>售后与微调响应</span></div>
+
+        <div class="stat-line"><strong>ALL</strong><span>主流鼠标方案适配</span></div>
+
+        <div class="stat-line"><strong>946408366</strong><span>技术交流群</span></div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+  <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+
+</header>
+
+<main>
+
+  <section class="section" id="campaign">
+
+    <div class="container">
+
+      <div class="section-head fade">
+
+        <div><div class="eyebrow">Campaign Briefing</div><h2>赛季<span>情报</span></h2></div>
+
+        
+
+      </div>
+
+      <div class="campaign-grid">
+
+        <article class="feature-card fade">
+
+          <h3>实战手感优先</h3>
+
+          <p>围绕武器后坐力、DPI、鼠标驱动和玩家习惯做方案，减少无效参数堆叠，重点追求稳定、跟手、容易上手。</p>
+
+        </article>
+
+        <div class="side-stack">
+
+          <div class="panel fade">
+
+            <h3>作战参数</h3>
+
+            <div class="loadout">
+
+              <div class="load-row"><span>稳定性</span><div class="bar"><i style="width:94%"></i></div><b>94</b></div>
+
+              <div class="load-row"><span>覆盖度</span><div class="bar"><i style="width:89%"></i></div><b>89</b></div>
+
+              <div class="load-row"><span>售后响应</span><div class="bar"><i style="width:96%"></i></div><b>96</b></div>
+
+              <div class="load-row"><span>适配效率</span><div class="bar"><i style="width:91%"></i></div><b>91</b></div>
+
+            </div>
+
+          </div>
+
+          <div class="panel fade">
+
+            <h3>当前支持</h3>
+
+            <div class="tag-cloud"><span class="tag">罗技</span><span class="tag">雷蛇</span><span class="tag">血手</span><span class="tag">赛睿</span><span class="tag">CFHD</span><span class="tag">R6S</span><span class="tag">THE FINALS</span><span class="tag">三角洲</span></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section alt" id="games">
+
+    <div class="container">
+
+      <div class="section-head fade">
+
+        <div><div class="eyebrow">Armory Database</div><h2>战术<span>武器库</span></h2></div>
+
+        
+
+      </div>
+
+      <div class="games-grid">
+
+        <article class="game-card fade" data-code="01"><span class="status">Live</span><h3>生死狙击2</h3><p>全武器宏支持，稳定压枪，精准射击。</p><div class="meta">FPS / FULL SET</div></article>
+
+        <article class="game-card fade" data-code="02"><span class="status">Live</span><h3>彩虹六号</h3><p>53把主武器 + 3把副武器宏，全枪械覆盖。</p><div class="meta">R6S / 56 WEAPONS</div></article>
+
+        <article class="game-card fade" data-code="03"><span class="status">Live</span><h3>The Finals</h3><p>AK47、FCAR、V95、M11、XP54、刘易斯、LH1覆盖。</p><div class="meta">ARENA / CORE LOADOUT</div></article>
+
+        <article class="game-card fade" data-code="04"><span class="status">Live</span><h3>高能英雄</h3><p>15+武器宏支持，冲锋枪、步枪手感稳定。</p><div class="meta">HERO FPS</div></article>
+
+        <article class="game-card fade" data-code="05"><span class="status">Live</span><h3>和平精英模拟器</h3><p>26幽灵宏，全武器精准控制。</p><div class="meta">EMULATOR</div></article>
+
+        <article class="game-card fade" data-code="06"><span class="status">Live</span><h3>CFHD</h3><p>28把枪宏 + 瞬狙、鬼跳、大跳上箱。</p><div class="meta">CLASSIC / ADVANCED</div></article>
+
+        <article class="game-card fade" data-code="07"><span class="status">Live</span><h3>AVA 战地之王</h3><p>四服通用，全武器宏支持。</p><div class="meta">MULTI SERVER</div></article>
+
+        <article class="game-card fade" data-code="08"><span class="status">Live</span><h3>三角洲行动</h3><p>全武器宏，适合长时间稳定压枪。</p><div class="meta">TACTICAL FPS</div></article>
+
+        <article class="game-card fade" data-code="09"><span class="status">Live</span><h3>界外狂潮</h3><p>全武器宏支持，持续更新。</p><div class="meta">NEW PATCH</div></article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section" id="media">
+
+    <div class="container">
+
+      <div class="section-head fade">
+
+        <div><div class="eyebrow">Gameplay Footage</div><h2>实战<span>影像</span></h2></div>
+
+        
+
+      </div>
+
+      <div class="video-grid">
+
+        <article class="video-card fade" onclick="openModal('BV1oKSnBkEEa')"><img src="https://shared.steamstatic.com/store_item_assets/steam/apps/359550/header.jpg" alt="彩虹六号演示"><div class="video-title"><small>DEMO 01</small><strong>彩虹六号</strong></div></article>
+
+        <article class="video-card fade" onclick="openModal('BV1oYJu6gEqg')"><img src="https://shared.steamstatic.com/store_item_assets/steam/apps/2073850/header.jpg" alt="The Finals演示"><div class="video-title"><small>DEMO 02</small><strong>The Finals</strong></div></article>
+
+        <article class="video-card fade" onclick="openModal('BV1H6Gb6QEHE')"><img src="https://game.gtimg.cn/images/cfhd/cp/a20260601mact/act0-2.jpg" alt="CFHD演示"><div class="video-title"><small>DEMO 03</small><strong>CFHD</strong></div></article>
+
+        <article class="video-card fade" onclick="openModal('BV1mvq5BLEbu')"><img src="https://static.gametalk.qq.com/image/182/1780387636_1b377d594325819fa771fa10c4ead3bc.jpg" alt="实战演示"><div class="video-title"><small>DEMO 04</small><strong>实战演示</strong></div></article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section alt" id="reviews">
+
+    <div class="container">
+
+      <div class="section-head fade">
+
+        <div><div class="eyebrow">Player Reports</div><h2>玩家<span>反馈</span></h2></div>
+
+        
+
+      </div>
+
+      <div class="reviews fade"><div class="review-window"><div class="review-track" id="reviewTrack"></div></div><div class="review-controls"><button class="icon-btn" onclick="prevReview()">←</button><div class="dots" id="reviewDots"></div><button class="icon-btn" onclick="nextReview()">→</button></div></div>
+
+    </div>
+
+  </section>
+
+  <section class="section" id="services">
+
+    <div class="container">
+
+      <div class="section-head fade">
+
+        <div><div class="eyebrow">Support Arsenal</div><h2>军需<span>服务</span></h2></div>
+
+        
+
+      </div>
+
+      <div class="services-grid">
+
+        <article class="service-card fade" onclick="openService(0)"><div class="service-code">SERVICE 01</div><h3>本地模型部署</h3><p>35B大模型本地化部署，一键启动脚本和远程调优。</p></article>
+
+        <article class="service-card fade" onclick="openService(1)"><div class="service-code">SERVICE 02</div><h3>视频VIP集成</h3><p>B站大会员等视频服务，稳定靠谱。</p></article>
+
+        <article class="service-card fade" onclick="openService(2)"><div class="service-code">SERVICE 03</div><h3>鼠标参数修改</h3><p>按DPI、回报率和手感习惯做深度定制。</p></article>
+
+        <article class="service-card fade" onclick="openService(3)"><div class="service-code">SERVICE 04</div><h3>电脑装机服务</h3><p>深圳本地上门，外地远程指导选配。</p></article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section alt" id="faq">
+
+    <div class="container">
+
+      <div class="section-head fade"><div><div class="eyebrow">FAQ</div><h2>常见<span>问题</span></h2></div></div>
+
+      <div class="faq-wrap">
+
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>全鼠标通用吗？</span><i class="faq-icon"></i></button><div class="faq-a">支持多数主流鼠标方案，包括罗技、雷蛇、赛睿、血手等，具体按你的设备和游戏项目确认。</div></div>
+
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>如何使用？</span><i class="faq-icon"></i></button><div class="faq-a">购买后提供说明和视频教程，需要远程协助也可以联系QQ客服。</div></div>
+
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>更新频率如何？</span><i class="faq-icon"></i></button><div class="faq-a">新武器、新版本会持续调整，优先保证热门项目稳定可用。</div></div>
+
+        <div class="faq-item fade"><button class="faq-q" onclick="toggleFaq(this)"><span>售后服务怎么联系？</span><i class="faq-icon"></i></button><div class="faq-a">客服QQ：1274513716，技术交流群：946408366，可咨询固件更新和手感微调。</div></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="contact" id="contact">
+
+    <div class="container contact-grid">
+
+      <div class="fade"><div class="eyebrow">Join The Operation</div><h2>准备好<br><span>接入战局</span></h2><p>先发游戏项目、鼠标型号、DPI和主要武器需求，客服按你的设备和玩法给方案。</p></div>
+
+      <div class="contact-box fade"><div class="qq-label">技术交流群</div><span class="qq-num">946408366</span><div class="qq-label">官方客服唯一QQ</div><span class="qq-num">1274513716</span><a class="btn btn-primary" href="tencent://message/?uin=1274513716&Site=&Menu=yes">打开QQ咨询 <i class="arrow"></i></a></div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<a class="float-contact" href="#contact">联系接入</a>
+
+<a href="#home" class="back-top" id="backTop">↑</a>
+
+<footer>
+        <div class="container">
+            <p>© 1980-2026 李大爷鼠标宏科技. All rights reserved.</p>
+            <div id="pv-stats">
+                <span id="fake_pv">加载中...</span> 次浏览
+            </div>
+        </div>
+    </footer>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        <span id="busuanzi_value_site_pv"></span>
+    </span>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="modal" id="videoModal" onclick="closeModal()"><div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal()">×</button><iframe id="modalIframe" src="" allowfullscreen></iframe></div></div>
+
+<div class="modal" id="serviceModal" onclick="closeService()"><div class="service-modal-card" onclick="event.stopPropagation()"><button class="service-close" onclick="closeService()">×</button><div id="serviceDetailBody"></div></div></div>
+
+<script>
+
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+
+var REVIEWS=[
+
+  {text:'一口气从CFHD买到彩虹六号再买到The Finals，三款全入手，稳。',author:'CFHD 三件套客户',highlight:true},
+
+  {text:'彩虹六号续费，用着舒服就一直用，售后省心。',author:'彩虹六号 续费客户',highlight:true},
+
+  {text:'CFHD瞬狙真的稳，28把枪全有宏，练枪效率翻倍。',author:'CFHD老玩家'},
+
+  {text:'The Finals AK和FCAR压枪舒服，扫射不飘。',author:'The Finals玩家'},
+
+  {text:'三角洲行动全套宏，血手鼠标插上即用，体验丝滑。',author:'三角洲行动玩家'},
+
+  {text:'本地AI模型部署很省钱，生产力拉满。',author:'AI玩家'}
+
+];
+
+var SERVICES=[
+
+  {code:'SERVICE 01',title:'本地模型部署',desc:'帮你把AI大模型部署到电脑上，减少按量API成本。支持DeepSeek、Qwen、Llama等主流开源模型，提供一键启动脚本和远程调优。',price:'¥500-600',note:'一次性部署'},
+
+  {code:'SERVICE 02',title:'视频VIP集成',desc:'B站大会员、视频会员等集成服务，稳定靠谱，售后到位。',price:'¥88',note:'长期方案'},
+
+  {code:'SERVICE 03',title:'鼠标参数修改',desc:'根据DPI、回报率、游戏灵敏度和手感偏好做深度定制。',price:'¥68',note:'深度定制'},
+
+  {code:'SERVICE 04',title:'电脑装机服务',desc:'深圳本地上门装机，外地远程指导选配置。从预算规划到走线理线一步到位。',price:'¥2000+',note:'按配置定价'}
+
+];
+
+var TRADES=['彩虹六号全套','CFHD全套','The Finals全套','三角洲行动全套','生死狙击2全套','高能英雄全套','AVA全套','界外狂潮全套','和平精英模拟器全套'];
+
+var curReview=0,reviewTimer=null;
+
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('active');}
+
+document.querySelectorAll('#navLinks a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navLinks').classList.remove('active');});});
+
+function initTicker(){var t=document.getElementById('tickerTrack');var html='';for(var i=0;i<16;i++){var item=TRADES[i%TRADES.length];html+='<span><b>LIVE DEPLOY</b> '+item+' / 参数更新完成</span>';}t.innerHTML=html+html;}
+
+function initReviews(){var track=document.getElementById('reviewTrack');var dots=document.getElementById('reviewDots');REVIEWS.forEach(function(r,i){var card=document.createElement('article');card.className='review-card'+(r.highlight?' highlight':'');card.innerHTML='<p class="review-text">“'+r.text+'”</p><div class="review-author">'+r.author+'</div>';track.appendChild(card);var dot=document.createElement('button');dot.className='dot'+(i===0?' active':'');dot.setAttribute('aria-label','切换评价 '+(i+1));dot.onclick=function(){goReview(i);};dots.appendChild(dot);});startReviewAuto();}
+
+function goReview(i){curReview=i;document.getElementById('reviewTrack').style.transform='translateX(-'+(i*100)+'%)';document.querySelectorAll('.dot').forEach(function(d,j){d.className='dot'+(j===i?' active':'');});}
+
+function nextReview(){goReview((curReview+1)%REVIEWS.length);}function prevReview(){goReview((curReview-1+REVIEWS.length)%REVIEWS.length);}function startReviewAuto(){reviewTimer=setInterval(nextReview,5200);}function stopReviewAuto(){clearInterval(reviewTimer);}var reviews=document.querySelector('.reviews');if(reviews){reviews.addEventListener('mouseenter',stopReviewAuto);reviews.addEventListener('mouseleave',startReviewAuto);}
+
+function toggleFaq(btn){btn.parentElement.classList.toggle('active');}
+
+function openModal(bvid){document.getElementById('modalIframe').src='https://player.bilibili.com/player.html?bvid='+bvid+'&autoplay=0';document.getElementById('videoModal').classList.add('active');document.body.style.overflow='hidden';}
+
+function closeModal(){document.getElementById('modalIframe').src='';document.getElementById('videoModal').classList.remove('active');document.body.style.overflow='';}
+
+function openService(i){var s=SERVICES[i];var card=document.querySelector('.service-modal-card');card.style.animation='none';void card.offsetWidth;document.getElementById('serviceDetailBody').innerHTML='<div class="eyebrow">'+s.code+'</div><h3>'+s.title+'</h3><p>'+s.desc+'</p><div class="service-price">'+s.price+' <span>'+s.note+'</span></div><a class="btn btn-primary" href="#contact" onclick="closeService()">立即咨询 <i class="arrow"></i></a>';card.style.animation='';document.getElementById('serviceModal').classList.add('active');document.body.style.overflow='hidden';}
+
+function closeService(){var card=document.querySelector('.service-modal-card');card.classList.add('closing');setTimeout(function(){document.getElementById('serviceModal').classList.remove('active');card.classList.remove('closing');card.style.animation='none';void card.offsetWidth;card.style.animation='';document.body.style.overflow='';},280);}
+
+var backTop=document.getElementById('backTop');window.addEventListener('scroll',function(){if(window.scrollY>560)backTop.classList.add('visible');else backTop.classList.remove('visible');});
+
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.12});document.querySelectorAll('.fade').forEach(function(el){observer.observe(el);});
+
+(function(){initTicker();initReviews();var fp=document.getElementById('fake_pv');if(fp){var bv=document.getElementById('busuanzi_value_site_pv');if(bv&&bv.textContent.trim()){fp.textContent=bv.textContent.trim();}else{var h=new Date().getHours();var total=1000000+Math.floor(Math.random()*99999)+h*10000;fp.textContent=total;}}})();
+
+window.addEventListener('load',function(){setTimeout(function(){window.scrollTo(0,0);},50);});
+
+</script>
+
+</body>
+
+</html>
