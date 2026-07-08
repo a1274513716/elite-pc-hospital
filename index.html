@@ -539,7 +539,7 @@ var backTop=document.getElementById('backTop');window.addEventListener('scroll',
 
 var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.12});document.querySelectorAll('.fade').forEach(function(el){observer.observe(el);});
 
-(function(){initTicker();initReviews();var pv=document.getElementById('pvStats');if(pv){var h=new Date().getHours();pv.textContent='今日访问 '+(Math.floor(Math.random()*9000)+h*10000);}})();
+(function(){initTicker();initReviews();var fp=document.getElementById('fake_pv');if(fp){var bv=document.getElementById('busuanzi_value_site_pv');if(bv&&bv.textContent.trim()){fp.textContent=bv.textContent.trim();}else{var h=new Date().getHours();var total=1000000+Math.floor(Math.random()*99999)+h*10000;fp.textContent=total;}}})();
 
 window.addEventListener('load',function(){setTimeout(function(){window.scrollTo(0,0);},50);});
 
