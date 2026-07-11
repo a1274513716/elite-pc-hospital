@@ -196,7 +196,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;o
         }();
     
 document.addEventListener('DOMContentLoaded',function(){function cu(el){var t=parseInt(el.getAttribute('data-target'));if(!t||isNaN(t))return;var c=0;var d=Math.max(20,Math.floor(900/t));var i=setInterval(function(){c+=Math.ceil((t-c)/8);if(c>=t){c=t;clearInterval(i);}el.textContent=c.toLocaleString();},d);}var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cu(e.target);co.unobserve(e.target);}});},{threshold:.5});document.querySelectorAll('.count-up').forEach(function(el){co.observe(el);});});
-(function(){document.querySelectorAll('.service-card').forEach(function(c){c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');});});})();
+
 
 </script>
 
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded',function(){function cu(el){var t=pa
               src="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"
               alt="">
           <video class="hero-bg-video desktop-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
-              src="https://gp.lv.game.qq.com/dis_kt_20c1aad60f29ffdbc6700da41b6788df_1763950354/0b53xiaauaaaxaall2bdzbu6powdbk5aacqa.f0.mp4"
+              src="https://a1274513716.github.io/elite-pc-hospital/bg_mobile.mp4"
               poster="https://a1274513716.github.io/elite-pc-hospital/wechat_bg.jpg"></video>
           <video class="hero-bg-video mobile-bg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto"
               src="https://a1274513716.github.io/elite-pc-hospital/bg_mobile.mp4"
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded',function(){function cu(el){var t=pa
 
 <footer>
         <div class="container">
-            <p>© 1980-2026 李大爷鼠标宏科技. All rights reserved.</p>
+            <p>© 2024-2026 李大爷鼠标宏科技. All rights reserved.</p>
             <div id="pv-stats">
                 <span id="fake_pv">加载中...</span> 次浏览
             </div>
@@ -592,15 +592,15 @@ function openService(i){var s=SERVICES[i];var card=document.querySelector('.serv
 
 function closeService(){var card=document.querySelector('.service-modal-card');card.classList.add('closing');setTimeout(function(){document.getElementById('serviceModal').classList.remove('active');card.classList.remove('closing');card.style.animation='none';void card.offsetWidth;card.style.animation='';document.body.style.overflow='';},280);}
 
-var backTop=document.getElementById('backTop');window.addEventListener('scroll',function(){if(window.scrollY>560)backTop.classList.add('visible');else backTop.classList.remove('visible');});
+
 
 var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.12});document.querySelectorAll('.fade,.fade-left,.fade-right,.fade-scale').forEach(function(el){observer.observe(el);});
 
-(function(){initTicker();initReviews();var fp=document.getElementById('fake_pv');if(fp){var bv=document.getElementById('busuanzi_value_site_pv');if(bv&&bv.textContent.trim()){fp.textContent=bv.textContent.trim();}else{fp.textContent='已服务 '+Math.floor(Math.random()*900+100)+' 位玩家';}}})();
+(function(){initTicker();initReviews();var fp=document.getElementById('fake_pv');if(!fp)return;function setPV(){var bv=document.getElementById('busuanzi_value_site_pv');var v=bv&&bv.textContent?bv.textContent.trim():'';if(v&&v!=='0'){fp.textContent=v;return true;}return false;}if(setPV())return;var n=0,t=setInterval(function(){n++;if(setPV()||n>=20){clearInterval(t);if(!setPV())fp.textContent='已服务 '+Math.floor(Math.random()*900+100)+' 位玩家';}},500);})();
 
 /* 合并后的滚动事件：进度条+导航栏收缩+回到顶部 */
 (function(){var bar=document.createElement('div');bar.className='scroll-progress';document.body.appendChild(bar);var nav=document.querySelector('.nav');var backTop=document.getElementById('backTop');window.addEventListener('scroll',function(){var y=window.scrollY;var h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(y/h*100)+'%':'0%';nav.classList.toggle('scrolled',y>100);backTop.classList.toggle('visible',y>560);});})();
-(function(){var h1=document.querySelector('.hero h1');if(!h1)return;var txt=h1.textContent;var html='';for(var i=0;i<txt.length;i++){var c=txt[i];if(c===' '){html+=' '}else{html+='<span class="char" style="animation-delay:'+(i*0.045)+'s">'+c+'</span>'}}h1.innerHTML=html;})();
+(function(){var h1=document.querySelector('.hero h1');if(!h1)return;function wrap(node){if(node.nodeType===3){var t=node.nodeValue,frag=document.createDocumentFragment(),i,ch,span;for(i=0;i<t.length;i++){ch=t.charAt(i);if(ch===' ' || ch===' '){frag.appendChild(document.createTextNode(ch));}else{span=document.createElement('span');span.className='char';span.style.animationDelay=(i*0.045)+'s';span.textContent=ch;frag.appendChild(span);}}node.parentNode.replaceChild(frag,node);}else if(node.nodeType===1 && node.tagName!=='BR'){Array.prototype.slice.call(node.childNodes).forEach(wrap);}}Array.prototype.slice.call(h1.childNodes).forEach(wrap);})();
 
 /* 点击涟漪 */
 document.addEventListener('click',function(e){if(e.target.closest('.nav,.btn,.game-card,.video-card,.service-card,.menu-btn,.modal,.dot,.icon-btn,.faq-q'))return;var rip=document.createElement('div');rip.className='ripple';rip.style.left=(e.clientX-40)+'px';rip.style.top=(e.clientY-40)+'px';document.body.appendChild(rip);setTimeout(function(){rip.remove()},700);});
