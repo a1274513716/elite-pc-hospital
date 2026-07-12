@@ -179,8 +179,9 @@ body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;o
 
 <body>
 <script>
-        // 微信浏览器：只在加载时恢复一次顶部，不持续锁定滚动
+        // 强制回到顶部（兼容QQ/微信内置浏览器）
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
         !function() {
             // UA检测：微信显示图片，非微信显示视频
             document.addEventListener('DOMContentLoaded', function() {
@@ -198,6 +199,9 @@ body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;o
                     });
                 }
             });
+            // 强制回到顶部（QQ/微信浏览器兼容）
+            window.scrollTo(0, 0);
+        }();
         }();
     
 document.addEventListener('DOMContentLoaded',function(){function cu(el){var t=parseInt(el.getAttribute('data-target'));if(!t||isNaN(t))return;var c=0;var d=Math.max(20,Math.floor(900/t));var i=setInterval(function(){c+=Math.ceil((t-c)/8);if(c>=t){c=t;clearInterval(i);}el.textContent=c.toLocaleString();},d);}var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cu(e.target);co.unobserve(e.target);}});},{threshold:.5});document.querySelectorAll('.count-up').forEach(function(el){co.observe(el);});});
